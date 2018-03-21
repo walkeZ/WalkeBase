@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/acl_text"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textSize="18sp"
+        android:text="广东省广州市越秀区"
+        android:gravity="center"
+        android:onClick="jump"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="#ffffff" >
+
+        <com.hui.huiheight.first.chooselocation.PickerView
+            android:id="@+id/acl_pv1"
+            android:layout_width="80dp"
+            android:layout_height="160dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分"
+            android:textColor="#ffaa33"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <com.hui.huiheight.first.chooselocation.PickerView
+            android:id="@+id/acl_pv2"
+            android:layout_width="80dp"
+            android:layout_height="160dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="秒"
+            android:textColor="#ffaa33"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+        <com.hui.huiheight.first.chooselocation.PickerView
+            android:id="@+id/acl_pv3"
+            android:layout_width="110dp"
+            android:layout_height="160dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="省"
+            android:textColor="#ffaa33"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+</LinearLayout>

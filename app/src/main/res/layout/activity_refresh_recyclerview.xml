@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hui.huiheight.views.refresh.recyclerview.ScrollRecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/arr_scrollLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hui.huiheight.views.refresh.recyclerview.CustomRecyclerView
+        android:id="@+id/arr_customRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</com.hui.huiheight.views.refresh.recyclerview.ScrollRecyclerView>

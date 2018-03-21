@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#7dbde6"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/arw_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="WebViewButterKnifeActivity"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_marginTop="22dp"/>
+
+    <com.hui.huiheight.views.refresh.webview.RefreshWebViewLinearLayout
+        android:id="@+id/arw_RefreshWebViewLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <com.hui.huiheight.views.refresh.webview.RefreshWebView
+            android:id="@+id/arw_webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.hui.huiheight.views.refresh.webview.RefreshWebViewLinearLayout>
+
+
+
+
+</LinearLayout>

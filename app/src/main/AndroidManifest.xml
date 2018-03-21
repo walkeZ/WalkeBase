@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.hui.huiheight">
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+
+    <!-- 获取定位信息 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- 获取手机信息 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"/>
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <!--<activity
+            android:name=".MainsActivity"
+            android:label="@string/app_name">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+        </activity>-->
+        <activity android:name=".LaunchActivity"/>
+        <activity android:name=".HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".first.photo.CutPhonePictureActivity"/>
+        <activity android:name=".first.photo.CutPhonePictureActivity2"/>
+        <activity android:name=".first.photo.PhonePictureActivity"/>
+        <activity android:name=".first.chooselocation.ChoiceLocationActivity"/>
+        <activity android:name=".first.chooselocation.GetLocationActivity"/>
+        <activity android:name=".first.phone.PhoneInfoActivity"/>
+        <activity android:name=".first.phone.ScreenShotActivity"/>
+        <activity android:name=".first.retrofit2.Retrofit2Activity"/>
+        <activity android:name=".first.ShopCarActivity"/>
+        <activity android:name=".first.addresspicker.AddressPickerActivity"/>
+        <activity android:name=".first.oss.OSSActivity"/>
+
+        <activity android:name=".views.touch.TouchEventActivity"/>
+        <activity android:name=".views.refresh.webview.RefreshWebViewActivity"/>
+        <activity android:name=".views.refresh.webview.WebViewButterKnifeActivity"/>
+        <activity android:name=".views.refresh.linearlayout.RefreshLinearLayoutActivity1"/>
+        <activity android:name=".views.refresh.linearlayout.RefreshLinearLayoutActivity2"/>
+        <activity android:name=".views.refresh.linearlayout.RefreshLinearLayoutActivity3"/>
+        <activity android:name=".views.refresh.linearlayout.RefreshLinearLayoutActivity4"/>
+        <activity android:name=".views.refresh.listview.RefreshListViewActivity"/>
+        <activity android:name=".views.refresh.recyclerview.RefreshRecyclerViewActivity"/>
+        <activity android:name=".views.refresh.scrollview.RefreshScrollViewActivity"/>
+        <activity android:name=".views.refresh.gridview.RefreshGridViewActivity"/>
+        <activity android:name=".views.snow.SnowFallActivity"/>
+        <activity android:name=".views.anim.AnimActivity"/>
+
+
+
+
+        <activity android:name=".encapsulation.recyclerview.MineRecyclerViewActivity"/>
+
+        <!-- 图片框架Glide的配置 -->
+        <meta-data
+            android:name="com.hui.huiheight.util.GlideConfigUtil"
+            android:value="GlideModule"/>
+        <!-- Android7.0适配 1 [文件管理]FileProvider配置 -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.hui.huiheight.file_provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+    </application>
+
+</manifest>

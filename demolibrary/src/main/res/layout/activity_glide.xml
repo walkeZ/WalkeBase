@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:text="文字垂直显示"
+        android:onClick="getImageFormNet"
+        android:gravity="center"
+        android:ems="2"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="获取保存网络图片"
+        android:onClick="getImageFormNet"/>
+
+    <ImageView
+        android:id="@+id/glide_ivNet"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="获取保存网络图片"
+        android:onClick="getImageForSDCard"/>
+
+    <ImageView
+        android:id="@+id/glide_ivFilePath"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"/>
+
+</LinearLayout>

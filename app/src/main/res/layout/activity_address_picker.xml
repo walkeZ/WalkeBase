@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp">
+   <!-- <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal">
+        <Button
+            android:index="@+index/address_picker_three"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="三级联动"
+            android:textSize="18sp"
+            android:gravity="center"/>
+        <Button
+            android:index="@+index/address_picker_four"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="四级联动"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>-->
+
+    <com.hui.huiheight.first.addresspicker.view.PickAddressView
+        android:id="@+id/address_picker_fourPicker"
+        android:layout_width="match_parent"
+        android:layout_height="205dp"
+        android:background="@color/blueSky"
+        android:paddingBottom="10dp"/>
+    <com.hui.huiheight.first.addresspicker.MyPickAddressView
+        android:id="@+id/address_picker_myFourPicker"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#a5ed4f4f"
+        android:paddingBottom="15dp"/>
+    <com.hui.huiheight.first.addresspicker.view.PickAddressThreeView
+        android:id="@+id/address_picker_threePicker"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:background="@color/greenGrass"
+        android:paddingBottom="10dp"/>
+
+</LinearLayout>

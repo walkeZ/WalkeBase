@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="title_textSize">18sp</dimen>
+    <dimen name="lineHeight_Frame">0.5dp</dimen>
+    <dimen name="height_address_picker_item">36dp</dimen>
+</resources>

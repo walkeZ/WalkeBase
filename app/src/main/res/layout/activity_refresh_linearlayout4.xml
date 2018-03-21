@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hui.huiheight.views.refresh.linearlayout.ScrollLinearLayout4 xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/arl4_scrollLinearLayout4"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <com.hui.huiheight.views.refresh.linearlayout.CustomLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <com.hui.huiheight.views.refresh.linearlayout.CustomWebView
+            android:id="@+id/arl4_webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.hui.huiheight.views.refresh.linearlayout.CustomLinearLayout>
+
+</com.hui.huiheight.views.refresh.linearlayout.ScrollLinearLayout4>

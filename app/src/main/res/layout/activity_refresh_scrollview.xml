@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hui.huiheight.views.refresh.scrollview.RefreshScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ars_RefreshScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hui.huiheight.views.refresh.scrollview.CustomScrollView
+        android:id="@+id/ars_CustomScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="#a1fdf29d"
+                android:gravity="center"
+                android:onClick="toasting"
+                android:text="RefreshLinearLayoutActivity3"/>
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="click"
+                android:text="Click"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@mipmap/jesssica1"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@mipmap/launch"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@mipmap/launch_page1"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@mipmap/launch_page2"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@mipmap/launch_page3"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@mipmap/launch_page1"/>
+        </LinearLayout>
+
+    </com.hui.huiheight.views.refresh.scrollview.CustomScrollView>
+
+</com.hui.huiheight.views.refresh.scrollview.RefreshScrollView>

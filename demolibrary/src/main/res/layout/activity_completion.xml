@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/demo_ac_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:lineSpacingExtra="5dp"
+        android:text="我不仅能变色，还能点击"/>
+    <TextView
+        android:id="@+id/demo_ac_tvQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:lineSpacingExtra="5dp"
+        android:text="分分扬扬的_____下了半尺多厚。天地间____的一片。
+        我顺着____工地走了四十多公里，只听见各种机器的吼声，可是看不见人影，
+        也看不见工点。一进入灵宫峡，我就心里发慌"/>
+
+</LinearLayout>

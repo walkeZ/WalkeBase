@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">HuiHeight</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="tabTitles">
+        <item>first+child</item>
+        <item>demo</item>
+        <item>views</item>
+        <item>消息</item>
+        <item>我的</item>
+    </string-array>
+
+</resources>

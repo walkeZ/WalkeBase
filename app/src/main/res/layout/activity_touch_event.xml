@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hui.huiheight.views.touch.EventLinearLayout
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <com.hui.huiheight.views.touch.EventTextView
+            android:id="@+id/textView"
+            android:layout_width="200dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="TextView"/>
+
+        <com.hui.huiheight.views.touch.EventButton
+            android:id="@+id/button"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="26dp"
+            android:onClick="toasting"
+            android:text="Button"/>
+
+    </com.hui.huiheight.views.touch.EventLinearLayout>
+
+    <com.hui.huiheight.views.touch.EventRelativeLayout
+        android:id="@+id/ate_linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:gravity="center">
+
+        <com.hui.huiheight.views.touch.EventView
+            android:id="@+id/ate_text"
+            android:layout_width="200dp"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:background="#a1d17d"/>
+
+    </com.hui.huiheight.views.touch.EventRelativeLayout>
+
+
+</LinearLayout>

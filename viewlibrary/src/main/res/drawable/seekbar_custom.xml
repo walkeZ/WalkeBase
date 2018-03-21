@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+   >
+    <!--
+     android:paddingTop="10dp"
+    android:paddingStart="10dp"
+    -->
+
+    <!-- 滑竿背景 -->
+     <item android:id="@android:id/background"
+         android:drawable="@drawable/seek_bar_blue"
+         android:right="80dp"
+         android:left="80dp">
+         <clip android:gravity="center_vertical" android:drawable="@drawable/seekbar_flash"  />
+
+
+     </item>
+
+    <!-- 第二进度条式样 -->
+    <item
+        android:id="@android:id/secondaryProgress"
+        android:drawable="@drawable/seek_bar_red"
+        android:right="80dp"
+        android:left="80dp">
+
+        <clip android:gravity="center_vertical" android:drawable="@drawable/seekbar_flash"/>
+    </item>
+
+    <!-- 进度条式样 一级进度条的颜色，也可以直接替换成图片-->
+     <item
+         android:id="@android:id/progress"
+         android:drawable="@drawable/seek_bar_red"
+         android:right="80dp"
+         android:left="80dp">
+         <clip android:gravity="center_vertical" android:drawable="@drawable/seekbar_flash"/>
+
+     </item>
+
+</layer-list>

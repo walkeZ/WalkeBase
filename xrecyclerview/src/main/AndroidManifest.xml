@@ -1,0 +1,45 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jcodecraeer.xrecyclerview">
+
+    <application
+        android:allowBackup="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".example.MainActivity">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+        <activity
+            android:name=".example.AlphaChangeActivity"
+            android:theme="@style/SupportTheme" />
+
+        <activity
+            android:name=".example.LinearActivity"
+            android:theme="@style/SupportTheme" />
+        <activity
+            android:name=".example.GridActivity"
+            android:theme="@style/SupportTheme" />
+        <activity
+            android:name=".example.StaggeredGridActivity"
+            android:theme="@style/SupportTheme" />
+        <activity
+            android:name=".example.EmptyViewActivity" />
+        <activity
+            android:name=".example.CollapsingToolbarLayoutActivity"
+            android:theme="@style/SupportTheme" />
+        <activity
+            android:name=".example.DisableExampleActivity"
+            android:theme="@style/SupportTheme" />
+        <activity
+            android:name=".example.MultiHeaderActivity"
+            android:theme="@style/SupportTheme" />
+        <activity
+            android:name=".example.ItemDecorationActivity"
+            android:theme="@style/SupportTheme"></activity>
+
+    </application>
+</manifest>

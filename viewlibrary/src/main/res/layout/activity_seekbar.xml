@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#75b9c9a0"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <SeekBar
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#89f2e89a"
+            android:progressDrawable="@drawable/seekbar_img"
+            android:thumb="@drawable/seekbar_flash"/>
+
+        <SeekBar
+            android:id="@+id/timeline"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:focusable="true"
+            android:maxHeight="4.0dip"
+            android:minHeight="4.0dip"
+            android:paddingLeft="16.0dip"
+            android:paddingRight="16.0dip"
+            android:progressDrawable="@drawable/po_seekbar"
+            android:thumb="@drawable/seekbar_thumb"/>
+
+        <SeekBar
+            android:id="@+id/progress_bar2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="12dp"
+            android:background="#89f2e89a"
+            android:progressDrawable="@drawable/seekbar_custom"
+            android:thumb="@drawable/seekbar_flash"/>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:progressDrawable="@drawable/seekbar_custom2"
+            android:thumb="@drawable/seek_bar_flash2"/>
+
+
+        <SeekBar
+            android:layout_width="232dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="12dp"
+            android:progressDrawable="@drawable/seekbar_custom3"
+            android:thumb="@drawable/seekbar_thumb_normal"/>
+
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTintMode="add"
+            android:progressDrawable="@drawable/seekbar_custom5"
+            android:splitTrack="false"
+            android:thumb="@drawable/seekbar_flash"/>
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTintMode="src_in"
+            android:progressDrawable="@drawable/seekbar_custom6"
+            android:splitTrack="false"
+            android:thumb="@drawable/seekbar_flash"/>
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTintMode="src_over"
+            android:progressDrawable="@drawable/seekbar_custom"
+            android:splitTrack="false"
+            android:thumb="@drawable/seekbar_flash"/>
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTintMode="src_atop"
+            android:progressDrawable="@drawable/seekbar_custom"
+            android:splitTrack="false"
+            android:thumb="@drawable/seekbar_flash"/>
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTintMode="multiply"
+            android:progressDrawable="@drawable/seekbar_custom"
+            android:splitTrack="false"
+            android:thumb="@drawable/seekbar_flash"/>
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTintMode="screen"
+            android:progressDrawable="@drawable/seekbar_custom"
+            android:splitTrack="false"
+            android:thumb="@drawable/seekbar_flash"/>
+        <!--
+        src_in 只显示设置的遮罩颜色。 相当于遮罩在里面。
+        src_over 遮罩颜色和图片都显示。相当于遮罩在图片上方。(特别是色值带透明度的)
+        src_atop 遮罩在图片上方
+        multiply 混合色遮罩
+        screen
+        add 混合遮罩
+        -->
+
+
+    </LinearLayout>
+
+</LinearLayout>

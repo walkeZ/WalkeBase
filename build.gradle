@@ -1,0 +1,28 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+        //mavenCentral()  //studio一般默认为jcenter(),如果无法加载则添加此句
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.2'
+//        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+
+        //黄油刀
+        //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

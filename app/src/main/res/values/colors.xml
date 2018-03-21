@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+    <color name="textBlack">#666666</color>
+    <color name="viewfinder_mask">#ff0000</color>
+    <color name="transparent">#4d93f177</color>
+    <color name="result_view">#cc00cc</color>
+    <color name="possible_result_points">#cccc00</color>
+    <color name="bg_orange">#ff6622</color>
+    <color name="bg_lineView">#dadada</color>
+    <color name="selectedColor">#ff6622</color>
+    <color name="blue">#0066ff</color>
+    <color name="line">#cccccc</color>
+    <color name="blueSky">#ff33b5e5</color>
+    <color name="greenGrass">#5FB700</color>
+</resources>
