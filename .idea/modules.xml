@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/HuiHeight.iml" filepath="$PROJECT_DIR$/HuiHeight.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WalkeBase.iml" filepath="$PROJECT_DIR$/WalkeBase.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/base/base.iml" filepath="$PROJECT_DIR$/base/base.iml" />
       <module fileurl="file://$PROJECT_DIR$/demolibrary/demolibrary.iml" filepath="$PROJECT_DIR$/demolibrary/demolibrary.iml" />
