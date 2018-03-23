@@ -70,6 +70,7 @@ public class Datas {
             "LuckyPanActivity",
             "SnowFallActivity",
             "AnimActivity",
+            "XiuActivity",
             "",
             "123",
             "456",

@@ -3,7 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <walke.viewlibrary.anim.StarView
+    <walke.widget.anim.StarView
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="#33000000"/>
@@ -12,13 +12,13 @@
         android:layout_height="180dp"
         android:layout_marginTop="5dp"
         android:orientation="horizontal">
-        <walke.viewlibrary.anim.StarView2
+        <walke.widget.anim.StarView2
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#9e8cf266"
             />
-        <walke.viewlibrary.anim.StarView3
+        <walke.widget.anim.StarView3
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

@@ -29,15 +29,16 @@ import com.hui.huiheight.views.touch.TouchEventActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import walke.activity.MarqueeActivity1;
+import walke.activity.MarqueeActivity2;
+import walke.activity.seekbar.SeekBarActivity;
+import walke.activity.xiu.XiuActivity;
 import walke.base.AppFragment;
 import walke.base.tool.SetUtil;
-import walke.viewlibrary.flowlayout.FlowLayoutActivity;
-import walke.viewlibrary.luckypan.LuckyPanActivity;
-import walke.viewlibrary.marquee.MarqueeActivity1;
-import walke.viewlibrary.marquee.MarqueeActivity2;
-import walke.viewlibrary.percentage.PercentageJavaActivity;
-import walke.viewlibrary.seekbar.SeekBarActivity;
-import walke.viewlibrary.sunset.SunAnimationActivity;
+import walke.widget.flowlayout.FlowLayoutActivity;
+import walke.widget.luckypan.LuckyPanActivity;
+import walke.widget.percentage.PercentageJavaActivity;
+import walke.widget.sunset.SunAnimationActivity;
 
 /**
  * 吾日三省吾身：看脸，看秤，看余额。
@@ -87,6 +88,7 @@ public class ViewsFragment extends AppFragment {
         activities.add(new LuckyPanActivity());
         activities.add(new SnowFallActivity());
         activities.add(new AnimActivity());
+        activities.add(new XiuActivity());
 
         mAdapter.setItemClickListener(new RecyclerViewAdapter.onItemClickListener() {
             @Override

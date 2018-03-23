@@ -6,7 +6,7 @@
 
 
     <!--左右滚动的textview-->
-    <walke.viewlibrary.marquee.AutoHorizontalScrollTextView
+    <walke.widget.marquee.AutoHorizontalScrollTextView
         android:layout_marginTop="20dp"
         android:textSize="20sp"
         android:background="#000000"
@@ -18,7 +18,7 @@
         android:padding="5dp"/>
 
     <!--上下滚动的TextView-->
-    <walke.viewlibrary.marquee.AutoVerticalScrollTextView
+    <walke.widget.marquee.AutoVerticalScrollTextView
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:id="@+id/marquee1_textView_auto_roll"

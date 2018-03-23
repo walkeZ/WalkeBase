@@ -5,9 +5,9 @@ import android.view.View;
 import com.hui.huiheight.R;
 
 import walke.base.activity.AppActivity;
-import walke.viewlibrary.snowfall.Snow2View;
-import walke.viewlibrary.snowfall.SnowUtils;
-import walke.viewlibrary.snowfall.SnowView;
+import walke.widget.snowfall.Snow2View;
+import walke.widget.snowfall.SnowUtils;
+import walke.widget.snowfall.SnowView;
 
 /**
  * Created by walke.Z on 2018/2/23.

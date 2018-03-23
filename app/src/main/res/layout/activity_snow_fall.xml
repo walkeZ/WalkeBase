@@ -35,12 +35,12 @@
             android:gravity="center"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
-    <walke.viewlibrary.snowfall.SnowView
+    <walke.widget.snowfall.SnowView
         android:id="@+id/snowfall_snowView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-    <walke.viewlibrary.snowfall.Snow2View
+    <walke.widget.snowfall.Snow2View
         android:id="@+id/snowfall_snow2View"
         android:layout_width="match_parent"
         android:layout_height="0dp"

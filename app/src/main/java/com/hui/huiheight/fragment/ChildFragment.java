@@ -32,7 +32,7 @@ import walke.base.tool.SetUtil;
 import walke.demolibrary.completion.CompletionActivity;
 import walke.demolibrary.interface1.Demo1Activity;
 import walke.demolibrary.interface3.Demo3Activity;
-import walke.viewlibrary.sunset.SunAnimationActivity;
+import walke.widget.sunset.SunAnimationActivity;
 
 
 /**

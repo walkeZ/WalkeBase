@@ -18,5 +18,10 @@
     </declare-styleable>
     <!--                    -->
 
+    <declare-styleable name="RadarRippleView">
+        <attr name="middleIcon" format="reference"></attr>
+
+    </declare-styleable>
+
 
 </resources>
