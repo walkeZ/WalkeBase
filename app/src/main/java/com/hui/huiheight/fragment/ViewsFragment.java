@@ -36,6 +36,7 @@ import walke.activity.xiu.XiuActivity;
 import walke.base.AppFragment;
 import walke.base.tool.SetUtil;
 import walke.widget.flowlayout.FlowLayoutActivity;
+import walke.widget.img.ImgActivity;
 import walke.widget.luckypan.LuckyPanActivity;
 import walke.widget.percentage.PercentageJavaActivity;
 import walke.widget.sunset.SunAnimationActivity;
@@ -89,6 +90,7 @@ public class ViewsFragment extends AppFragment {
         activities.add(new SnowFallActivity());
         activities.add(new AnimActivity());
         activities.add(new XiuActivity());
+        activities.add(new ImgActivity());
 
         mAdapter.setItemClickListener(new RecyclerViewAdapter.onItemClickListener() {
             @Override

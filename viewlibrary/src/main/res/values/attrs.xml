@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!-- 第②种：属性、引用写在View里面 -->
     <declare-styleable name="SunAnimationView">
         <attr name="sun_circle_color" format="color"></attr>
         <attr name="sun_font_color" format="color"></attr>
@@ -9,7 +9,7 @@
     </declare-styleable>
 
 
-    <!--                    -->
+    <!-- 第①种：属性、引用与 View分开写 -->
     <attr name="imgTurntable" format="reference"/>
     <attr name="imgPointer" format="reference"/>
     <declare-styleable name="TurntableView">
@@ -18,9 +18,47 @@
     </declare-styleable>
     <!--                    -->
 
-    <declare-styleable name="RadarRippleView">
-        <attr name="middleIcon" format="reference"></attr>
+    <attr name="middleIcon" format="reference"></attr>
 
+    <declare-styleable name="RadarRippleView">
+       <!-- <attr name="middleIcon" format="reference"></attr>-->
+        <attr name="middleIcon"/>
+        <attr name="iconWidth" format="integer|reference|dimension"></attr>
+        <attr name="interval" format="integer|reference|dimension"></attr>
+        <attr name="speed" format="float|reference|dimension"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="RadarRippleView2">
+        <attr name="middleIcon"/>
+        <!--<attr name="middleIcon" format="reference"></attr>--><!--   Error: Found item Attr/middleIcon more than one time -->
+    </declare-styleable>
+
+    <declare-styleable name="WaveView">
+        <!--圆颜色-->
+        <attr name="wave_color" format="color"/>
+        <!--中心圆图片半径-->
+        <attr name="wave_coreImageRadius" format="integer"/>
+        <!--波浪圆之间间距,值越小越窄-->
+        <attr name="wave_width" format="integer"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="RoundImageView">
+        <!--  -->
+        <attr name="imgType" format="enum">
+            <!-- 常规 -->
+            <enum name="normal" value="0"/>
+            <!-- 圆形 -->
+            <enum name="circle" value="1"/>
+            <!-- 圆角 -->
+            <enum name="radius" value="2"/>
+        </attr>
+        <!--边框(圆形或者圆角边框宽度)-->
+        <attr name="border_Width" format="dimension|reference"/><!--Error:(343) Attribute "borderWidth" already defined with incompatible format.-->
+        <!-- 圆角大小-->
+        <attr name="borderRadius" format="integer|dimension|reference"/>
+        <!--边框颜色-->
+        <attr name="borderColor" format="color|reference"/>
     </declare-styleable>
 
 

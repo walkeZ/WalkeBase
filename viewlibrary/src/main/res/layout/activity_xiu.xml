@@ -1,12 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <walke.widget.xiu.RadarRippleView2
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:background="#ac90cdff"/>
+
+        <walke.widget.xiu.RadarRippleView3
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="#ac90cdff"
+            android:layout_marginLeft="5dp"
+            app:middleIcon="@mipmap/ic_launcher_round"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp">
+
+        <walke.widget.xiu.WaveView
+            android:id="@+id/xiu_WaveView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:wave_color="@color/yellow"
+            app:wave_coreImageRadius="30"
+            app:wave_width="25"/>
+
+        <ImageView
+            android:id="@+id/xiu_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/user"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
 
     <walke.widget.xiu.RadarRippleView
-        android:layout_width="160dp"
+        android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:background="#ac90cdff"/>
+        android:background="#ac90cdff"
+        android:layout_marginLeft="5dp"
+        app:middleIcon="@mipmap/meizi"/>
+
+
+
 
 </LinearLayout>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal">
+        <walke.widget.img.RoundImageView2
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/meizi"
+            android:scaleType="fitXY"
+            android:background="#a670baff"
+            app:border_Width="5dp"
+            app:imgType="radius"
+            app:borderColor="#fd1818"
+            app:borderRadius="5"/>
+        <walke.widget.img.RoundImageView2
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/meizi"
+            android:scaleType="fitCenter"
+            android:background="#a670baff"
+            app:border_Width="5dp"
+            app:imgType="radius"
+            app:borderColor="#fd1818"
+            app:borderRadius="5"
+            android:layout_marginLeft="4dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
+        <walke.widget.img.RoundImageView3
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/meizi"
+            android:scaleType="fitXY"
+            android:background="#a670baff"
+            app:imgType="circle"/>
+        <walke.widget.img.RoundImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/meizi"
+            android:scaleType="fitCenter"
+            android:background="#a670baff"
+            app:border_Width="5dp"
+            app:imgType="circle"
+            app:borderColor="#fd1818"
+            android:layout_marginLeft="4dp"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

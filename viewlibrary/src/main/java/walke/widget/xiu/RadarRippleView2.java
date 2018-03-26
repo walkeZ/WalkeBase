@@ -12,9 +12,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import walke.widget.R;
 
 /**
@@ -32,58 +29,47 @@ import walke.widget.R;
  * 3.重绘invalidate()；60帧每秒
  */
 
-public class RadarRippleView extends View {
-
+public class RadarRippleView2 extends View {
 
     private Bitmap middleIcon = null;
     private int mWidth;
     private int mHeight;
     private int middleIconId = R.mipmap.ic_launcher_round;
     private float mMaxRadius = 900;//最大圆弧半径
-    private float mMinRadius = 20;//最大圆弧半径
+    private float mMinRadius = 45;//最大圆弧半径
 
     private float mRadius = mMinRadius;//圆弧半径
 
 //    private float[] radiusTag=new float[]{40,50,60,70,80};
-    private List<Float> radiusList =new ArrayList<>();//发现无法做到由中心一直间隔同个距离扩散，应该用list集合，当每超过一个间隔，就添加一个
-    private int mInterval =20;
+    private float[] radiusArray=new float[]{40,60,80};//发现无法做到由中心一直间隔同个距离扩散，应该用list集合，当每超过一个间隔，就添加一个
     private float[] radiusOrgin=new float[]{40,50,60};
     private int[] alphaArray=new int[]{255,135,85};
 
     private Paint mPaint;
-    private float mSpeed = 1f;
-    private int mIconWidth=50;
-    private boolean recycle=false;
+    private float mSpeed = 0.3f;
 
-    public RadarRippleView(Context context) {
+    public RadarRippleView2(Context context) {
         this(context, null);
     }
 
-    public RadarRippleView(Context context, @Nullable AttributeSet attrs) {
+    public RadarRippleView2(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RadarRippleView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public RadarRippleView2(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.RadarRippleView, defStyleAttr, 0);
+        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.RadarRippleView2, defStyleAttr, 0);
         int count = ta.getIndexCount();
         for (int i = 0; i < count; i++) {
             int index = ta.getIndex(i);
-            if (index == R.styleable.RadarRippleView_middleIcon)
+            if (index == R.styleable.RadarRippleView2_middleIcon)
                 middleIconId = ta.getResourceId(index, R.mipmap.ic_launcher_round);
-            else if (index == R.styleable.RadarRippleView_iconWidth)
-                mIconWidth=ta.getInt(index,50);
-            else if (index == R.styleable.RadarRippleView_interval)
-                mInterval =ta.getInt(index,20);
-            else if (index == R.styleable.RadarRippleView_speed)
-                mSpeed=ta.getFloat(index,0.6f);
+
         }
         ta.recycle();
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);//消除锯齿
-
-        radiusList.add(mMinRadius);
 
     }
 
@@ -119,49 +105,39 @@ public class RadarRippleView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Log.i("walke", "onDraw: ---------------");
+
+//        float cx = ((float) mWidth) / 2;
+//        float xy = ((float) mHeight) / 2;
+//        mPaint.setColor(Color.RED);
+//        canvas.drawCircle(cx, xy, mRadius, mPaint);
+//        if (mRadius<mMaxRadius){
+//            mRadius+= mSpeed;
+//        }else {
+//            mRadius=mMinRadius;
+//        }
+//        drawIcon(canvas);
 //        invalidate();
         float cx = ((float) mWidth) / 2;
         float xy = ((float) mHeight) / 2;
         mPaint.setColor(Color.RED);
 
-        for (int i = 0; i < radiusList.size(); i++) {
-            if (radiusList.get(i)<mMaxRadius) {
+        for (int i = 0; i < alphaArray.length; i++) {
 
-                int alpha = (int) (255.0F * (1.0F - (radiusList.get(i)) * 1.0f / mMaxRadius));//
-                Log.i("walke", "onDraw: ---------------- alpha = "+alpha);
-                mPaint.setAlpha(alpha);
-
-                canvas.drawCircle(cx, xy, radiusList.get(i), mPaint);
-                radiusList.set(i, radiusList.get(i) + mSpeed);
-
-
-            }else {
-
+            mPaint.setAlpha(alphaArray[i]);
+            if (radiusArray[i]<mMaxRadius){
+                radiusArray[i]+= mSpeed;
             }
+            mRadius=radiusArray[i];
+            canvas.drawCircle(cx, xy, mRadius, mPaint);
         }
 
-        // 判断当波浪圆扩散到指定宽度时添加新扩散圆,即当一个圈由小到指定宽度后，添加一个圈[透明度：不透明，半径为0]
-//        if (radiusList.get(radiusList.size()-1)==mInterval) {
-        if (Math.abs(radiusList.get(radiusList.size()-1)-mMinRadius- mInterval)<=mSpeed) {
-            radiusList.add(mMinRadius);
-//            mPaint.setAlpha(155);
-        }
+
 
 
         drawIcon(canvas);
-//        invalidate();
-        if (recycle)
-            return;
-        postInvalidate();
+        invalidate();
 
 
-
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        recycle=true;
     }
 
     private void drawIcon(Canvas canvas) {
@@ -171,7 +147,7 @@ public class RadarRippleView extends View {
         int iconWidth = middleIcon.getWidth();
         int x = (mWidth - iconWidth) / 2;//
         int y = (mHeight - iconHeight) / 2;
-        mPaint.setAlpha(255);
+
         canvas.drawBitmap(middleIcon, x, y, mPaint);//画图由左上角开始
     }
 

@@ -71,6 +71,7 @@ public class Datas {
             "SnowFallActivity",
             "AnimActivity",
             "XiuActivity",
+            "ImgActivity",
             "",
             "123",
             "456",
