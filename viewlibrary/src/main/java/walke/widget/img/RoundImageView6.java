@@ -23,7 +23,7 @@ import walke.widget.R;
  * Created by lanso on 2016/12/1.
  * 圆角图片
  */
-public class RoundImageView extends ImageView {
+public class RoundImageView6 extends ImageView {
 
     private static final int NORMAL = 0;
     private static final int CIRCLE = 1;
@@ -38,15 +38,15 @@ public class RoundImageView extends ImageView {
     private int mWidth;
     private int mHeight;
 
-    public RoundImageView(Context context) {
+    public RoundImageView6(Context context) {
         this(context, null);
     }
 
-    public RoundImageView(Context context, AttributeSet attrs) {
+    public RoundImageView6(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RoundImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RoundImageView6(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView);
@@ -186,8 +186,8 @@ public class RoundImageView extends ImageView {
 
     private void drawBorder(Canvas canvas) {
         //边框 https://my.oschina.net/smalant/blog/40328
-        paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
 //        paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
+        paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
         int i = mBorderWidth/2;
         //之前用 paint1 出现奇怪现象：颜色设置不起效,原因估计：paint绘图的PorterDuff.Mode.XX原因，用一个新的paint即可

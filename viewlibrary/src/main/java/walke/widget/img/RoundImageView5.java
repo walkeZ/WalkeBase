@@ -23,7 +23,7 @@ import walke.widget.R;
  * Created by lanso on 2016/12/1.
  * 圆角图片
  */
-public class RoundImageView extends ImageView {
+public class RoundImageView5 extends ImageView {
 
     private static final int NORMAL = 0;
     private static final int CIRCLE = 1;
@@ -38,15 +38,15 @@ public class RoundImageView extends ImageView {
     private int mWidth;
     private int mHeight;
 
-    public RoundImageView(Context context) {
+    public RoundImageView5(Context context) {
         this(context, null);
     }
 
-    public RoundImageView(Context context, AttributeSet attrs) {
+    public RoundImageView5(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RoundImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RoundImageView5(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView);
@@ -82,6 +82,7 @@ public class RoundImageView extends ImageView {
         paint3.setStyle(Paint.Style.STROKE);
         paint3.setAntiAlias(true);
         paint3.setStrokeWidth(mBorderWidth);
+        paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
         paint3.setColor(mBorderColor);
 
     }
@@ -109,14 +110,12 @@ public class RoundImageView extends ImageView {
                 super.draw(canvas2);
 //                paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
 
+                drawBorder(canvas2);
                 drawLiftUp(canvas2);
                 drawRightUp(canvas2);
                 drawLiftDown(canvas2);
                 drawRightDown(canvas2);
                 canvas.drawBitmap(bitmap, 0, 0, paint2);
-
-                drawBorder(canvas2);
-
                 bitmap.recycle();
                 break;
             default:
@@ -174,59 +173,20 @@ public class RoundImageView extends ImageView {
         path.close();
         canvas.drawPath(path, paint1);
 
-
-        paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
        //边框 https://my.oschina.net/smalant/blog/40328
         int i = mBorderWidth/2;
         //之前用 paint1 出现奇怪现象：颜色设置不起效,原因估计：paint绘图的PorterDuff.Mode.XX原因，用一个新的paint即可
         canvas.drawOval(new RectF(i, i, mWidth- i, mHeight- i),paint3);
+
 
     }
 
 
     private void drawBorder(Canvas canvas) {
         //边框 https://my.oschina.net/smalant/blog/40328
-        paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-//        paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
-
         int i = mBorderWidth/2;
         //之前用 paint1 出现奇怪现象：颜色设置不起效,原因估计：paint绘图的PorterDuff.Mode.XX原因，用一个新的paint即可
         canvas.drawRect(new RectF(i, i, mWidth- i, mHeight- i),paint3);
-
-        //圆角边框 https://my.oschina.net/smalant/blog/40328
-        //第二象限
-        Path path = new Path();
-        path.moveTo(0, mBorderRadius);
-        path.lineTo(0+i, 0+i);//边角点减去“奇怪的边距”
-        path.lineTo(mBorderRadius, 0);
-        path.arcTo(new RectF(0+i, 0+i, mBorderRadius * 2, mBorderRadius * 2), -90, -90);
-        path.close();
-        canvas.drawPath(path, paint3);
-
-        //第三象限
-        path.moveTo(0, getHeight() - mBorderRadius);
-        path.lineTo(0+i, getHeight()-i);//边角点减去“奇怪的边距”
-        path.lineTo(mBorderRadius, getHeight());
-        path.arcTo(new RectF(0+i, getHeight() - mBorderRadius * 2, mBorderRadius * 2, mHeight-i), 90, 90);
-        path.close();
-        canvas.drawPath(path, paint3);
-
-        //第四象限
-        path.moveTo(getWidth() - mBorderRadius, getHeight());
-        path.lineTo(getWidth()-i, getHeight()-i);
-        path.lineTo(getWidth(), getHeight() - mBorderRadius);
-        path.arcTo(new RectF(getWidth() - mBorderRadius * 2, getHeight() - mBorderRadius * 2, getWidth()-i, getHeight()-i), 0, 90);
-        path.close();
-        canvas.drawPath(path, paint3);
-
-        //第一象限
-        path.moveTo(getWidth(), mBorderRadius);
-        path.lineTo(getWidth(), 0);
-        path.lineTo(getWidth() - mBorderRadius, 0);
-        path.arcTo(new RectF(getWidth() - mBorderRadius * 2, 0+i, getWidth()-i, 0 + mBorderRadius * 2), -90, 90);
-        path.close();
-        canvas.drawPath(path, paint3);
-
     }
 
     /** 第二象限
@@ -242,6 +202,19 @@ public class RoundImageView extends ImageView {
         path.arcTo(new RectF(0, 0, right, bottom), -90, -90);
         path.close();
         canvas.drawPath(path, paint1);
+
+
+
+        //圆角边框 https://my.oschina.net/smalant/blog/40328
+        int i = mBorderWidth/2;
+        path.moveTo(0, mBorderRadius);
+        path.lineTo(0+i, 0+i);//边角点减去“奇怪的边距”
+        path.lineTo(mBorderRadius, 0);
+        path.arcTo(new RectF(0+i, 0+i, right, bottom), -90, -90);
+        path.close();
+
+        paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
+        canvas.drawPath(path, paint3);
 
     }
 
@@ -260,6 +233,16 @@ public class RoundImageView extends ImageView {
         path.close();
         canvas.drawPath(path, paint1);
 
+
+        //边框 https://my.oschina.net/smalant/blog/40328
+        int i = mBorderWidth/2;
+        path.moveTo(0, getHeight() - mBorderRadius);
+        path.lineTo(0+i, getHeight()-i);//边角点减去“奇怪的边距”
+        path.lineTo(mBorderRadius, getHeight());
+        path.arcTo(new RectF(0+i, top, right, bottom-i), 90, 90);
+        path.close();
+
+        canvas.drawPath(path, paint3);
     }
 
 
@@ -275,6 +258,20 @@ public class RoundImageView extends ImageView {
         path.close();
         canvas.drawPath(path, paint1);
 
+
+        //边框 https://my.oschina.net/smalant/blog/40328
+        int i = mBorderWidth/2;
+
+        path.moveTo(getWidth() - mBorderRadius, getHeight());
+        path.lineTo(getWidth()-i, getHeight()-i);
+        path.lineTo(getWidth(), getHeight() - mBorderRadius);
+        path.arcTo(new RectF(getWidth() - mBorderRadius * 2, getHeight() - mBorderRadius * 2, getWidth()-i, getHeight()-i), 0, 90);
+//        path.arcTo(new RectF(getWidth() - mBorderRadius * 2, getHeight() - mBorderRadius * 2, getWidth(), getHeight()), 0, 90);
+        path.close();
+
+        paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
+        canvas.drawPath(path, paint3);
+
     }
 
     /** 第一象限
@@ -289,6 +286,17 @@ public class RoundImageView extends ImageView {
         path.close();
         canvas.drawPath(path, paint1);
 
+
+        //边框 https://my.oschina.net/smalant/blog/40328
+        int i = mBorderWidth/2;
+        path.moveTo(getWidth(), mBorderRadius);
+        path.lineTo(getWidth(), 0);
+        path.lineTo(getWidth() - mBorderRadius, 0);
+        path.arcTo(new RectF(getWidth() - mBorderRadius * 2, 0+i, getWidth()-i, 0 + mBorderRadius * 2), -90, 90);
+        path.close();
+
+        paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
+        canvas.drawPath(path, paint3);
     }
 
 

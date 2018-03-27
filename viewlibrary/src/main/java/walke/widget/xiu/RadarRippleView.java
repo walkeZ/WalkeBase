@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -42,7 +43,6 @@ public class RadarRippleView extends View {
     private float mMaxRadius = 900;//最大圆弧半径
     private float mMinRadius = 20;//最大圆弧半径
 
-    private float mRadius = mMinRadius;//圆弧半径
 
 //    private float[] radiusTag=new float[]{40,50,60,70,80};
     private List<Float> radiusList =new ArrayList<>();//发现无法做到由中心一直间隔同个距离扩散，应该用list集合，当每超过一个间隔，就添加一个
@@ -52,7 +52,7 @@ public class RadarRippleView extends View {
 
     private Paint mPaint;
     private float mSpeed = 1f;
-    private int mIconWidth=50;
+    private int mIconWidth=70;
     private boolean recycle=false;
 
     public RadarRippleView(Context context) {
@@ -164,15 +164,44 @@ public class RadarRippleView extends View {
         recycle=true;
     }
 
+    /** 发现：如果要对图片设置一些动画、(点击)事件等比较不方便，建议改用FrameLayout层叠来实现添加icon
+     * @param canvas
+     */
     private void drawIcon(Canvas canvas) {
         if (middleIcon == null)
             middleIcon = BitmapFactory.decodeResource(getResources(), middleIconId);
+
         int iconHeight = middleIcon.getHeight();
         int iconWidth = middleIcon.getWidth();
         int x = (mWidth - iconWidth) / 2;//
         int y = (mHeight - iconHeight) / 2;
         mPaint.setAlpha(255);
-        canvas.drawBitmap(middleIcon, x, y, mPaint);//画图由左上角开始
+
+        if (iconHeight<mIconWidth||iconWidth<mIconWidth)
+            canvas.drawBitmap(middleIcon, x, y, mPaint);//画图由左上角开始
+        else {
+
+//            Rect rect = new Rect((mWidth-mIconWidth)/2,(mHeight-mIconWidth)/2,(mWidth+mIconWidth)/2,(mHeight+mIconWidth)/2 );
+//            canvas.drawBitmap(middleIcon, null, rect, null);//画图由左上角开始
+
+            if (iconHeight>iconWidth){//高度大於宽带，以宽度=mIconWidth，高度按比例缩放
+                double scaleType = ((double) iconWidth) / ((double) mIconWidth);
+                iconWidth=mIconWidth;
+                iconHeight= (int) (((double) iconHeight)/scaleType);
+                Rect rect = new Rect((mWidth-iconWidth)/2,(mHeight-iconHeight)/2,(mWidth+iconWidth)/2,(mHeight+iconHeight)/2 );
+//            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_ATOP));
+                canvas.drawBitmap(middleIcon, null, rect, null);//画图由左上角开始
+            }else {//以高度=mIconWidth，宽度按比例缩放
+
+                double scaleType = ((double) iconHeight) / ((double) mIconWidth);
+                iconHeight=mIconWidth;
+                iconWidth= (int) (((double) iconWidth)/scaleType);
+                Rect rect = new Rect((mWidth-iconWidth)/2,(mHeight-iconHeight)/2,(mWidth+iconWidth)/2,(mHeight+iconHeight)/2 );
+                canvas.drawBitmap(middleIcon, null, rect, null);//画图由左上角开始
+
+            }
+
+        }
     }
 
     /**
