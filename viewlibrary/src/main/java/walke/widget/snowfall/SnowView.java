@@ -13,7 +13,7 @@ import java.lang.ref.WeakReference;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * Created by heqiang on 16-12-1.
+ * change by walke on 16-12-1.
  */
 public class SnowView extends View {
 

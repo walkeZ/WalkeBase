@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,7 +17,7 @@ import java.util.Random;
 import walke.widget.R;
 
 /**
- * Created by heqiang on 17-5-27.
+ * change by walke on 17-5-27.
  */
 
 public class SnowUtils {
@@ -65,6 +66,7 @@ public class SnowUtils {
     private int mMaxSpeed,mMinSpeed;
     private int mHeight;
     private int mWidth;
+    private float degrees=10;
 
 
     public SnowUtils(Context context){
@@ -78,7 +80,7 @@ public class SnowUtils {
         initSnowFlakes();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)//ndk:21
     private void initSnowFlakes(){
         mSnowBitmap = ((BitmapDrawable)(mContext.getResources().getDrawable(R.drawable.snow, mContext.getTheme()))).getBitmap();
         mBitmaps = new Bitmap[]{resizeBitmap(mScaleFactors[0]),resizeBitmap(mScaleFactors[1]),
@@ -118,10 +120,20 @@ public class SnowUtils {
             if(snow.isLive){
                 int save = canvas.save();
 
-                //mMatrix.reset();
-                //mMatrix.setScale(snow.scale, snow.scale);
-                //mMatrix.setScale(1.0f, 1.0f);
-                //canvas.setMatrix(mMatrix);
+                //新增-------
+                Matrix mMatrix=new Matrix();
+                mMatrix.reset();
+                mMatrix.setScale(snow.scale, snow.scale);
+                mMatrix.setScale(1.0f, 1.0f);
+                if (degrees<40){
+                    degrees++;
+                }else {
+                    degrees=10;
+                }
+                mMatrix.setRotate(degrees);
+                canvas.setMatrix(mMatrix);
+                Log.i("walke", "draw: -----------------canvas.setMatrix");
+
                 mPaint.setAlpha(snow.alpha);
                 canvas.drawBitmap(mBitmaps[snow.index], snow.x, snow.y, mPaint);
                 canvas.restoreToCount(save);
