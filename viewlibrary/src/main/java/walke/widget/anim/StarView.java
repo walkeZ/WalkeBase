@@ -68,7 +68,7 @@ public class StarView extends View {
         mX += mSpeed;//4
         if (isDown)
             mY += mSpeedY;
-        canvas.drawBitmap(mStarBitmap, mX, mY, mPaint);
+        canvas.drawBitmap(mStarBitmap, mX, mY, mPaint);//画图由左上角开始
         /*if (mX>mWidth||mY>mHeight){//重复
             mX=0;
             mY=0;

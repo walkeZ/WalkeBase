@@ -1,9 +1,9 @@
 package walke.widget.snowfall;
 
 /**
- * Created by heqiang on 16-12-1.
+ * change by walke on 16-12-1.
  */
-public class Snow2Flake {
+public class SnowFlake2 {
     public int startX;
     public int startY;
     public int x;
@@ -16,7 +16,7 @@ public class Snow2Flake {
     public float scale;
     public int index;
 
-    public Snow2Flake(){
+    public SnowFlake2(){
         this.startX = 0;
         this.startY = 0;
         this.x = 0;

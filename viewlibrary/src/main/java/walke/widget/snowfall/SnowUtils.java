@@ -9,7 +9,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -17,7 +16,7 @@ import java.util.Random;
 import walke.widget.R;
 
 /**
- * change by walke on 17-5-27.
+ * Created by heqiang on 17-5-27.
  */
 
 public class SnowUtils {
@@ -46,10 +45,6 @@ public class SnowUtils {
 
     private int SNOW_FLAKE_MAX_COUNT = 300;
     private float SCALE_MIN = 0.5f;
-
-//    private float[] mAlphas = new float[]{0.3f,0.5f,0.6f,0.8f,1f};
-//    private float[] mSpeedFactors = new float[]{0.5f,0.7f,0.8f,0.9f,1f};
-//    private float[] mScaleFactors = new float[]{0.3f,0.4f,0.6f,0.8f,1f};
     private float[] mAlphas = new float[]{0.3f,0.5f,0.6f,0.8f,1f};//透明度数组
     private float[] mSpeedFactors = new float[]{0.5f,0.7f,0.8f,0.9f,1f};//飘落速度数组
     private float[] mScaleFactors = new float[]{0.1f,0.3f,0.4f,0.5f,0.6f};//缩放大小数组
@@ -66,7 +61,6 @@ public class SnowUtils {
     private int mMaxSpeed,mMinSpeed;
     private int mHeight;
     private int mWidth;
-    private float degrees=10;
 
 
     public SnowUtils(Context context){
@@ -80,7 +74,7 @@ public class SnowUtils {
         initSnowFlakes();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)//ndk:21
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initSnowFlakes(){
         mSnowBitmap = ((BitmapDrawable)(mContext.getResources().getDrawable(R.drawable.snow, mContext.getTheme()))).getBitmap();
         mBitmaps = new Bitmap[]{resizeBitmap(mScaleFactors[0]),resizeBitmap(mScaleFactors[1]),
@@ -120,20 +114,10 @@ public class SnowUtils {
             if(snow.isLive){
                 int save = canvas.save();
 
-                //新增-------
-                Matrix mMatrix=new Matrix();
-                mMatrix.reset();
-                mMatrix.setScale(snow.scale, snow.scale);
-                mMatrix.setScale(1.0f, 1.0f);
-                if (degrees<40){
-                    degrees++;
-                }else {
-                    degrees=10;
-                }
-                mMatrix.setRotate(degrees);
-                canvas.setMatrix(mMatrix);
-                Log.i("walke", "draw: -----------------canvas.setMatrix");
-
+                //mMatrix.reset();
+                //mMatrix.setScale(snow.scale, snow.scale);
+                //mMatrix.setScale(1.0f, 1.0f);
+                //canvas.setMatrix(mMatrix);
                 mPaint.setAlpha(snow.alpha);
                 canvas.drawBitmap(mBitmaps[snow.index], snow.x, snow.y, mPaint);
                 canvas.restoreToCount(save);
