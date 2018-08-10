@@ -35,7 +35,9 @@
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
 
-    <walke.widget.snowfall.SnowView2
+
+
+    <walke.widget.snowfall.Snow2View
         android:id="@+id/snowfall_snowView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -51,7 +53,7 @@
         android:background="#d164fd7e"/>
 
 
-    <walke.widget.snowfall.SnowView2
+    <walke.widget.snowfall.Snow3View
         android:id="@+id/snowfall_snowView3"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -1,1 +1,1 @@
-include ':app', ':xrecyclerview', ':wheelviewlibrary', ':base', ':viewlibrary', ':demolibrary'
+include ':app', ':xrecyclerview', ':wheelviewlibrary', ':base', ':viewlibrary', ':demolibrary', ':camerademo', ':TouchToCameraFocusMeteringZoom'

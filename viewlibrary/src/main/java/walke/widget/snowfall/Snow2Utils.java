@@ -21,7 +21,7 @@ import walke.widget.R;
  * change by walke on 17-5-27.
  */
 
-public class SnowUtils2 {
+public class Snow2Utils {
 
     private Context mContext;
 
@@ -62,7 +62,7 @@ public class SnowUtils2 {
     private int mProduceSnowInterval = PRODUCE_SNOW_INTERVAL_MIDDLE;
 
     private Bitmap mSnowBitmap;
-    private ArrayList<SnowFlake2> mSnowFlake2List;
+    private ArrayList<Snow2Flake> mSnow2FlakeList;
     private Bitmap[] mBitmaps;
     private int mMaxSpeed,mMinSpeed;
     private int mHeight;
@@ -70,7 +70,7 @@ public class SnowUtils2 {
     private float degrees=10;
 
 
-    public SnowUtils2(Context context){
+    public Snow2Utils(Context context){
         mContext = context;
     }
 
@@ -86,10 +86,10 @@ public class SnowUtils2 {
         mSnowBitmap = ((BitmapDrawable)(mContext.getResources().getDrawable(R.drawable.snow, mContext.getTheme()))).getBitmap();
         mBitmaps = new Bitmap[]{resizeBitmap(mScaleFactors[0]),resizeBitmap(mScaleFactors[1]),
                 resizeBitmap(mScaleFactors[2]),resizeBitmap(mScaleFactors[3]),mSnowBitmap};
-        mSnowFlake2List = new ArrayList<>(SNOW_FLAKE_MAX_COUNT);
+        mSnow2FlakeList = new ArrayList<>(SNOW_FLAKE_MAX_COUNT);
         for(int i = 0; i < SNOW_FLAKE_MAX_COUNT; i++){
-            SnowFlake2 snow = new SnowFlake2();
-            mSnowFlake2List.add(snow);
+            Snow2Flake snow = new Snow2Flake();
+            mSnow2FlakeList.add(snow);
         }
     }
 
@@ -101,8 +101,8 @@ public class SnowUtils2 {
     }
 
     private void updateSnowFlake(){
-        for(int i = 0; i < mSnowFlake2List.size(); i++){
-            SnowFlake2 snow = mSnowFlake2List.get(i);
+        for(int i = 0; i < mSnow2FlakeList.size(); i++){
+            Snow2Flake snow = mSnow2FlakeList.get(i);
             if(snow.isLive){
                 long currentTime = SystemClock.uptimeMillis();
                 int offsetY = (int)(((float)(currentTime - snow.startTimeVertical))/100 * snow.speedVertical);
@@ -116,8 +116,8 @@ public class SnowUtils2 {
     }
     Camera mCamera = new Camera();
     public void draw(Canvas canvas){
-        for(int i = 0; i < mSnowFlake2List.size(); i++) {
-            SnowFlake2 snow = mSnowFlake2List.get(i);
+        for(int i = 0; i < mSnow2FlakeList.size(); i++) {
+            Snow2Flake snow = mSnow2FlakeList.get(i);
             if(snow.isLive){
                 int save = canvas.save();
 
@@ -195,8 +195,8 @@ public class SnowUtils2 {
 
 
     public void removeAllSnowFlake(){
-        for(int i = 0; i < mSnowFlake2List.size(); i++){
-            SnowFlake2 snow = mSnowFlake2List.get(i);
+        for(int i = 0; i < mSnow2FlakeList.size(); i++){
+            Snow2Flake snow = mSnow2FlakeList.get(i);
             if(snow.isLive){
                 snow.isLive = false;
             }
@@ -205,8 +205,8 @@ public class SnowUtils2 {
 
     public void produceSnowFlake(){
         int produceCount = 0;
-        for(int i = 0; i < mSnowFlake2List.size(); i++){
-            SnowFlake2 snow = mSnowFlake2List.get(i);
+        for(int i = 0; i < mSnow2FlakeList.size(); i++){
+            Snow2Flake snow = mSnow2FlakeList.get(i);
             if(!snow.isLive){
                 int index = mRandom.nextInt(4);
                 snow.isLive = true;

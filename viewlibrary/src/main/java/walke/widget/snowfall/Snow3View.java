@@ -17,9 +17,9 @@ import java.util.concurrent.CountDownLatch;
 /**
  * change by walke on 16-12-1.
  */
-public class SnowView2 extends View {
+public class Snow3View extends View {
 
-    private SnowUtils2 mSnowUtils2;
+    private Snow3Utils mSnowUtils;
 
     public static final int MSG_PRODUCE_SNOW = 1;
     public static final int MSG_UPDATE_SNOW = 2;
@@ -34,22 +34,22 @@ public class SnowView2 extends View {
 
     private CountDownLatch mMeasureLatch = new CountDownLatch(1);
 
-    public SnowView2(Context context) {
+    public Snow3View(Context context) {
         super(context);
         initSnowFlakes();
     }
 
-    public SnowView2(Context context, AttributeSet attrs) {
+    public Snow3View(Context context, AttributeSet attrs) {
         super(context, attrs);
         initSnowFlakes();
     }
 
-    public SnowView2(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Snow3View(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initSnowFlakes();
     }
 
-    public SnowView2(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public Snow3View(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initSnowFlakes();
     }
@@ -57,34 +57,34 @@ public class SnowView2 extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(mSnowUtils2 != null){
-            mSnowUtils2.draw(canvas);
+        if(mSnowUtils != null){
+            mSnowUtils.draw(canvas);
         }
     }
 
     private void initSnowFlakes(){
-        mSnowUtils2 = new SnowUtils2(getContext());
+        mSnowUtils = new Snow3Utils(getContext());
 
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onGlobalLayout() {
-                mSnowUtils2.init(getMeasuredWidth(), getMeasuredHeight());
+                mSnowUtils.init(getMeasuredWidth(), getMeasuredHeight());
                 mMeasureLatch.countDown();
             }
         });
     }
 
     public void produceSnowFlake(){
-        mSnowUtils2.produceSnowFlake();
+        mSnowUtils.produceSnowFlake();
     }
 
     private int getProduceSnowInterval(){
-        return mSnowUtils2.getProduceSnowInterval();
+        return mSnowUtils.getProduceSnowInterval();
     }
 
     public void startSnowAnim(int level){
-        mSnowUtils2.setSnowLevel(level);
+        mSnowUtils.setSnowLevel(level);
         startThread.start();
     }
 
@@ -94,12 +94,12 @@ public class SnowView2 extends View {
     }
 
     public void stopAnim(){
-        mSnowUtils2.removeAllSnowFlake();
+        mSnowUtils.removeAllSnowFlake();
         mSnowHandler.removeCallbacksAndMessages(null);
     }
 
     public void changeSnowLevel(int level){
-        mSnowUtils2.setSnowLevel(level);
+        mSnowUtils.setSnowLevel(level);
         stopAnim();
         startSnowAnim();
     }
@@ -108,10 +108,10 @@ public class SnowView2 extends View {
 
     public  class SnowHandler extends Handler {
 
-        private WeakReference<SnowView2> mSnowView;
+        private WeakReference<Snow3View> mSnowView;
 
-        public SnowHandler(SnowView2 view){
-            mSnowView = new WeakReference<SnowView2>(view);
+        public SnowHandler(Snow3View view){
+            mSnowView = new WeakReference<Snow3View>(view);
         }
         @Override
         public void handleMessage(Message msg) {
