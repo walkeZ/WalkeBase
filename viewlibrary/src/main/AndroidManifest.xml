@@ -22,6 +22,10 @@
         <activity android:name="walke.widget.luckypan.LuckyPanActivity"/>
 
         <activity android:name="walke.activity.xiu.XiuActivity"/>
+        <activity android:name="walke.widget.img.ImgActivity"/>
+        <activity android:name="walke.widget.img.ImgActivity2"/>
+        <activity android:name="walke.widget.gallery.GalleryActivity"/>
+        <activity android:name="walke.widget.text.TextActivity"/>
 
     </application>
 

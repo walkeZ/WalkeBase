@@ -1,7 +1,7 @@
 package walke.widget.snowfall;
 
 /**
- * Created by heqiang on 16-12-1.
+ * change by walke on 16-12-1.
  */
 public class Snow2Flake {
     public int startX;

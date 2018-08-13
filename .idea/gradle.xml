@@ -8,8 +8,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/TouchToCameraFocusMeteringZoom" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base" />
+            <option value="$PROJECT_DIR$/camerademo" />
             <option value="$PROJECT_DIR$/demolibrary" />
             <option value="$PROJECT_DIR$/viewlibrary" />
             <option value="$PROJECT_DIR$/wheelviewlibrary" />

@@ -2,4 +2,5 @@
 <resources>
     <color name="text_black_two">#2b2b2b</color>
     <color name="text_black_three">#777777</color>
+    <color name="yellow">#ffd03e</color>
 </resources>

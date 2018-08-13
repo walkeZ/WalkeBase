@@ -7,10 +7,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import walke.widget.R;
 
@@ -24,18 +28,32 @@ import walke.widget.R;
  * a.获取控件的宽高用于定位中点，建议在onAttachedToWindow()通过getWidth、getHeight获取
  * b.在控件中间换一个圆形图
  * 2.点击一次创建一个圆，并动画：由小变大,实现点canvas.drawBitmap动态改变半径
+ *  a.先实现一个圆的放大动画：canvas.drawBitmap动态改变radius ，radius具有最大值mRadius与最小值mMaxRadius,+一个speed
+ *  b.用数组表示初始半径，然后在onDraw方法遍历画圆:/发现无法做到由中心一直间隔同个距离扩散，应该用list集合，当每超过一个间隔，就添加一个
  * 3.重绘invalidate()；60帧每秒
  */
 
 public class RadarRippleView extends View {
 
+
     private Bitmap middleIcon = null;
     private int mWidth;
     private int mHeight;
     private int middleIconId = R.mipmap.ic_launcher_round;
-    private float mRadius = 50;//圆弧半径
     private float mMaxRadius = 900;//最大圆弧半径
+    private float mMinRadius = 20;//最大圆弧半径
+
+
+//    private float[] radiusTag=new float[]{40,50,60,70,80};
+    private List<Float> radiusList =new ArrayList<>();//发现无法做到由中心一直间隔同个距离扩散，应该用list集合，当每超过一个间隔，就添加一个
+    private int mInterval =20;
+    private float[] radiusOrgin=new float[]{40,50,60};
+    private int[] alphaArray=new int[]{255,135,85};
+
     private Paint mPaint;
+    private float mSpeed = 1f;
+    private int mIconWidth=70;
+    private boolean recycle=false;
 
     public RadarRippleView(Context context) {
         this(context, null);
@@ -53,12 +71,19 @@ public class RadarRippleView extends View {
             int index = ta.getIndex(i);
             if (index == R.styleable.RadarRippleView_middleIcon)
                 middleIconId = ta.getResourceId(index, R.mipmap.ic_launcher_round);
-
+            else if (index == R.styleable.RadarRippleView_iconWidth)
+                mIconWidth=ta.getInt(index,50);
+            else if (index == R.styleable.RadarRippleView_interval)
+                mInterval =ta.getInt(index,20);
+            else if (index == R.styleable.RadarRippleView_speed)
+                mSpeed=ta.getFloat(index,0.6f);
         }
         ta.recycle();
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);//消除锯齿
+
+        radiusList.add(mMinRadius);
 
     }
 
@@ -67,7 +92,7 @@ public class RadarRippleView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         mWidth = w;
         mHeight = h;
-        mMaxRadius = mWidth > mHeight ? mHeight / 2 : mWidth / 2;
+        mMaxRadius = mWidth > mHeight ? mHeight / 2 : mWidth / 2;//半径最大值
         Log.i("walke", "onSizeChanged: ---------- w = " + w + "--- h = " + h);
     }
 
@@ -87,33 +112,96 @@ public class RadarRippleView extends View {
         Log.i("walke", "onAttachedToWindow: --------------------- width = " + width + " ---------- height = " + height);
     }
 
+    /**
+     * @param canvas
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-
+        Log.i("walke", "onDraw: ---------------");
+//        invalidate();
         float cx = ((float) mWidth) / 2;
         float xy = ((float) mHeight) / 2;
         mPaint.setColor(Color.RED);
-        canvas.drawCircle(cx, xy, mRadius, mPaint);
 
-        Log.i("walke", "onDraw: ---------------");
+        for (int i = 0; i < radiusList.size(); i++) {
+            if (radiusList.get(i)<mMaxRadius) {
 
+                int alpha = (int) (255.0F * (1.0F - (radiusList.get(i)) * 1.0f / mMaxRadius));//
+                Log.i("walke", "onDraw: ---------------- alpha = "+alpha);
+                mPaint.setAlpha(alpha);
+
+                canvas.drawCircle(cx, xy, radiusList.get(i), mPaint);
+                radiusList.set(i, radiusList.get(i) + mSpeed);
+
+
+            }else {
+
+            }
+        }
+
+        // 判断当波浪圆扩散到指定宽度时添加新扩散圆,即当一个圈由小到指定宽度后，添加一个圈[透明度：不透明，半径为0]
+//        if (radiusList.get(radiusList.size()-1)==mInterval) {
+        if (Math.abs(radiusList.get(radiusList.size()-1)-mMinRadius- mInterval)<=mSpeed) {
+            radiusList.add(mMinRadius);
+//            mPaint.setAlpha(155);
+        }
+
+
+        drawIcon(canvas);
+//        invalidate();
+        if (recycle)
+            return;
+        postInvalidate();
+
+
+
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        recycle=true;
+    }
+
+    /** 发现：如果要对图片设置一些动画、(点击)事件等比较不方便，建议改用FrameLayout层叠来实现添加icon
+     * @param canvas
+     */
+    private void drawIcon(Canvas canvas) {
         if (middleIcon == null)
             middleIcon = BitmapFactory.decodeResource(getResources(), middleIconId);
+
         int iconHeight = middleIcon.getHeight();
         int iconWidth = middleIcon.getWidth();
         int x = (mWidth - iconWidth) / 2;//
         int y = (mHeight - iconHeight) / 2;
+        mPaint.setAlpha(255);
 
-        canvas.drawBitmap(middleIcon, x, y, mPaint);//画图由左上角开始
+        if (iconHeight<mIconWidth||iconWidth<mIconWidth)
+            canvas.drawBitmap(middleIcon, x, y, mPaint);//画图由左上角开始
+        else {
 
-        if (mRadius<mMaxRadius){
-            mRadius+=3;
-        }else {
-            mRadius=50;
+//            Rect rect = new Rect((mWidth-mIconWidth)/2,(mHeight-mIconWidth)/2,(mWidth+mIconWidth)/2,(mHeight+mIconWidth)/2 );
+//            canvas.drawBitmap(middleIcon, null, rect, null);//画图由左上角开始
+
+            if (iconHeight>iconWidth){//高度大於宽带，以宽度=mIconWidth，高度按比例缩放
+                double scaleType = ((double) iconWidth) / ((double) mIconWidth);
+                iconWidth=mIconWidth;
+                iconHeight= (int) (((double) iconHeight)/scaleType);
+                Rect rect = new Rect((mWidth-iconWidth)/2,(mHeight-iconHeight)/2,(mWidth+iconWidth)/2,(mHeight+iconHeight)/2 );
+//            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_ATOP));
+                canvas.drawBitmap(middleIcon, null, rect, null);//画图由左上角开始
+            }else {//以高度=mIconWidth，宽度按比例缩放
+
+                double scaleType = ((double) iconHeight) / ((double) mIconWidth);
+                iconHeight=mIconWidth;
+                iconWidth= (int) (((double) iconWidth)/scaleType);
+                Rect rect = new Rect((mWidth-iconWidth)/2,(mHeight-iconHeight)/2,(mWidth+iconWidth)/2,(mHeight+iconHeight)/2 );
+                canvas.drawBitmap(middleIcon, null, rect, null);//画图由左上角开始
+
+            }
+
         }
-        invalidate();
     }
 
     /**

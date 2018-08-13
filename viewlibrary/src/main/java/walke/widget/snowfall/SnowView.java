@@ -3,8 +3,10 @@ package walke.widget.snowfall;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -47,10 +49,6 @@ public class SnowView extends View {
         initSnowFlakes();
     }
 
-    public SnowView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initSnowFlakes();
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -64,12 +62,21 @@ public class SnowView extends View {
         mSnowUtils = new SnowUtils(getContext());
 
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onGlobalLayout() {
                 mSnowUtils.init(getMeasuredWidth(), getMeasuredHeight());
                 mMeasureLatch.countDown();
             }
         });
+
+        startSnowAnim(SnowUtils.SNOW_LEVEL_MIDDLE);
+
+        //
+//        ObjectAnimator oa=new ObjectAnimator();
+//        RotateAnimation ra=new RotateAnimation()
+
+
     }
 
     public void produceSnowFlake(){
@@ -82,7 +89,8 @@ public class SnowView extends View {
 
     public void startSnowAnim(int level){
         mSnowUtils.setSnowLevel(level);
-        startThread.start();
+        if (!startThread.isAlive())
+            startThread.start();
     }
 
     private void startSnowAnim(){
@@ -102,11 +110,13 @@ public class SnowView extends View {
     }
 
     private SnowHandler mSnowHandler = new SnowHandler(this);
-    public static class SnowHandler extends Handler {
+
+    public  class SnowHandler extends Handler {
         private WeakReference<SnowView> mSnowView;
         public SnowHandler(SnowView view){
             mSnowView = new WeakReference<SnowView>(view);
         }
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
@@ -137,6 +147,7 @@ public class SnowView extends View {
     }
 
     private Thread startThread = new Thread(new Runnable() {
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
         @Override
         public void run() {
             if(getContext() != null && !((Activity)getContext()).isDestroyed()){

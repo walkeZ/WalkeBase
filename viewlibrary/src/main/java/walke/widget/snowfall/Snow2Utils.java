@@ -2,6 +2,7 @@ package walke.widget.snowfall;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -9,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,7 +18,7 @@ import java.util.Random;
 import walke.widget.R;
 
 /**
- * Created by heqiang on 17-5-27.
+ * change by walke on 17-5-27.
  */
 
 public class Snow2Utils {
@@ -45,6 +47,10 @@ public class Snow2Utils {
 
     private int SNOW_FLAKE_MAX_COUNT = 300;
     private float SCALE_MIN = 0.5f;
+
+//    private float[] mAlphas = new float[]{0.3f,0.5f,0.6f,0.8f,1f};
+//    private float[] mSpeedFactors = new float[]{0.5f,0.7f,0.8f,0.9f,1f};
+//    private float[] mScaleFactors = new float[]{0.3f,0.4f,0.6f,0.8f,1f};
     private float[] mAlphas = new float[]{0.3f,0.5f,0.6f,0.8f,1f};//透明度数组
     private float[] mSpeedFactors = new float[]{0.5f,0.7f,0.8f,0.9f,1f};//飘落速度数组
     private float[] mScaleFactors = new float[]{0.1f,0.3f,0.4f,0.5f,0.6f};//缩放大小数组
@@ -56,11 +62,12 @@ public class Snow2Utils {
     private int mProduceSnowInterval = PRODUCE_SNOW_INTERVAL_MIDDLE;
 
     private Bitmap mSnowBitmap;
-    private ArrayList<Snow2Flake> mSnowFlakeList;
+    private ArrayList<Snow2Flake> mSnow2FlakeList;
     private Bitmap[] mBitmaps;
     private int mMaxSpeed,mMinSpeed;
     private int mHeight;
     private int mWidth;
+    private float degrees=10;
 
 
     public Snow2Utils(Context context){
@@ -74,15 +81,15 @@ public class Snow2Utils {
         initSnowFlakes();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)//ndk:21
     private void initSnowFlakes(){
         mSnowBitmap = ((BitmapDrawable)(mContext.getResources().getDrawable(R.drawable.snow, mContext.getTheme()))).getBitmap();
         mBitmaps = new Bitmap[]{resizeBitmap(mScaleFactors[0]),resizeBitmap(mScaleFactors[1]),
                 resizeBitmap(mScaleFactors[2]),resizeBitmap(mScaleFactors[3]),mSnowBitmap};
-        mSnowFlakeList = new ArrayList<>(SNOW_FLAKE_MAX_COUNT);
+        mSnow2FlakeList = new ArrayList<>(SNOW_FLAKE_MAX_COUNT);
         for(int i = 0; i < SNOW_FLAKE_MAX_COUNT; i++){
             Snow2Flake snow = new Snow2Flake();
-            mSnowFlakeList.add(snow);
+            mSnow2FlakeList.add(snow);
         }
     }
 
@@ -94,8 +101,8 @@ public class Snow2Utils {
     }
 
     private void updateSnowFlake(){
-        for(int i = 0; i < mSnowFlakeList.size(); i++){
-            Snow2Flake snow = mSnowFlakeList.get(i);
+        for(int i = 0; i < mSnow2FlakeList.size(); i++){
+            Snow2Flake snow = mSnow2FlakeList.get(i);
             if(snow.isLive){
                 long currentTime = SystemClock.uptimeMillis();
                 int offsetY = (int)(((float)(currentTime - snow.startTimeVertical))/100 * snow.speedVertical);
@@ -107,17 +114,47 @@ public class Snow2Utils {
             }
         }
     }
-
+    Camera mCamera = new Camera();
     public void draw(Canvas canvas){
-        for(int i = 0; i < mSnowFlakeList.size(); i++) {
-            Snow2Flake snow = mSnowFlakeList.get(i);
+        for(int i = 0; i < mSnow2FlakeList.size(); i++) {
+            Snow2Flake snow = mSnow2FlakeList.get(i);
             if(snow.isLive){
                 int save = canvas.save();
 
-                //mMatrix.reset();
-                //mMatrix.setScale(snow.scale, snow.scale);
-                //mMatrix.setScale(1.0f, 1.0f);
-                //canvas.setMatrix(mMatrix);
+                //新增-------
+//                Matrix mMatrix=new Matrix();
+//                mMatrix.reset();
+//                mMatrix.setScale(snow.scale, snow.scale);
+//                mMatrix.setScale(1.0f, 1.0f);
+//                if (degrees<40){
+//                    degrees++;
+//                }else {
+//                    degrees=10;
+//                }
+//                mMatrix.setRotate(degrees);
+//                canvas.setMatrix(mMatrix);
+
+
+                //新增-------
+                Matrix mMatrix=new Matrix();
+                mCamera.save();
+                if (degrees<360){
+                    degrees++;
+                }else {
+                    degrees=0;
+                }
+                mCamera.rotateY(degrees);
+                mCamera.getMatrix(mMatrix);
+                int centerX = mBitmaps[snow.index].getWidth() / 2;
+                int centerY = mBitmaps[snow.index].getHeight() / 2;
+                mMatrix.preTranslate(-centerX, -centerY);
+                mMatrix.postTranslate(centerX, centerY);
+                mCamera.restore();
+                canvas.setMatrix(mMatrix);
+                Log.i("walke", "SnowUtils3 draw: -------> centerX = "+centerX+" ---> centerY = "+centerY );
+
+
+
                 mPaint.setAlpha(snow.alpha);
                 canvas.drawBitmap(mBitmaps[snow.index], snow.x, snow.y, mPaint);
                 canvas.restoreToCount(save);
@@ -158,8 +195,8 @@ public class Snow2Utils {
 
 
     public void removeAllSnowFlake(){
-        for(int i = 0; i < mSnowFlakeList.size(); i++){
-            Snow2Flake snow = mSnowFlakeList.get(i);
+        for(int i = 0; i < mSnow2FlakeList.size(); i++){
+            Snow2Flake snow = mSnow2FlakeList.get(i);
             if(snow.isLive){
                 snow.isLive = false;
             }
@@ -168,8 +205,8 @@ public class Snow2Utils {
 
     public void produceSnowFlake(){
         int produceCount = 0;
-        for(int i = 0; i < mSnowFlakeList.size(); i++){
-            Snow2Flake snow = mSnowFlakeList.get(i);
+        for(int i = 0; i < mSnow2FlakeList.size(); i++){
+            Snow2Flake snow = mSnow2FlakeList.get(i);
             if(!snow.isLive){
                 int index = mRandom.nextInt(4);
                 snow.isLive = true;

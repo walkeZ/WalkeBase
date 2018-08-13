@@ -36,9 +36,13 @@ import walke.activity.xiu.XiuActivity;
 import walke.base.AppFragment;
 import walke.base.tool.SetUtil;
 import walke.widget.flowlayout.FlowLayoutActivity;
+import walke.widget.gallery.GalleryActivity;
+import walke.widget.img.ImgActivity;
+import walke.widget.img.ImgActivity2;
 import walke.widget.luckypan.LuckyPanActivity;
 import walke.widget.percentage.PercentageJavaActivity;
 import walke.widget.sunset.SunAnimationActivity;
+import walke.widget.text.TextActivity;
 
 /**
  * 吾日三省吾身：看脸，看秤，看余额。
@@ -89,6 +93,10 @@ public class ViewsFragment extends AppFragment {
         activities.add(new SnowFallActivity());
         activities.add(new AnimActivity());
         activities.add(new XiuActivity());
+        activities.add(new ImgActivity());
+        activities.add(new ImgActivity2());
+        activities.add(new GalleryActivity());
+        activities.add(new TextActivity());
 
         mAdapter.setItemClickListener(new RecyclerViewAdapter.onItemClickListener() {
             @Override

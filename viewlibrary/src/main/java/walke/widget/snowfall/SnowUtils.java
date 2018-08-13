@@ -45,10 +45,6 @@ public class SnowUtils {
 
     private int SNOW_FLAKE_MAX_COUNT = 300;
     private float SCALE_MIN = 0.5f;
-
-//    private float[] mAlphas = new float[]{0.3f,0.5f,0.6f,0.8f,1f};
-//    private float[] mSpeedFactors = new float[]{0.5f,0.7f,0.8f,0.9f,1f};
-//    private float[] mScaleFactors = new float[]{0.3f,0.4f,0.6f,0.8f,1f};
     private float[] mAlphas = new float[]{0.3f,0.5f,0.6f,0.8f,1f};//透明度数组
     private float[] mSpeedFactors = new float[]{0.5f,0.7f,0.8f,0.9f,1f};//飘落速度数组
     private float[] mScaleFactors = new float[]{0.1f,0.3f,0.4f,0.5f,0.6f};//缩放大小数组

@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/TouchToCameraFocusMeteringZoom/TouchToCameraFocusMeteringZoom.iml" filepath="$PROJECT_DIR$/TouchToCameraFocusMeteringZoom/TouchToCameraFocusMeteringZoom.iml" />
       <module fileurl="file://$PROJECT_DIR$/WalkeBase.iml" filepath="$PROJECT_DIR$/WalkeBase.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/base/base.iml" filepath="$PROJECT_DIR$/base/base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/camerademo/camerademo.iml" filepath="$PROJECT_DIR$/camerademo/camerademo.iml" />
       <module fileurl="file://$PROJECT_DIR$/demolibrary/demolibrary.iml" filepath="$PROJECT_DIR$/demolibrary/demolibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/viewlibrary/viewlibrary.iml" filepath="$PROJECT_DIR$/viewlibrary/viewlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/wheelviewlibrary/wheelviewlibrary.iml" filepath="$PROJECT_DIR$/wheelviewlibrary/wheelviewlibrary.iml" />

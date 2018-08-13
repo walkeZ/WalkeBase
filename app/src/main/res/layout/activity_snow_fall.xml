@@ -2,11 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-    android:background="@color/blueSky">
+              android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="40dp"
         android:orientation="horizontal">
         <Button
             android:id="@+id/snowfall_small"
@@ -35,18 +34,33 @@
             android:gravity="center"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
-    <walke.widget.snowfall.SnowView
-        android:id="@+id/snowfall_snowView"
+
+
+
+    <walke.widget.snowfall.Snow2View
+        android:id="@+id/snowfall_snowView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
-    <walke.widget.snowfall.Snow2View
-        android:id="@+id/snowfall_snow2View"
+        android:layout_weight="1"
+        android:background="#d1648dfd"/>
+
+    <walke.widget.snowfall.SnowView
+        android:id="@+id/snowfall_snowView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginTop="6dp"
         android:background="#d164fd7e"/>
+
+
+    <walke.widget.snowfall.Snow3View
+        android:id="@+id/snowfall_snowView3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="6dp"
+        android:background="#d1648dfd"/>
+
 
 
 </LinearLayout>
