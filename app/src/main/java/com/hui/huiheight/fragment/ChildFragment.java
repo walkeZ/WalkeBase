@@ -8,11 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hui.huiheight.HomeActivity;
 import com.hui.huiheight.MainsActivity;
 import com.hui.huiheight.R;
 import com.hui.huiheight.first.ShopCarActivity;
 import com.hui.huiheight.first.addresspicker.AddressPickerActivity;
 import com.hui.huiheight.first.chooselocation.ChoiceLocationActivity;
+import com.hui.huiheight.first.chooselocation.GetLocationActivity;
 import com.hui.huiheight.first.oss.OSSActivity;
 import com.hui.huiheight.first.phone.PhoneInfoActivity;
 import com.hui.huiheight.first.phone.ScreenShotActivity;
@@ -46,6 +48,8 @@ public class ChildFragment extends AppFragment {
     private RecyclerView mRecyclerView;
     private List<AppCompatActivity> mActivities=new ArrayList<>();
 
+
+
     public static ChildFragment getChildFragment(String title,String[] arr){
         //Java.lang.IllegalStateException: Can't change tag of fragment fendo1MainActivity{531dbce4 index=0x7f0b0054
         // Android:switcher:2131427412:0}: was android:switcher:2131427412:0 now android:switcher:2131427412:1
@@ -62,6 +66,9 @@ public class ChildFragment extends AppFragment {
 
     @Override
     protected int rootLayoutId() {
+        List<Class> acts=new ArrayList<>();
+        Class<HomeActivity> aClass = HomeActivity.class;
+        acts.add(aClass);
         return R.layout.fragment_child;
     }
 
@@ -95,6 +102,7 @@ public class ChildFragment extends AppFragment {
 
     private void initActivitys(String title) {
         if ("first+child".equals(title)){// R.array.tabTitles
+            mActivities.add(new GetLocationActivity());
             mActivities.add(new ChoiceLocationActivity());
             mActivities.add(new WheelViewActivity());
             mActivities.add(new CutPhonePictureActivity());

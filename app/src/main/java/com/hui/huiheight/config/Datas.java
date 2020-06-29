@@ -19,6 +19,7 @@ public class Datas {
     };
 
     public static final String[] FIRST_SKILLS = new String[]{
+            "本地获取经纬度",
             "选择省份市县三级联动",
             "选择省份市县三级联动pw",
             "CutPhonePictureActivity",

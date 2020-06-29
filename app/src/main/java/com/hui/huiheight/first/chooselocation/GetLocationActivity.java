@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.hui.huiheight.R;
@@ -64,6 +65,7 @@ public class GetLocationActivity extends TitleActivity implements LocationListen
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                Log.i("walke: ", " GetLocationActivity:  run:-------> Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
                 tvLocation.setText("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
             }
         },2000);

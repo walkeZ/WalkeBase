@@ -33,7 +33,7 @@ public class HomeActivity extends AppActivity {
 
     private RadioGroup tabRadioGroup;
     private RadioButton rbFirst, rbViews,rbNews,rbMine;
-    private ImageView ivLaunch;
+    private ImageView ivLaunch,ivNull;
     /**当新进入HomeActivity时需要(true)加载HomeInfo,在InfoFragment中加载后设置为不需要，当HomeActivity销毁时标识重置(需要加载HomeInfo)*/
     public boolean hasLoadHomeInfo =true;
     private ViewPager mViewPager;
@@ -41,12 +41,24 @@ public class HomeActivity extends AppActivity {
 
     @Override
     protected int rootLayoutId() {
+
         return R.layout.activity_home;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initView() {
+        tabRadioGroup = (RadioGroup) findViewById(R.id.ah_radioGroup);
+        rbFirst = (RadioButton) findViewById(R.id.ah_rbFirst);
+        rbViews = (RadioButton) findViewById(R.id.ah_rbViews);
+        rbNews = (RadioButton) findViewById(R.id.ah_rbNews);
+        rbMine = (RadioButton) findViewById(R.id.ah_rbMine);
+
+        mViewPager = (ViewPager) findViewById(R.id.ah_viewPager);
+
+        ivLaunch = ((ImageView) findViewById(R.id.ah_launch));
+
+
         String[] permissionSDCard = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
         boolean b = PermissionUtils.checkPermissionSetLack(this, permissionSDCard);
 
@@ -67,15 +79,7 @@ public class HomeActivity extends AppActivity {
             }
         }
 
-        tabRadioGroup = (RadioGroup) findViewById(R.id.ah_radioGroup);
-        rbFirst = (RadioButton) findViewById(R.id.ah_rbFirst);
-        rbViews = (RadioButton) findViewById(R.id.ah_rbViews);
-        rbNews = (RadioButton) findViewById(R.id.ah_rbNews);
-        rbMine = (RadioButton) findViewById(R.id.ah_rbMine);
 
-        mViewPager = (ViewPager) findViewById(R.id.ah_viewPager);
-
-        ivLaunch = ((ImageView) findViewById(R.id.ah_launch));
     }
 
 
@@ -134,6 +138,8 @@ public class HomeActivity extends AppActivity {
                         break;
                     case R.id.ah_rbMine:
                         mViewPager.setCurrentItem(3, false);
+
+                        ivNull.setVisibility(View.GONE);
                         break;
                 }
             }

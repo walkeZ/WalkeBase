@@ -2,11 +2,19 @@
 
 buildscript {
     repositories {
+//        jcenter()
+//        mavenCentral()  //studio一般默认为jcenter(),如果无法加载则添加此句
+
+        // 新增 20200119
+        mavenCentral()
+        mavenLocal()
+        // 原有
+        google()
         jcenter()
-        //mavenCentral()  //studio一般默认为jcenter(),如果无法加载则添加此句
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+//        classpath 'com.android.tools.build:gradle:3.6.1'
+        classpath 'com.android.tools.build:gradle:3.6.1'
 //        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -19,6 +27,8 @@ buildscript {
 
 allprojects {
     repositories {
+        google()
+        mavenCentral()
         jcenter()
     }
 }

@@ -1,7 +1,9 @@
 package com.hui.huiheight.util;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.Registry;
 import com.bumptech.glide.load.DecodeFormat;
@@ -32,7 +34,7 @@ public class GlideConfigUtil implements GlideModule {
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
         // Apply options to the builder here.
-        builder.setDecodeFormat(DecodeFormat.PREFER_ARGB_8888);
+//        builder.setDecodeFormat(DecodeFormat.PREFER_ARGB_8888);
 
         int maxMemory = (int) Runtime.getRuntime().maxMemory();//获取系统分配给应用的总内存大小
         int memoryCacheSize = maxMemory / 8;//设置图片内存缓存占用八分之一
@@ -43,8 +45,13 @@ public class GlideConfigUtil implements GlideModule {
 
 
 
+//    @Override
+//    public void registerComponents(Context context, Registry registry) {
+//
+//    }
+
     @Override
-    public void registerComponents(Context context, Registry registry) {
+    public void registerComponents(@NonNull Context context, @NonNull Glide glide, @NonNull Registry registry) {
 
     }
 }
