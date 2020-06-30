@@ -12,6 +12,8 @@ import android.app.Application;
  *  2.部分第三方框架的注册
  *  3.添加启动标示用于开启闪屏页
  *  ...
+ 
+ * git使用测试01
  */
 
 public class App extends Application {
