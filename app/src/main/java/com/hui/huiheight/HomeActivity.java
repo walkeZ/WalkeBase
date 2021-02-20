@@ -18,6 +18,7 @@ import com.hui.huiheight.fragment.ChildFragment;
 import com.hui.huiheight.fragment.MineFragment;
 import com.hui.huiheight.fragment.NewsFragment;
 import com.hui.huiheight.fragment.ViewsFragment;
+import com.hui.huiheight.util.DialogUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -139,7 +140,9 @@ public class HomeActivity extends AppActivity {
                     case R.id.ah_rbMine:
                         mViewPager.setCurrentItem(3, false);
 
-                        ivNull.setVisibility(View.GONE);
+//                        ivNull.setVisibility(View.GONE);
+                        DialogUtil.showAgreeDialog(HomeActivity.this,"333",
+                                Contants.TEST_CONTENT);
                         break;
                 }
             }
