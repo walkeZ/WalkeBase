@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="315dp"
+    android:layout_height="500dp"
+    android:clipChildren="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/corner_bg_dialog">
+
+        <FrameLayout
+            android:id="@+id/fl_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/dialog_agreement_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#48586D"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                tools:text="用户推广协议" />
+
+            <ImageView
+                android:id="@+id/dialog_agreement_img_close"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="right|center_vertical"
+                android:src="@mipmap/ico_agreement_close" />
+        </FrameLayout>
+
+
+        <ScrollView
+            android:id="@+id/dialog_agreement_content_sv"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@id/fl_1"
+            android:layout_marginTop="24dp">
+
+            <TextView
+                android:id="@+id/dialog_agreement_content_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="28dp"
+                android:layout_marginRight="27dp"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="#789292"
+                android:textSize="14sp"
+                tools:text="哒大大1哒哒31哒哒哒哒大大1哒哒31哒哒哒哒哒大大231哒哒大大1哒哒31哒哒哒哒哒大大231哒哒大大1哒哒31哒哒哒哒哒大大231哒哒大大1哒哒31哒哒哒哒哒大大231哒哒大大1哒哒31哒哒哒哒哒大大231哒哒哒大大231哒哒哒哒哒大大23大大23大大23大大231哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒哒1哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231哒哒哒哒大大231" />
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/ll_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="29dp"
+            android:layout_marginTop="24dp"
+            android:layout_below="@id/dialog_agreement_content_sv"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/dialog_agreement_cb"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:background="@drawable/checkbox_agreement"
+                android:button="@null" />
+
+            <TextView
+                android:id="@+id/tv_main_index"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="同意签订"
+                android:textColor="#48586D"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="《该协议》"
+                android:textColor="#18C8A1"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/dialog_agreement_btn_confirm"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/ll_2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="21dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/selector_half_18ca1_dbdfe5"
+            android:enabled="false"
+            android:text="确认"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </RelativeLayout>
+</RelativeLayout>

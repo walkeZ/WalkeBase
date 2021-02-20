@@ -10,8 +10,10 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hui.huiheight.R;
+import com.hui.huiheight.util.dialog.AgreementDialog;
 
 import walke.base.activity.BaseActivity;
 
@@ -21,6 +23,16 @@ import walke.base.activity.BaseActivity;
 
 public class DialogUtil {
 
+    public static void showAgreeDialog(final Context context,String title, String content) {
+        AgreementDialog agreementDialog = new AgreementDialog(context, title, content);
+        agreementDialog.setmAgreeHelper(new AgreementDialog.AgreeHelper() {
+            @Override
+            public void clickConfirm() {
+                Toast.makeText(context,"clickConfirm",Toast.LENGTH_LONG).show();
+            }
+        });
+        agreementDialog.show();
+    }
 
     /**
      * 显示更换头像提示框
