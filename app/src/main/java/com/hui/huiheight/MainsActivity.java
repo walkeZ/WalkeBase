@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hui.huiheight.first.photo.CutPhonePictureActivity;
+import com.jcodecraeer.xrecyclerview.example.MainActivity2;
 
 import walke.base.activity.BaseActivity;
 
@@ -88,7 +89,7 @@ public class MainsActivity extends BaseActivity {
                 startActivity(new Intent(this, HomeActivity.class));
                 break;
             case R.id.menu_test3:
-                startActivity(new Intent(this, com.jcodecraeer.xrecyclerview.example.MainActivity.class));
+                startActivity(new Intent(this, MainActivity2.class));
                 break;
             case R.id.menu_test4:
 

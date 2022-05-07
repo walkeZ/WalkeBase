@@ -44,11 +44,11 @@ public class NewsFragment extends AppFragment {
         String[] stringArray = getResources().getStringArray(R.array.tabTitles);
         ChildFragment child1 = ChildFragment.getChildFragment(stringArray[0], Datas.FIRST_SKILLS);
         ChildFragment child2 = ChildFragment.getChildFragment(stringArray[1], Datas.DEMO_SKILLS);
-        ChildFragment child3 = ChildFragment.getChildFragment(stringArray[2], Datas.VIEW_SKILLS);
+//        ChildFragment child3 = ChildFragment.getChildFragment(stringArray[2], Datas.VIEW_SKILLS);
         ChildFragment child4 = ChildFragment.getChildFragment(stringArray[3], Datas.MINE_SKILLS);
         fgs.add(child1);
         fgs.add(child2);
-        fgs.add(child3);
+//        fgs.add(child3);
         fgs.add(child4);
         /*for (String s : stringArray) {
             ChildFragment instance = ChildFragment.getChildFragment(s);

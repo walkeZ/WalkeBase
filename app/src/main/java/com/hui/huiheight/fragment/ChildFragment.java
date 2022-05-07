@@ -24,9 +24,15 @@ import com.hui.huiheight.first.photo.PhonePictureActivity;
 import com.hui.huiheight.first.retrofit2.Retrofit2Activity;
 import com.hui.huiheight.fragment.adapter.RecyclerViewAdapter;
 import com.hui.wheelviewlibrary.WheelViewActivity;
+import com.jcodecraeer.xrecyclerview.example.CollapsingToolbarLayoutActivity;
+import com.jcodecraeer.xrecyclerview.example.MainActivity2;
+import com.jcodecraeer.xrecyclerview.example.MultiHeaderActivity;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import walke.base.AppFragment;
 import walke.base.TestActivityTest;
@@ -91,9 +97,15 @@ public class ChildFragment extends AppFragment {
             adapter.setItemClickListener(new RecyclerViewAdapter.onItemClickListener() {
                 @Override
                 public void onClick(int position) {
-
-                    startActivity(new Intent(getContext(), mActivities.get(position).getClass()));
-
+                    if (mActivities.size() < 1) {
+                        toast("暂未实现，Activity Size is 0");
+                        return;
+                    }
+                    if (position >= mActivities.size()) {
+                        startActivity(new Intent(getContext(), mActivities.get(mActivities.size() - 1).getClass()));
+                    } else {
+                        startActivity(new Intent(getContext(), mActivities.get(position).getClass()));
+                    }
                 }
             });
         }
@@ -128,7 +140,9 @@ public class ChildFragment extends AppFragment {
         }else if ("views".equals(title)){
 
         }else if ("消息".equals(title)){
-
+            mActivities.add(new MainActivity2());
+            mActivities.add(new CollapsingToolbarLayoutActivity());
+            mActivities.add(new MultiHeaderActivity());
         }else {
 
         }

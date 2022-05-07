@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
