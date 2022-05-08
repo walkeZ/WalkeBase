@@ -71,6 +71,7 @@ public class Datas {
             "LuckyPanActivity",
             "SnowFallActivity",
             "AnimActivity",
+            "DragActivity1",
             "XiuActivity",
             "ImgActivity",
             "倒影效果的ImageView",

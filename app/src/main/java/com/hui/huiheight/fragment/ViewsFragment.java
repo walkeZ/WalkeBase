@@ -13,6 +13,7 @@ import com.hui.huiheight.config.Datas;
 import com.hui.huiheight.encapsulation.recyclerview.MineRecyclerViewActivity;
 import com.hui.huiheight.fragment.adapter.RecyclerViewAdapter;
 import com.hui.huiheight.views.anim.AnimActivity;
+import com.hui.huiheight.views.drag.DragActivity1;
 import com.hui.huiheight.views.refresh.gridview.RefreshGridViewActivity;
 import com.hui.huiheight.views.refresh.linearlayout.RefreshLinearLayoutActivity1;
 import com.hui.huiheight.views.refresh.linearlayout.RefreshLinearLayoutActivity2;
@@ -92,6 +93,7 @@ public class ViewsFragment extends AppFragment {
         activities.add(new LuckyPanActivity());
         activities.add(new SnowFallActivity());
         activities.add(new AnimActivity());
+        activities.add(new DragActivity1());
         activities.add(new XiuActivity());
         activities.add(new ImgActivity());
         activities.add(new ImgActivity2());

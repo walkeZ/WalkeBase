@@ -1,0 +1,72 @@
+package com.hui.huiheight.views.drag;
+
+import android.content.Context;
+import android.graphics.Paint;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+
+
+/**
+ * @author walker
+ * @description View 随手指滑动 -> 移动
+ * @date 2022/5/7
+ * https://blog.csdn.net/weixin_30200131/article/details/117485718
+ */
+public class DragView1 extends View {
+    public float moveX = 70;
+    public float moveY = 70;
+    //定义。创建画笔
+    Paint p = new Paint();
+    private int mParentWidth;
+    private int mParentHeight;
+
+    public DragView1(Context context) {
+        this(context, null);
+    }
+
+    public DragView1(Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public DragView1(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+
+    public boolean onTouchEvent(MotionEvent event) {
+        //获取SingleTouchView所在父布局的中心点
+        ViewGroup mViewGroup = (ViewGroup) getParent();
+        if(null != mViewGroup){
+            mParentWidth = mViewGroup.getWidth();
+            mParentHeight = mViewGroup.getHeight();
+            Log.i("DragView1", "onTouchEvent: ------>mParentHeight = " + mParentHeight);
+        }
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                moveX = event.getX();
+                moveY = event.getY();
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                // 位于父控件底部要加原始偏移量：getTop()
+                float yMove = event.getY() - moveY;
+                float translationY = getY() + yMove - getTop();
+                Log.i("DragView1", "onTouchEvent: ------>translationY = " + translationY + "， yMove = " + yMove);
+                setTranslationY(translationY);
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                break;
+
+        }
+
+        return true;
+
+    }
+}

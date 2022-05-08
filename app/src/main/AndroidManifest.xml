@@ -73,6 +73,8 @@
         <activity android:name=".views.snow.SnowFallActivity"/>
         <activity android:name=".views.anim.AnimActivity"/>
 
+        <activity android:name=".views.drag.DragActivity1"/>
+
 
 
 
