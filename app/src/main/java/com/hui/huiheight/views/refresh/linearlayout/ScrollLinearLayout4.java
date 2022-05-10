@@ -23,7 +23,7 @@ import walke.base.tool.WindowUtil;
  */
 
 public class ScrollLinearLayout4 extends LinearLayout {
-    private static final String TAG = "ScrollLinearLayout3";
+    private static final String TAG = "ScrollLinearLayout4";
     private float scrollSpead = 2.5f;
     private Scroller scroller;
     float downY;

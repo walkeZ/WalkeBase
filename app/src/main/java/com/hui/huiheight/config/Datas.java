@@ -57,6 +57,7 @@ public class Datas {
             "RefreshLinearLayout2",
             "RefreshLinearLayout3",
             "RefreshLinearLayout4",
+            "滑动的相对布局-ScrollRelativeLayout1",
             "RefreshListView",
             "RefreshRecyclerView",
             "RefreshScrollView",

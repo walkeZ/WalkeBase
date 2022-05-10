@@ -26,7 +26,9 @@ public class CustomLinearLayout3 extends LinearLayout{
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         boolean b = super.dispatchTouchEvent(ev);
+        // 如果直接return true，子控件获取不到事件，如果先super.dispatchTouchEvent(ev)后，return ture,子控件可以获取到事件
         b=true;
-        return b;
+        return true;
+//        return true;
     }
 }

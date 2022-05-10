@@ -1,4 +1,4 @@
-package com.hui.huiheight.views.refresh.linearlayout;
+package com.hui.huiheight.views.scroll;
 
 import android.view.View;
 
@@ -11,10 +11,10 @@ import walke.base.widget.TitleLayout;
  * Created by walke.Z on 2017/8/18.
  */
 
-public class RefreshLinearLayoutActivity3 extends TitleActivity {
+public class ScrollerRelativeLayoutActivity1 extends TitleActivity {
     @Override
     protected int rootLayoutId() {
-        return R.layout.activity_refresh_linearlayout3;
+        return R.layout.activity_scroll_relativelayout1;
     }
 
     @Override
@@ -28,9 +28,9 @@ public class RefreshLinearLayoutActivity3 extends TitleActivity {
     }
 
     public void click(View v){
-        toast("click ： ScrollLinearLayout3");
+        toast("click");
     }
     public void toasting(View v){
-        toast("RefreshLinearLayoutActivity3");
+        toast("ScrollRelativeLayout1");
     }
 }

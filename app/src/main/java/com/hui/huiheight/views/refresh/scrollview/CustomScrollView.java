@@ -54,7 +54,7 @@ public class CustomScrollView extends ScrollView {
             Log.i("showBug", "-------->onScrollChanged: 顶部");
             isTop=true;
             //((BaseActivity) mContext).getTestApp().setWebViewTop(true);
-        }else {
+        } else {
 
         }
         Log.i("showBug", "-------->onScrollChanged: isTop = "+isTop);

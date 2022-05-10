@@ -24,6 +24,7 @@ import com.hui.huiheight.views.refresh.recyclerview.RefreshRecyclerViewActivity;
 import com.hui.huiheight.views.refresh.scrollview.RefreshScrollViewActivity;
 import com.hui.huiheight.views.refresh.webview.RefreshWebViewActivity;
 import com.hui.huiheight.views.refresh.webview.WebViewButterKnifeActivity;
+import com.hui.huiheight.views.scroll.ScrollerRelativeLayoutActivity1;
 import com.hui.huiheight.views.snow.SnowFallActivity;
 import com.hui.huiheight.views.touch.TouchEventActivity;
 
@@ -79,6 +80,7 @@ public class ViewsFragment extends AppFragment {
         activities.add(new RefreshLinearLayoutActivity2());
         activities.add(new RefreshLinearLayoutActivity3());
         activities.add(new RefreshLinearLayoutActivity4());
+        activities.add(new ScrollerRelativeLayoutActivity1());
         activities.add(new RefreshListViewActivity());
         activities.add(new RefreshRecyclerViewActivity());
         activities.add(new RefreshScrollViewActivity());

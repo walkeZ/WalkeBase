@@ -66,6 +66,7 @@
         <activity android:name=".views.refresh.linearlayout.RefreshLinearLayoutActivity2"/>
         <activity android:name=".views.refresh.linearlayout.RefreshLinearLayoutActivity3"/>
         <activity android:name=".views.refresh.linearlayout.RefreshLinearLayoutActivity4"/>
+        <activity android:name=".views.scroll.ScrollerRelativeLayoutActivity1"/>
         <activity android:name=".views.refresh.listview.RefreshListViewActivity"/>
         <activity android:name=".views.refresh.recyclerview.RefreshRecyclerViewActivity"/>
         <activity android:name=".views.refresh.scrollview.RefreshScrollViewActivity"/>

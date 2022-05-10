@@ -111,14 +111,29 @@ public class ScrollLinearLayout3 extends LinearLayout {
 
     @Override
     public boolean onInterceptHoverEvent(MotionEvent event) {
-        Log.i(TAG, "-----onInterceptHoverEvent: ");
-        return super.onInterceptHoverEvent(event);
+
+        boolean hoverEvent = super.onInterceptHoverEvent(event);
+        Log.i(TAG, "-----onInterceptHoverEvent: " + hoverEvent + ", (Down 0;Move 2;Up 1)； " + event.getAction());
+        return hoverEvent;
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.i(TAG, "-------onInterceptTouchEvent: ");
-        return super.onInterceptTouchEvent(ev);
+
+        boolean cost = super.onInterceptTouchEvent(ev);
+        Log.i(TAG, "-------onInterceptTouchEvent: cost = " + cost);
+        return cost;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        boolean onTouchEvent = super.onTouchEvent(ev);
+
+
+        boolean interceptEvent = super.onInterceptTouchEvent(ev);
+        Log.i(TAG, "-------onTouchEvent: onTouchEvent: " +onTouchEvent + ", interceptEvent = " + interceptEvent
+                + ", (Down 0;Move 2;Up 1)； " + ev.getAction());
+        return interceptEvent;//
     }
 
     /**
@@ -128,26 +143,28 @@ public class ScrollLinearLayout3 extends LinearLayout {
      * @param ev
      * @return
      */
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-       /* Log.i(TAG, "---------onTouchEvent: ");
-        float eventY = ev.getY();
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                scrollStart = getScrollY();
-                downY = eventY;
-                break;
-            case MotionEvent.ACTION_MOVE:
-                //scrollTo(0, (int) ((int) scrollStart - (eventY - downY)));
-                scrollTo(0, (int) ((int) scrollStart - (eventY - downY)/scrollSpead));
-                break;
-            case MotionEvent.ACTION_UP:
-                scrollEnd = getScrollY();
-                scroller.startScroll(0, scrollEnd, 0,  - scrollEnd);
-                break;
-        }*/
-        return super.onInterceptTouchEvent(ev);
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent ev) {
+//       /* Log.i(TAG, "---------onTouchEvent: ");
+//        float eventY = ev.getY();
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                scrollStart = getScrollY();
+//                downY = eventY;
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                //scrollTo(0, (int) ((int) scrollStart - (eventY - downY)));
+//                scrollTo(0, (int) ((int) scrollStart - (eventY - downY)/scrollSpead));
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                scrollEnd = getScrollY();
+//                scroller.startScroll(0, scrollEnd, 0,  - scrollEnd);
+//                break;
+//        }*/
+//        boolean interceptEvent = super.onInterceptTouchEvent(ev);
+//        Log.i(TAG, "---------onTouchEvent: interceptEvent " + interceptEvent);
+//        return interceptEvent;
+//    }
 
     /**
      * ViewGroup 事件分发中一定会走的方法
@@ -157,7 +174,7 @@ public class ScrollLinearLayout3 extends LinearLayout {
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        Log.i(TAG, "-----------dispatchTouchEvent: ");
+        Log.i(TAG, "-----------dispatchTouchEvent:  (Down 0;Move 2;Up 1)； " + ev.getAction());
         float eventY = ev.getY();
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
