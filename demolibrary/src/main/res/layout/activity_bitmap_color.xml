@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CDCDCD"
+    android:orientation="vertical"
+    tools:context=".completion.BitmapColorActivity">
+
+    <ImageView
+        android:id="@+id/bitmapColor_iv"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:background="@mipmap/ic_launcher"
+        android:src="@mipmap/nvshen" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="红色:"
+            android:textColor="#FF0000"
+            android:textSize="24sp" />
+
+        <SeekBar
+            android:id="@+id/bitmapColor_sb1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:max="256"
+            android:progress="128" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="绿色:"
+            android:textColor="#00FF00"
+            android:textSize="24sp" />
+
+        <SeekBar
+            android:id="@+id/bitmapColor_sb2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:max="256"
+            android:progress="128" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="蓝色:"
+            android:textColor="#0000FF"
+            android:textSize="24sp" />
+
+        <SeekBar
+            android:id="@+id/bitmapColor_sb3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:max="256"
+            android:progress="128" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="饱和度:"
+            android:textColor="#000000"
+            android:textSize="16.5sp" />
+
+        <SeekBar
+            android:id="@+id/bitmapColor_sb4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:max="256"
+            android:progress="128" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="透明度:"
+            android:textColor="#000000"
+            android:textSize="16.5sp" />
+
+        <SeekBar
+            android:id="@+id/bitmapColor_sb5"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:max="256"
+            android:progress="128" />
+    </LinearLayout>
+</LinearLayout>

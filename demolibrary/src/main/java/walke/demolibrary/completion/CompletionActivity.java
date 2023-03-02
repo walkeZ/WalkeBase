@@ -32,7 +32,6 @@ import walke.demolibrary.R;
 
 public class CompletionActivity extends TitleActivity {
 
-
     private TextView tvQuestion;
     private TextView tvText;
     private String mTextTest = "我不仅能变色，还能点击";
