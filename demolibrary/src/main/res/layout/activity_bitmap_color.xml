@@ -123,4 +123,36 @@
             android:max="256"
             android:progress="128" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="黑白图片"
+            android:textColor="#000000"
+            android:textSize="16.5sp"
+            android:onClick="heiBai"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="圆角"
+            android:textColor="#000000"
+            android:textSize="16.5sp"
+            android:onClick="corner"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="高斯模糊"
+            android:textColor="#000000"
+            android:textSize="16.5sp"
+            android:onClick="blur"/>
+
+    </LinearLayout>
 </LinearLayout>
