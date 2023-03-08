@@ -1,0 +1,40 @@
+Java Class 可用(AS412的)：
+【setting/Preference（Mac）-> Editor -> File and Code Templates -> ① Files -> Class】
+
+#if (${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+#parse("File Header.java")
+public class ${NAME} {
+}
+
+--------end---------
+
+Java Interface 可用（As422的）
+
+#if (${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+#if (${IMPORT_BLOCK} != "")${IMPORT_BLOCK}
+#end
+#parse("File Header.java")
+#if (${VISIBILITY} == "PUBLIC")public #end interface ${NAME} #if (${INTERFACES} != "")extends ${INTERFACES} #end {
+}
+
+--------end---------
+
+后期补充文件头：
+
+①setting/Preference（Mac）-> Editor -> Live Templates -> Android -> Add（右上角）
+参考fbc、Toast等。
+Abbreviation 别名   Description 描述
+
+Template text：
+/**
+ * @author walker
+ * @date $DATE$
+ * @desc $Desc$
+ */
+
+② Define -> 选择在哪些文件生效，如全选Java框
+③ EditVariables -> 可选占位（$$包裹的字符）填充，如方法名、时间等
+④ Apply
+--------end---------
