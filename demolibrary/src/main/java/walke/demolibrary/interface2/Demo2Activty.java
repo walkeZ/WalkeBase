@@ -1,6 +1,5 @@
 package walke.demolibrary.interface2;
 
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -12,9 +11,7 @@ import walke.demolibrary.R;
  * Created by walke.Z on 2017/9/13.
  *  2. java之interface--接口作为方法的参数传递,就像平时封装网络请求的callBack
  */
-
 public class Demo2Activty extends TitleActivity {
-
     private Button btCar,btPlane,btShip;
     private TextView tvResult;
 
@@ -37,23 +34,12 @@ public class Demo2Activty extends TitleActivity {
 //        btCar.setOnClickListener(this);
 //        btPlane.setOnClickListener(this);
 //        btShip.setOnClickListener(this);
-        btCar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickCar();
-            }
-        });
-        btPlane.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btCar.setOnClickListener(v -> clickCar());
+        btPlane.setOnClickListener(v -> {
 
-            }
         });
-        btShip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btShip.setOnClickListener(v -> {
 
-            }
         });
     }
     /**
@@ -63,13 +49,8 @@ public class Demo2Activty extends TitleActivity {
      * */
     public void clickCar() {
         CheckBroad checkBroad = new CheckBroad();
-        checkBroad.getMainMessage(new Extendbroadable() {
-            @Override
-            public void input() {
+        checkBroad.getMainMessage(() -> {
 
-            }
         });
     }
-
-
 }

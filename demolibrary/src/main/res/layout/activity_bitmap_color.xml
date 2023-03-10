@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     android:background="#CDCDCD"
     android:orientation="vertical"
-    tools:context=".completion.BitmapColorActivity">
+    tools:context=".picture.BitmapColorActivity">
 
     <ImageView
         android:id="@+id/bitmapColor_iv"
         android:layout_width="match_parent"
         android:layout_height="320dp"
         android:background="@mipmap/ic_launcher"
-        android:src="@mipmap/nvshen" />
+        android:src="@mipmap/nvshen1" />
 
     <LinearLayout
         android:layout_width="match_parent"

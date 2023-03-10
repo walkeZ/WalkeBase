@@ -29,9 +29,7 @@ import walke.demolibrary.R;
  * Android 填空题实现
  * 参考：http://www.jianshu.com/p/28b7082b7563
  */
-
 public class CompletionActivity extends TitleActivity {
-
     private TextView tvQuestion;
     private TextView tvText;
     private String mTextTest = "我不仅能变色，还能点击";

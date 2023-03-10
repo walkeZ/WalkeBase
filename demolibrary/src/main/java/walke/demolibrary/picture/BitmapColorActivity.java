@@ -1,4 +1,4 @@
-package walke.demolibrary.completion;
+package walke.demolibrary.picture;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -48,7 +48,7 @@ public class BitmapColorActivity extends TitleActivity {
         sb3 = findViewById(R.id.bitmapColor_sb3);
         sb4 = findViewById(R.id.bitmapColor_sb4);
         sb5 = findViewById(R.id.bitmapColor_sb5);
-        bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.nvshen);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.nvshen1);
         updateBitmap = Bitmap.createBitmap(bitmap.getWidth(),
                 bitmap.getHeight(), bitmap.getConfig());
         canvas = new Canvas(updateBitmap);
@@ -195,15 +195,15 @@ public class BitmapColorActivity extends TitleActivity {
      * @param view
      */
     public void heiBai(View view) {
-        iv.setImageBitmap(convertToBlackWhite(BitmapFactory.decodeResource(getResources(), R.mipmap.nvshen)));
+        iv.setImageBitmap(convertToBlackWhite(BitmapFactory.decodeResource(getResources(), R.mipmap.nvshen1)));
     }
 
     public void corner(View view) {
-        iv.setImageBitmap(convertToRoundedCorner(BitmapFactory.decodeResource(getResources(), R.mipmap.nvshen), 60));
+        iv.setImageBitmap(convertToRoundedCorner(BitmapFactory.decodeResource(getResources(), R.mipmap.nvshen1), 60));
     }
 
     public void blur(View view) {
-        iv.setImageBitmap(convertToBlur(BitmapFactory.decodeResource(getResources(), R.mipmap.nvshen)));
+        iv.setImageBitmap(convertToBlur(BitmapFactory.decodeResource(getResources(), R.mipmap.nvshen1)));
     }
 
     /**
