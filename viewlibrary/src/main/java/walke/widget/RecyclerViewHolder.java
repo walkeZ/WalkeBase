@@ -1,10 +1,11 @@
 package walke.widget;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**   使用RecycleView时候的adapter的简单封装
  * Created by walke.Z on 2017/8/22.

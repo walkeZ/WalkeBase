@@ -1,12 +1,11 @@
 package walke.widget.luckypan;
 
+import static android.content.ContentValues.TAG;
+
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.AttrRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,9 +14,11 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import walke.widget.R;
+import androidx.annotation.AttrRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-import static android.content.ContentValues.TAG;
+import walke.widget.R;
 
 /**
  * Created by walke.Z on 2017/10/23.

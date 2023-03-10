@@ -9,7 +9,6 @@ import walke.base.R;
 import walke.base.tool.LayoutParamsUtil;
 import walke.base.widget.TitleLayout;
 
-
 /**
  * Created by Walke.Z on 2017/4/21.
  * 这是上一层(第二层)封装：

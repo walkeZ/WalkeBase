@@ -4,7 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import walke.widget.R;
 import walke.widget.marquee.AutoHorizontalScrollTextView;
@@ -60,10 +61,8 @@ public class MarqueeActivity1 extends AppCompatActivity {
                 number++;
                 verticalScrollTV.setText(strings[number%strings.length]);
             }
-
         }
     };
-
 
     @Override
     protected void onDestroy() {

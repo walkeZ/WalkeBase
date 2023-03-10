@@ -11,7 +11,7 @@
         android:textSize="18sp"
         android:textColor="@color/bg_orange"
         android:layout_gravity="center"/>
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fv_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

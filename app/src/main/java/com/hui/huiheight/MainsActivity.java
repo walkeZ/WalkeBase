@@ -2,9 +2,6 @@ package com.hui.huiheight;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +9,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.hui.huiheight.first.photo.CutPhonePictureActivity;
 import com.jcodecraeer.xrecyclerview.example.MainActivity2;
 
@@ -23,19 +24,16 @@ public class MainsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mains);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //toolbar.setBackgroundColor(Color.TRANSPARENT);
         toolbar.setBackgroundResource(R.color.transparent);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.at_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                startActivity(new Intent(MainsActivity.this, CutPhonePictureActivity.class));
-            }
+        fab.setOnClickListener(view -> {
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            startActivity(new Intent(MainsActivity.this, CutPhonePictureActivity.class));
         });
-        TextView textView = (TextView) findViewById(R.id.mains_text);
+        TextView textView = findViewById(R.id.mains_text);
         registerForContextMenu(textView);
     }
 

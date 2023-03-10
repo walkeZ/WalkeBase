@@ -8,12 +8,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import walke.base.tool.LogUtil;
 import walke.base.tool.ToastUtil;
@@ -24,7 +25,7 @@ import walke.base.tool.ToastUtil;
  * 这是底层(第一层)封装
  *
  */
-public class BaseActivity extends AppCompatActivity  {
+public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +129,6 @@ public class BaseActivity extends AppCompatActivity  {
         intent.setData(Uri.parse("package:" + getPackageName()));
         startActivity(intent);
     }
-
 
     public void toast(String message){
         if (!TextUtils.isEmpty(message))

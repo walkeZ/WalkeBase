@@ -17,7 +17,6 @@ public abstract class AppActivity extends BaseActivity implements View.OnClickLi
         setContentView(rootLayoutId());
         initView();
         initData();
-
     }
 
     protected abstract int rootLayoutId();

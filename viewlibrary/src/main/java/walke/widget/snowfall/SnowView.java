@@ -6,10 +6,11 @@ import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewTreeObserver;
+
+import androidx.annotation.RequiresApi;
 
 import java.lang.ref.WeakReference;
 import java.util.concurrent.CountDownLatch;

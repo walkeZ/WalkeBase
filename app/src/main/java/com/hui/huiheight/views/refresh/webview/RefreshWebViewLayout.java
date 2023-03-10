@@ -3,7 +3,6 @@ package com.hui.huiheight.views.refresh.webview;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -12,7 +11,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+
 import com.hui.huiheight.R;
+
 import walke.base.tool.ViewUtil;
 import walke.base.tool.WindowUtil;
 

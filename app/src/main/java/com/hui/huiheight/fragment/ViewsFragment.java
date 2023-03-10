@@ -2,11 +2,12 @@ package com.hui.huiheight.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.hui.huiheight.R;
 import com.hui.huiheight.config.Datas;
@@ -50,9 +51,7 @@ import walke.widget.text.TextActivity;
  * 吾日三省吾身：看脸，看秤，看余额。
  * Created by lanso on 2016/11/24.
  */
-
 public class ViewsFragment extends AppFragment {
-
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mAdapter;
 
@@ -64,9 +63,9 @@ public class ViewsFragment extends AppFragment {
     @Override
     protected void initView(View rootView, Bundle savedInstanceState) {
         mRecyclerView = ((RecyclerView) rootView.findViewById(R.id.fv_recyclerView));
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
-        mAdapter = new RecyclerViewAdapter(getContext(), SetUtil.arrToList(Datas.VIEW_SKILLS));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        mAdapter = new RecyclerViewAdapter(getActivity(), SetUtil.arrToList(Datas.VIEW_SKILLS));
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -101,14 +100,6 @@ public class ViewsFragment extends AppFragment {
         activities.add(new ImgActivity2());
         activities.add(new GalleryActivity());
         activities.add(new TextActivity());
-
-        mAdapter.setItemClickListener(new RecyclerViewAdapter.onItemClickListener() {
-            @Override
-            public void onClick(int position) {
-                startActivity(new Intent(getContext(),activities.get(position).getClass()));
-            }
-        });
-
-
+        mAdapter.setItemClickListener(position -> startActivity(new Intent(getContext(),activities.get(position).getClass())));
     }
 }

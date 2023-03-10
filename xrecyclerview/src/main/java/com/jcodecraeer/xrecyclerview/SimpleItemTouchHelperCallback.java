@@ -2,14 +2,14 @@ package com.jcodecraeer.xrecyclerview;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by jianghejie on 16/6/20.
  */
-
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     public static final float ALPHA_FULL = 1.0f;

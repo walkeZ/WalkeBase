@@ -2,10 +2,11 @@ package com.jcodecraeer.xrecyclerview.example;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.R;
@@ -40,42 +41,34 @@ public class CollapsingToolbarLayoutActivity extends AppCompatActivity {
             public void onRefresh() {
                 refreshTime ++;
                 times = 0;
-                new Handler().postDelayed(new Runnable(){
-                    public void run() {
-
-                        listData.clear();
-                        for(int i = 0; i < 15 ;i++){
-                            listData.add("item" + i + "after " + refreshTime + " times of refresh");
-                        }
-                        mAdapter.notifyDataSetChanged();
-                        mRecyclerView.refreshComplete();
+                new Handler().postDelayed(() -> {
+                    listData.clear();
+                    for(int i = 0; i < 15 ;i++){
+                        listData.add("item" + i + "after " + refreshTime + " times of refresh");
                     }
-
+                    mAdapter.notifyDataSetChanged();
+                    mRecyclerView.refreshComplete();
                 }, 1000);            //refresh data here
             }
 
             @Override
             public void onLoadMore() {
                 if(times < 2){
-                    new Handler().postDelayed(new Runnable(){
-                        public void run() {
-                            mRecyclerView.loadMoreComplete();
-                            for(int i = 0; i < 15 ;i++){
-                                listData.add("item" + (i + listData.size()) );
-                            }
-                            mRecyclerView.loadMoreComplete();
-                            mAdapter.notifyDataSetChanged();
+                    new Handler().postDelayed(() -> {
+                        mRecyclerView.loadMoreComplete();
+                        for(int i = 0; i < 15 ;i++){
+                            listData.add("item" + (i + listData.size()) );
                         }
+                        mRecyclerView.loadMoreComplete();
+                        mAdapter.notifyDataSetChanged();
                     }, 1000);
                 } else {
-                    new Handler().postDelayed(new Runnable() {
-                        public void run() {
-                            for(int i = 0; i < 9 ;i++){
-                                listData.add("item" + (1 + listData.size() ) );
-                            }
-                            mRecyclerView.setNoMore(true);
-                            mAdapter.notifyDataSetChanged();
+                    new Handler().postDelayed(() -> {
+                        for(int i = 0; i < 9 ;i++){
+                            listData.add("item" + (1 + listData.size() ) );
                         }
+                        mRecyclerView.setNoMore(true);
+                        mAdapter.notifyDataSetChanged();
                     }, 1000);
                 }
                 times ++;

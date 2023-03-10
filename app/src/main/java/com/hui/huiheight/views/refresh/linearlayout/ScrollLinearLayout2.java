@@ -1,13 +1,14 @@
 package com.hui.huiheight.views.refresh.linearlayout;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Scroller;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by walke.Z on 2017/8/14.

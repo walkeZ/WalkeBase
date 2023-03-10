@@ -3,14 +3,15 @@ package com.hui.huiheight;
 import android.Manifest;
 import android.os.Build;
 import android.os.Handler;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.hui.huiheight.config.Contants;
 import com.hui.huiheight.config.Datas;
@@ -29,16 +30,23 @@ import walke.base.tool.FileUtils;
 import walke.base.tool.PermissionUtils;
 import walke.base.tool.SharepreUtil;
 
-
+/**
+ * @author walker
+ * @date 2023/3/10
+ * @desc 首页
+ * 迁移到androidx。
+ * https://blog.csdn.net/dongheli/article/details/103664860
+ */
 public class HomeActivity extends AppActivity {
 
     private RadioGroup tabRadioGroup;
-    private RadioButton rbFirst, rbViews,rbNews,rbMine;
-    private ImageView ivLaunch,ivNull;
-    /**当新进入HomeActivity时需要(true)加载HomeInfo,在InfoFragment中加载后设置为不需要，当HomeActivity销毁时标识重置(需要加载HomeInfo)*/
-    public boolean hasLoadHomeInfo =true;
+    private RadioButton rbFirst, rbViews, rbNews, rbMine;
+    private ImageView ivLaunch, ivNull;
+    /**
+     * 当新进入HomeActivity时需要(true)加载HomeInfo,在InfoFragment中加载后设置为不需要，当HomeActivity销毁时标识重置(需要加载HomeInfo)
+     */
+    public boolean hasLoadHomeInfo = true;
     private ViewPager mViewPager;
-
 
     @Override
     protected int rootLayoutId() {
@@ -54,15 +62,10 @@ public class HomeActivity extends AppActivity {
         rbViews = (RadioButton) findViewById(R.id.ah_rbViews);
         rbNews = (RadioButton) findViewById(R.id.ah_rbNews);
         rbMine = (RadioButton) findViewById(R.id.ah_rbMine);
-
         mViewPager = (ViewPager) findViewById(R.id.ah_viewPager);
-
         ivLaunch = ((ImageView) findViewById(R.id.ah_launch));
-
-
         String[] permissionSDCard = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
         boolean b = PermissionUtils.checkPermissionSetLack(this, permissionSDCard);
-
         if (b) {
             requestPermissions(permissionSDCard, Contants.PERMISSION_SDCARD_REQUEST_CODE);
             return;
@@ -70,34 +73,24 @@ public class HomeActivity extends AppActivity {
 
         // 判断存储卡是否可用，创建文件夹
         boolean sDcardAvailable = FileUtils.isSDcardAvailable();
-        logI("sDcardAvailable : "+sDcardAvailable+"  -----> sdcard Permission b: "+b);
+        logI("sDcardAvailable : " + sDcardAvailable + "  -----> sdcard Permission b: " + b);
         if (sDcardAvailable) {
             File file = new File(Contants.APP_LOCATION);
             boolean exists = file.exists();
-            logI("sDcardAvailable : "+sDcardAvailable+"   ----------> exists: "+exists);
-            if (!exists){
+            logI("sDcardAvailable : " + sDcardAvailable + "   ----------> exists: " + exists);
+            if (!exists) {
                 file.mkdir();
             }
         }
-
-
     }
-
 
     @Override
     protected void initData() {
-
         //rbFirst.setChecked(true);
         rbNews.setChecked(true);
         boolean firstOpen = SharepreUtil.getBoolean(this, Contants.FIRST_OPEN, false);
         if (firstOpen) {//启动应用第一次进入HomeActivity，显示公司logo
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ivLaunch.setVisibility(View.GONE);
-                }
-            }, 1700);
-
+            new Handler().postDelayed(() -> ivLaunch.setVisibility(View.GONE), 1700);
         } else {
             ivLaunch.setVisibility(View.GONE);
         }
@@ -125,26 +118,23 @@ public class HomeActivity extends AppActivity {
             }
         });
 
-        tabRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup arg0, int arg1) {
-                switch (arg1) {
-                    case R.id.ah_rbFirst:
-                        mViewPager.setCurrentItem(0, false);
-                        break;
-                    case R.id.ah_rbViews:
-                        mViewPager.setCurrentItem(1, false);
-                        break;
-                    case R.id.ah_rbNews:
-                        mViewPager.setCurrentItem(2, false);
-                        break;
-                    case R.id.ah_rbMine:
-                        mViewPager.setCurrentItem(3, false);
-
+        tabRadioGroup.setOnCheckedChangeListener((arg0, arg1) -> {
+            switch (arg1) {
+                case R.id.ah_rbFirst:
+                    mViewPager.setCurrentItem(0, false);
+                    break;
+                case R.id.ah_rbViews:
+                    mViewPager.setCurrentItem(1, false);
+                    break;
+                case R.id.ah_rbNews:
+                    mViewPager.setCurrentItem(2, false);
+                    break;
+                case R.id.ah_rbMine:
+                    mViewPager.setCurrentItem(3, false);
 //                        ivNull.setVisibility(View.GONE);
-                        DialogUtil.showAgreeDialog(HomeActivity.this,"333",
-                                Contants.TEST_CONTENT);
-                        break;
-                }
+                    DialogUtil.showAgreeDialog(HomeActivity.this, "333",
+                            Contants.TEST_CONTENT);
+                    break;
             }
         });
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -163,18 +153,13 @@ public class HomeActivity extends AppActivity {
 
             }
         });
-
         mViewPager.setCurrentItem(2, false);//以消息tab为默认显示  view//1
-
     }
-
 
     @Override
     protected void onResume() {
         super.onResume();
     }
-
-
 
     @Override
     protected void onStop() {
@@ -186,6 +171,4 @@ public class HomeActivity extends AppActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
-
 }

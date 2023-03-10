@@ -1,7 +1,6 @@
 package com.hui.huiheight.views.scroll;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -9,8 +8,9 @@ import android.view.VelocityTracker;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
-import walke.base.tool.WindowUtil;
+import androidx.annotation.Nullable;
 
+import walke.base.tool.WindowUtil;
 
 /**
  * Created by walke.Z on 2022/05/09.

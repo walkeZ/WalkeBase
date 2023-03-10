@@ -1,8 +1,9 @@
 package walke.base;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+
+import androidx.fragment.app.Fragment;
 
 import walke.base.activity.BaseActivity;
 import walke.base.tool.LogUtil;

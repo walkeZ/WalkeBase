@@ -2,14 +2,14 @@ package walke.widget;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
 /**
  * Created by walke.Z on 2017/8/2.
  */
-
 public class ViewAdapter extends RecyclerViewBaseAdapter<AppCompatActivity> {
 
     private Context mContext;

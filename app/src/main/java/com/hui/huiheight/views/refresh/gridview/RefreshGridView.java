@@ -1,7 +1,6 @@
 package com.hui.huiheight.views.refresh.gridview;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -12,6 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Scroller;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+
 import walke.base.tool.ViewUtil;
 import walke.base.tool.WindowUtil;
 

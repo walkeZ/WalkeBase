@@ -1,10 +1,13 @@
 package com.hui.huiheight.views.refresh.recyclerview;
 
 import android.os.Handler;
-import android.support.v7.widget.LinearLayoutManager;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.hui.huiheight.R;
 import com.hui.huiheight.config.Datas;
 import com.hui.huiheight.fragment.adapter.RecyclerViewAdapter;
+
 import walke.base.activity.TitleActivity;
 import walke.base.tool.SetUtil;
 import walke.base.widget.TitleLayout;

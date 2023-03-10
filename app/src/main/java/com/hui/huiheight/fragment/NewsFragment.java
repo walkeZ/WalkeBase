@@ -1,10 +1,11 @@
 package com.hui.huiheight.fragment;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 import com.hui.huiheight.R;
 import com.hui.huiheight.config.Datas;
 import com.hui.huiheight.fragment.adapter.TabFragmentAdapter;
@@ -21,8 +22,6 @@ import walke.base.BaseFragment;
  * 首页碎片
  */
 public class NewsFragment extends AppFragment {
-
-
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private List<BaseFragment> fgs;

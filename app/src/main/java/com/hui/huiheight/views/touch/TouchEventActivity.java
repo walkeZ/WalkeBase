@@ -1,11 +1,14 @@
 package com.hui.huiheight.views.touch;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.hui.huiheight.R;
+
 import walke.base.tool.ToastUtil;
 
 public class TouchEventActivity extends AppCompatActivity {

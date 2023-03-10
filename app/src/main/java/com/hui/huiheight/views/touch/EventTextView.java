@@ -1,11 +1,12 @@
 package com.hui.huiheight.views.touch;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by walke.Z on 2017/8/21.

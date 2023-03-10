@@ -1,11 +1,12 @@
 package com.hui.huiheight.fragment.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.hui.huiheight.R;
 
@@ -50,13 +51,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
-            mTextView = ((TextView) itemView.findViewById(R.id.rc_tvText));
-            mTextView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mClickListener!=null)
-                        mClickListener.onClick(getLayoutPosition());
-                }
+            mTextView = itemView.findViewById(R.id.rc_tvText);
+            mTextView.setOnClickListener(v -> {
+                if (mClickListener!=null)
+                    mClickListener.onClick(getLayoutPosition());
             });
 
         }
