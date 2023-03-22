@@ -1,6 +1,9 @@
 package com.hui.huiheight.fragment;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -40,6 +43,7 @@ import walke.demolibrary.interface1.Demo1Activity;
 import walke.demolibrary.interface3.Demo3Activity;
 import walke.demolibrary.layoutmanager.TTCardsActivity;
 import walke.demolibrary.picture.BitmapColorActivity;
+import walke.demolibrary.pinpu.PinPuActivity;
 import walke.widget.sunset.SunAnimationActivity;
 
 
@@ -131,6 +135,7 @@ public class ChildFragment extends AppFragment {
             mActivities.add(new CompletionActivity());
             mActivities.add(new BitmapColorActivity());
             mActivities.add(new TTCardsActivity());
+            mActivities.add(new PinPuActivity());
 //            mActivities.add(new GlideActivity());
         } else if ("views".equals(title)) {
 
@@ -146,6 +151,30 @@ public class ChildFragment extends AppFragment {
 
     @Override
     protected void initData() {
+        askPermission();
+    }
+
+    List<String> permissions = new ArrayList<String>();
+
+    /**
+     * https://blog.csdn.net/idlegao/article/details/128966705
+     *
+     * @return
+     */
+    private boolean askPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int RECORD_AUDIO = getActivity().checkSelfPermission(Manifest.permission.RECORD_AUDIO);
+            if (RECORD_AUDIO != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.RECORD_AUDIO);
+            }
+
+            if (!permissions.isEmpty()) {
+                requestPermissions(permissions.toArray(new String[permissions.size()]), 1);
+            } else
+                return false;
+        } else
+            return false;
+        return true;
 
     }
 

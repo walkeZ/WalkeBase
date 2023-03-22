@@ -1,6 +1,7 @@
 package com.hui.huiheight.config;
 
 import walke.demolibrary.layoutmanager.TTCardsActivity;
+import walke.demolibrary.pinpu.PinPuActivity;
 
 /**
  * Created by Walke.Z on 2017/4/21.
@@ -47,6 +48,7 @@ public class Datas {
             "Android填空题实现",
             "Android编程之图片颜色处理方法",
             "探探卡片" + TTCardsActivity.class.getSimpleName(),
+            "频谱" + PinPuActivity.class.getSimpleName(),
             "Glide获取保存网络图片和本地图片",
             "123",
             "456",
