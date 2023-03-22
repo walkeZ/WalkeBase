@@ -1,7 +1,9 @@
 package walke.demolibrary.layoutmanager;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 import walke.base.activity.TitleActivity;
 import walke.base.widget.TitleLayout;
@@ -15,7 +17,7 @@ import walke.demolibrary.R;
  * https://www.jianshu.com/p/879988f9c78c
  */
 public class TTCardsActivity extends TitleActivity {
-    private int[] imgs = new int[]{R.mipmap.movie1, R.mipmap.movie2, R.mipmap.movie3, R.mipmap.movie4,
+    private int[] mImgs = new int[]{R.mipmap.movie1, R.mipmap.movie2, R.mipmap.movie3, R.mipmap.movie4,
             R.mipmap.movie5, R.mipmap.movie6, R.mipmap.movie7, R.mipmap.movie8};
     private RecyclerView mRecyclerView;
 
@@ -32,7 +34,15 @@ public class TTCardsActivity extends TitleActivity {
 
     @Override
     protected void initData() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.setAdapter(new TTCAdapter(imgs));
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setLayoutManager(new SlideCardLayoutManager());
+        TTCAdapter adapter = new TTCAdapter(mImgs);
+        mRecyclerView.setAdapter(adapter);
+        ArrayList<Integer> imgs = new ArrayList<>();
+        for (int i = 0; i < mImgs.length; i++) {
+            imgs.add(mImgs[i]);
+        }
+        // SlideCardLayoutManager
+        new ItemTouchHelper(new SlideCardCallBack(adapter, imgs)).attachToRecyclerView(mRecyclerView);
     }
 }
