@@ -14,6 +14,7 @@
         <activity android:name=".picture.BitmapColorActivity"/>
         <activity android:name=".layoutmanager.TTCardsActivity"/>
         <activity android:name=".pinpu.PinPuActivity"/>
+        <activity android:name=".pinpu.PinPuActivity2"/>
 <!--        <activity android:name=".glide.GlideActivity"/>-->
         <!-- Glide引用将RGB565改成ARGB8888需配置 -->
     <!--    <meta-data

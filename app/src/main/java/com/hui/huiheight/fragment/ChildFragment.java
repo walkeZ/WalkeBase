@@ -44,6 +44,7 @@ import walke.demolibrary.interface3.Demo3Activity;
 import walke.demolibrary.layoutmanager.TTCardsActivity;
 import walke.demolibrary.picture.BitmapColorActivity;
 import walke.demolibrary.pinpu.PinPuActivity;
+import walke.demolibrary.pinpu.PinPuActivity2;
 import walke.widget.sunset.SunAnimationActivity;
 
 
@@ -136,6 +137,7 @@ public class ChildFragment extends AppFragment {
             mActivities.add(new BitmapColorActivity());
             mActivities.add(new TTCardsActivity());
             mActivities.add(new PinPuActivity());
+            mActivities.add(new PinPuActivity2());
 //            mActivities.add(new GlideActivity());
         } else if ("views".equals(title)) {
 
