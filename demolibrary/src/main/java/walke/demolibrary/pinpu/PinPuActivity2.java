@@ -29,11 +29,10 @@ public class PinPuActivity2 extends AppCompatActivity {
     private Visualizer mVisualizer0; // ����ϵͳ��Ƶ��,0-����Ҷ����Ƶ�ף�1-��������Ƶ��
     //private Visualizer mVisualizer1;
     private MyVisualizerView mVisualizerView;
-    final int CRate = Visualizer.getMaxCaptureRate()/2;
+    final int CRate = Visualizer.getMaxCaptureRate() / 2;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_pinpu2);
@@ -42,7 +41,7 @@ public class PinPuActivity2 extends AppCompatActivity {
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         // ����MediaPlayer����,�������Ƶ
         // ��Ƶ·��Ϊ  res/raw/beautiful.mp3
-        mPlayer = MediaPlayer.create(this, R.raw.ddddd);
+        mPlayer = MediaPlayer.create(this, R.raw.ski);
 
         // ����MyVisualizerView�����������ʾ����ͼ
         mVisualizerView = new MyVisualizerView(this);
@@ -51,7 +50,7 @@ public class PinPuActivity2 extends AppCompatActivity {
                 ViewGroup.LayoutParams.FILL_PARENT));
 
         // ��MyVisualizerView�����ӵ�layout������
-        LinearLayout pinpulayout=(LinearLayout)findViewById(R.id.pinpu2_layout1);//Ƶ����ʾ����
+        LinearLayout pinpulayout = (LinearLayout) findViewById(R.id.pinpu2_layout1);//Ƶ����ʾ����
         pinpulayout.addView(mVisualizerView);
 
         //���������α�ʾ�����Ҳ�����
@@ -85,22 +84,20 @@ public class PinPuActivity2 extends AppCompatActivity {
         //����Ŀǰ�뵽�İ취ֻ�з�����Visualizer��ȡ�����ˡ����ʧ���ˣ����������ǻ��������Ǹ�����Ϊ׼�ģ��������ݴ洢��ָ��λ�ã��ᱻ���ǡ�
         //�뵽�İ취���ڴ����л�ʱ������setupVisualizer
         mVisualizer0.setDataCaptureListener(
-                new Visualizer.OnDataCaptureListener()
-                {
+                new Visualizer.OnDataCaptureListener() {
                     //����ص�Ӧ�òɼ����ǿ��ٸ���Ҷ�任�йص�����
                     public void onWaveFormDataCapture(Visualizer visualizer,
-                                                      byte[] bytes, int samplingRate)
-                    {
+                                                      byte[] bytes, int samplingRate) {
                         //mVisualizerView.updateVisualizer0(bytes); //�������������ȡ���ݣ�������ʾ�ᡰ������
                     }
+
                     //����ص�Ӧ�òɼ����ǲ�������
                     public void onFftDataCapture(Visualizer visualizer,
-                                                 byte[] fft, int samplingRate)
-                    {
+                                                 byte[] fft, int samplingRate) {
                         // ��waveform�������ݸ���mVisualizerView���
                         mVisualizerView.updateVisualizer0(fft); //ԭ���ǲɼ��������ݵ�,���ò�������updateVisualizer���ô������ݣ����¼���
                     }
-                }, CRate , false, true);
+                }, CRate, false, true);
 
 	         /*
              //ȡ�������ݵĻ�������������ʮ�ֿ϶��ϸ��Ҫ�������˳����ţ���������������������ţ�����������ȡ�����ģ�����û����ʾ����ʹ��һ����������û���κβ���
@@ -146,32 +143,29 @@ public class PinPuActivity2 extends AppCompatActivity {
         mVisualizer0.setCaptureSize(1024);
 
         mVisualizer0.setDataCaptureListener(
-                new Visualizer.OnDataCaptureListener()
-                {
+                new Visualizer.OnDataCaptureListener() {
                     //����ص�Ӧ�òɼ����ǿ��ٸ���Ҷ�任�йص�����
                     @Override
                     public void onFftDataCapture(Visualizer visualizer,
-                                                 byte[] fft, int samplingRate)
-                    {
+                                                 byte[] fft, int samplingRate) {
                         //mVisualizerView.updateVisualizer0(fft);
                     }
+
                     //����ص�Ӧ�òɼ����ǲ�������
                     @Override
                     public void onWaveFormDataCapture(Visualizer visualizer,
-                                                      byte[] waveform, int samplingRate)
-                    {
+                                                      byte[] waveform, int samplingRate) {
                         // ��waveform�������ݸ���mVisualizerView���
                         mVisualizerView.updateVisualizer0(waveform); //ԭ���ǲɼ��������ݵ�,���ò�������updateVisualizer���ô������ݣ����¼���
                     }
-                }, CRate , true, false);
+                }, CRate, true, false);
 
         mVisualizer0.setEnabled(true);
     }
 
     /*** ����Visualizer���������ݶ�̬���Ʋ���Ч�����ֱ�Ϊ��
      * ��״���Ρ���״���Ρ����߲��� */
-    class MyVisualizerView extends View
-    {
+    class MyVisualizerView extends View {
 
         private static final int DN_W = 470; //view����뵥����Ƶ��ռ�� - ����480 ��΢��
         private static final int DN_H = 180; //view�߶��뵥����Ƶ��ռ��
@@ -205,8 +199,7 @@ public class PinPuActivity2 extends AppCompatActivity {
         //private boolean mFirst = true;
         //private int mSpectrumNum = 48;
 
-        public MyVisualizerView(Context context)
-        {
+        public MyVisualizerView(Context context) {
             super(context);
             bytes = null;
             // ���û��ʵ�����
@@ -239,18 +232,16 @@ public class PinPuActivity2 extends AppCompatActivity {
 
         //������ͬ��Ƶ�ײ�����ʾ��Ƶ�׹��ɲ�һ��Ӧ�þ�����Ϊ�������Ҷ�任�ɼ����ݷ������������������ǲ�һ���ģ����������о������ԣ����Ͼ������֣����Ҳ������õ�~~
         //���ò������ݵĻ�����Ͳ��ô���ʲô���ø���Ҷ�Ļ���Ҫ������ת������
-        public void updateVisualizer0(byte[] fft)
-        {
-            if(type>1)  //��������Ƶ��
+        public void updateVisualizer0(byte[] fft) {
+            if (type > 1)  //��������Ƶ��
             {
                 bytes = fft;  //ԭ���ò������ݣ����Ҳ���Ҫ���ݴ���ֱ��ȡ�������
                 // ֪ͨ������ػ��Լ���
                 invalidate();
-            }
-            else if(type==0||type==1)  //����ʽ����ҶƵ�׺Ͳ���Ƶ��
+            } else if (type == 0 || type == 1)  //����ʽ����ҶƵ�׺Ͳ���Ƶ��
             {
-                if(type==0)  levelStep = 128 / MAX_LEVEL2;
-                else  levelStep = 128 / MAX_LEVEL;
+                if (type == 0) levelStep = 128 / MAX_LEVEL2;
+                else levelStep = 128 / MAX_LEVEL;
 
                 byte[] model = new byte[fft.length / 2 + 1];
                 if (mDataEn) {
@@ -295,9 +286,8 @@ public class PinPuActivity2 extends AppCompatActivity {
          }  */
 
         //����Ƶ�׿�͵�Ӱ
-        protected void drawCylinder0(Canvas canvas, float x, byte value)
-        {
-            if (value <= 0)  value = 1;//������һ��Ƶ�׿�
+        protected void drawCylinder0(Canvas canvas, float x, byte value) {
+            if (value <= 0) value = 1;//������һ��Ƶ�׿�
             for (int i = 0; i < value; i++) {                  //ÿ������������value��������
                 float y = (getHeight() - i * vgap - vgap);//����y������
                 //float y = (getHeight() - i * vgap - vgap) - 40;//ԭ����������������ʾ������y������
@@ -317,10 +307,10 @@ public class PinPuActivity2 extends AppCompatActivity {
         }
 
         //����Ƶ�׿�͵�Ӱ 2//ע���޸ĵĵط������������������ͻ��Ƴ�ʼ�ĸ���(y��)
-        protected void drawCylinder1(Canvas canvas, float x, byte value)
-        {
-            if (value <= MAX_LEVEL2/2 + 1)  value = MAX_LEVEL2/2 + 1;   //������һ��Ƶ�׿�(<=8����������Ӱ)��ʵ������ʱΪ8~9�����ӣ���8���ȶ�����9��Ϊ��Ӱ���ȶ���������value=9������Ӱ��
-            for (int i = 0; i < value - MAX_LEVEL2/2; i++) {        //ÿ�����������Ƹ�������
+        protected void drawCylinder1(Canvas canvas, float x, byte value) {
+            if (value <= MAX_LEVEL2 / 2 + 1)
+                value = MAX_LEVEL2 / 2 + 1;   //������һ��Ƶ�׿�(<=8����������Ӱ)��ʵ������ʱΪ8~9�����ӣ���8���ȶ�����9��Ϊ��Ӱ���ȶ���������value=9������Ӱ��
+            for (int i = 0; i < value - MAX_LEVEL2 / 2; i++) {        //ÿ�����������Ƹ�������
                 float y = (getHeight() - i * vgap2 - vgap2);   //����y������ //
                 //float y = (getHeight() - i * vgap - vgap) - 40;//ԭ����������������ʾ������y������
 
@@ -339,19 +329,17 @@ public class PinPuActivity2 extends AppCompatActivity {
         }
 
         @Override
-        protected void onDraw(Canvas canvas)
-        {
+        protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
             //����Ҷ��ʾʱ��������return;��������Ҷ��Ƶ�׾���ʾ�����ˣ���
-            if(type>1 && bytes == null) {  //��������Ǻ��������Ӱ�캦�ҵģ�ֱ��ȥ�����ˣ��ߺߺߣ�����ȥ�������п��ܳ������������~
+            if (type > 1 && bytes == null) {  //��������Ǻ��������Ӱ�캦�ҵģ�ֱ��ȥ�����ˣ��ߺߺߣ�����ȥ�������п��ܳ������������~
                 return;
             }
             // ���ư�ɫ����
             //canvas.drawColor(Color.WHITE);
             // ʹ��rect�����¼������Ŀ�Ⱥ͸߶�
-            rect.set(0,0,getWidth(),getHeight());
-            switch(type)
-            {
+            rect.set(0, 0, getWidth(), getHeight());
+            switch (type) {
                 //-------���Ƹ���ҶƵ��ͼ-------
                 case 1:
                     for (int i = 0; i < CYLINDER_NUM; i++) { //����25��������
@@ -366,11 +354,10 @@ public class PinPuActivity2 extends AppCompatActivity {
                     break;
                 // -------������״����ͼ-------
                 case 3:
-                    for (int i = 0; i < bytes.length - 1; i++)
-                    {
+                    for (int i = 0; i < bytes.length - 1; i++) {
                         float left1 = getWidth() * i / (bytes.length - 1);
                         // ���ݲ���ֵ����þ��εĸ߶�
-                        float top1 = (rect.height()-(byte)(bytes[i+1]+128)
+                        float top1 = (rect.height() - (byte) (bytes[i + 1] + 128)
                                 * rect.height() / 128) - 5;     //����Ҳ��ʾ�ײ����Լ��Ĺ��ģ�ԭ����û��-5
                         float right1 = left1 + 1;
                         float bottom1 = rect.height();
@@ -381,13 +368,12 @@ public class PinPuActivity2 extends AppCompatActivity {
                     break;
                 // -------������״�Ĳ���ͼ��ÿ��18�����������һ�����Σ�-------
                 case 4:
-                    for (int i = 0; i < bytes.length - 1; i += 18)
-                    {
-                        float left1 = rect.width()*i/(bytes.length - 1);
+                    for (int i = 0; i < bytes.length - 1; i += 18) {
+                        float left1 = rect.width() * i / (bytes.length - 1);
                         // ���ݲ���ֵ����þ��εĸ߶�
-                        float top1 = (rect.height()-(byte)(bytes[i+1]+128)
+                        float top1 = (rect.height() - (byte) (bytes[i + 1] + 128)
                                 * rect.height() / 128) - 5;          //����Ҳ��ʾ�ײ����Լ��Ĺ��ģ�ԭ����û��-5
-                        float right1 = left1 + (strokeWidth*1/2);  //ԭ����left1+6����������Ӧ��С�ģ�����һ����������Ӧ
+                        float right1 = left1 + (strokeWidth * 1 / 2);  //ԭ����left1+6����������Ӧ��С�ģ�����һ����������Ӧ
                         float bottom1 = rect.height();
                         MyPaint.setStrokeWidth(1f);
                         MyPaint.setColor(Color.GREEN);
@@ -397,14 +383,12 @@ public class PinPuActivity2 extends AppCompatActivity {
                 // -------�������߲���ͼ-------
                 case 2:
                     // ���point���黹δ��ʼ��
-                    if (points == null || points.length < bytes.length * 4)
-                    {
+                    if (points == null || points.length < bytes.length * 4) {
                         points = new float[bytes.length * 4];
                     }
-                    for (int i = 0; i < bytes.length - 1; i++)
-                    {
+                    for (int i = 0; i < bytes.length - 1; i++) {
                         // �����i�����x����
-                        points[i * 4] = rect.width()*i/(bytes.length - 1);
+                        points[i * 4] = rect.width() * i / (bytes.length - 1);
                         // ����bytes[i]��ֵ�����ε��ֵ�������i�����y����
                         points[i * 4 + 1] = (rect.height() / 2) //�м�λ�ã���ʼ��
                                 + ((byte) (bytes[i] + 128)) * 128
@@ -422,7 +406,8 @@ public class PinPuActivity2 extends AppCompatActivity {
                     MyPaint.setColor(Color.YELLOW);
                     canvas.drawLines(points, MyPaint);
                     break;
-                default : break;
+                default:
+                    break;
             }
         }
 
@@ -448,23 +433,21 @@ public class PinPuActivity2 extends AppCompatActivity {
 
         // ���û����������ʱ���л���������
         @Override
-        public boolean onTouchEvent(MotionEvent me)
-        {
-            if(me.getAction() != MotionEvent.ACTION_DOWN)
+        public boolean onTouchEvent(MotionEvent me) {
+            if (me.getAction() != MotionEvent.ACTION_DOWN)
                 return false;
-            type ++;
-            if(type >= 5){
+            type++;
+            if (type >= 5) {
                 type = 0;
             }
 
             mVisualizer0.setEnabled(false);  //��������У�����Ȼ�����л��ٶȻ᲻�ϱ�죡������ԭ������ܾ��ˣ�Ѿ�ģ�
             mVisualizer0.release();  //����Ҫ��release���������ã��������
-            mVisualizer0=null;
+            mVisualizer0 = null;
             //����type��ֵ����setupVisualizer//Ѿ�����������ڳɹ��ˣ���ȫ������ô���ǣ�����
-            if(type!=1) {
+            if (type != 1) {
                 setupVisualizer1();   //���ò���Ƶ��
-            }
-            else if(type==1) {
+            } else if (type == 1) {
                 setupVisualizer0(); //���ø���ҶƵ��
             }
 
@@ -473,11 +456,9 @@ public class PinPuActivity2 extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
-        if (isFinishing() && mPlayer != null)
-        {
+        if (isFinishing() && mPlayer != null) {
             // �ͷ����ж���
             mVisualizer0.release();
             // mVisualizer1.release();
