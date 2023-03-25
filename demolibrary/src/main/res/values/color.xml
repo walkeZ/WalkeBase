@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="waveformBacg">#efefef</color>
+    <color name="waveformCircle">#f6837e</color>
+    <color name="waveformBorderLine">#a9a9a9</color>
+    <color name="waveformCenterLine">#27c7af</color>
+</resources>

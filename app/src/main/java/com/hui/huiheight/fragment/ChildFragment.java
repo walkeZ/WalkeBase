@@ -40,6 +40,7 @@ import walke.base.TestActivityTest;
 import walke.base.tool.SetUtil;
 import walke.demolibrary.audio.activity.AudioActivity01;
 import walke.demolibrary.audio.activity.AudioActivity02;
+import walke.demolibrary.audio.waveform.WaveformActivity;
 import walke.demolibrary.completion.CompletionActivity;
 import walke.demolibrary.interface1.Demo1Activity;
 import walke.demolibrary.interface3.Demo3Activity;
@@ -49,11 +50,9 @@ import walke.demolibrary.pinpu.PinPuActivity;
 import walke.demolibrary.pinpu.PinPuActivity2;
 import walke.widget.sunset.SunAnimationActivity;
 
-
 /**
  * Created by walke.Z on 2017/8/2.
  */
-
 public class ChildFragment extends AppFragment {
 
     private static ChildFragment mChildFragment;
@@ -110,7 +109,6 @@ public class ChildFragment extends AppFragment {
                 }
             });
         }
-
     }
 
     private void initActivitys(String title) {
@@ -142,6 +140,7 @@ public class ChildFragment extends AppFragment {
             mActivities.add(new PinPuActivity2());
             mActivities.add(new AudioActivity01());
             mActivities.add(new AudioActivity02());
+            mActivities.add(new WaveformActivity());
 //            mActivities.add(new GlideActivity());
         } else if ("views".equals(title)) {
 
@@ -152,7 +151,6 @@ public class ChildFragment extends AppFragment {
         } else {
 
         }
-
     }
 
     @Override
@@ -160,7 +158,7 @@ public class ChildFragment extends AppFragment {
         askPermission();
     }
 
-    List<String> permissions = new ArrayList<String>();
+    List<String> permissions = new ArrayList<>();
 
     /**
      * https://blog.csdn.net/idlegao/article/details/128966705

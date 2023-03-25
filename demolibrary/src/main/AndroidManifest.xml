@@ -17,6 +17,11 @@
         <activity android:name=".pinpu.PinPuActivity2"/>
         <activity android:name=".audio.activity.AudioActivity01"/>
         <activity android:name=".audio.activity.AudioActivity02"/>
+        <activity android:name=".audio.waveform.WaveformActivity"/>
+        <activity android:name=".audio.waveform.DoubleChannelActivity"/>
+        <activity android:name=".audio.waveform.DoubleFileActivity"/>
+        <activity android:name=".audio.waveform.SingleChannelActivity"/>
+        <activity android:name=".audio.waveform.SingleFileActivity"/>
 <!--        <activity android:name=".glide.GlideActivity"/>-->
         <!-- Glide引用将RGB565改成ARGB8888需配置 -->
     <!--    <meta-data

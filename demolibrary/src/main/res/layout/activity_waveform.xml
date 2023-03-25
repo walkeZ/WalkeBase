@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".audio.waveform.WaveformActivity">
+
+    <Button
+        android:id="@+id/btn_singleChannel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="单声道波形绘制"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btn_singleFile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="单声道文件波形绘制"
+        app:layout_constraintTop_toBottomOf="@+id/btn_singleChannel" />
+
+    <Button
+        android:id="@+id/btn_doubleChannel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="双声道波形绘制"
+        app:layout_constraintTop_toBottomOf="@+id/btn_singleFile" />
+
+
+    <Button
+        android:id="@+id/btn_doubleFile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="双声道文件波形绘制"
+        app:layout_constraintTop_toBottomOf="@+id/btn_doubleChannel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
