@@ -1,5 +1,7 @@
 package com.hui.huiheight.config;
 
+import walke.demolibrary.audio.activity.AudioActivity01;
+import walke.demolibrary.audio.activity.AudioActivity02;
 import walke.demolibrary.layoutmanager.TTCardsActivity;
 import walke.demolibrary.pinpu.PinPuActivity;
 import walke.demolibrary.pinpu.PinPuActivity2;
@@ -51,6 +53,8 @@ public class Datas {
             "探探卡片" + TTCardsActivity.class.getSimpleName(),
             "频谱" + PinPuActivity.class.getSimpleName(),
             "频谱" + PinPuActivity2.class.getSimpleName(),
+            "音频(波、谱)" + AudioActivity01.class.getSimpleName(),
+            "音频(波、谱)" + AudioActivity02.class.getSimpleName(),
             "Glide获取保存网络图片和本地图片",
             "123",
             "456",

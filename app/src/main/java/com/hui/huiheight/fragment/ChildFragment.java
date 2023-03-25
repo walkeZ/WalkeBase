@@ -38,6 +38,8 @@ import java.util.List;
 import walke.base.AppFragment;
 import walke.base.TestActivityTest;
 import walke.base.tool.SetUtil;
+import walke.demolibrary.audio.activity.AudioActivity01;
+import walke.demolibrary.audio.activity.AudioActivity02;
 import walke.demolibrary.completion.CompletionActivity;
 import walke.demolibrary.interface1.Demo1Activity;
 import walke.demolibrary.interface3.Demo3Activity;
@@ -138,6 +140,8 @@ public class ChildFragment extends AppFragment {
             mActivities.add(new TTCardsActivity());
             mActivities.add(new PinPuActivity());
             mActivities.add(new PinPuActivity2());
+            mActivities.add(new AudioActivity01());
+            mActivities.add(new AudioActivity02());
 //            mActivities.add(new GlideActivity());
         } else if ("views".equals(title)) {
 
