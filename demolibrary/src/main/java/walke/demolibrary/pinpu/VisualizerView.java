@@ -34,6 +34,12 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
     boolean mDataEn = true;
 
+    private Visualizer.OnDataCaptureListener mDataCaptureListener;
+
+    public void setDataCaptureListener(Visualizer.OnDataCaptureListener dataCaptureListener) {
+        mDataCaptureListener = dataCaptureListener;
+    }
+
     //构造函数初始化画笔
     public VisualizerView(Context context) {
         super(context);
@@ -124,6 +130,9 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
     //这个回调应该采集的是快速傅里叶变换有关的数据
     @Override
     public void onFftDataCapture(Visualizer visualizer, byte[] fft, int samplingRate) {
+        if (mDataCaptureListener != null) {
+            mDataCaptureListener.onFftDataCapture(visualizer, fft, samplingRate);
+        }
         byte[] model = new byte[fft.length / 2 + 1];
         if (mDataEn) {
             model[0] = (byte) Math.abs(fft[1]);
@@ -157,5 +166,8 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
     @Override
     public void onWaveFormDataCapture(Visualizer visualizer, byte[] waveform, int samplingRate) {
         // Do nothing...
+        if (mDataCaptureListener != null) {
+            mDataCaptureListener.onWaveFormDataCapture(visualizer, waveform, samplingRate);
+        }
     }
 }

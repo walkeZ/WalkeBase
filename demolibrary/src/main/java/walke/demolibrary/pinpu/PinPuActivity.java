@@ -7,7 +7,6 @@ import android.media.audiofx.Equalizer;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -26,7 +25,6 @@ import walke.demolibrary.R;
  * @desc : 音频频谱
  */
 public class PinPuActivity extends AppCompatActivity {
-
     private static final float VISUALIZER_HEIGHT_DIP = 150f;//频谱View高度
 
     private MediaPlayer mMediaPlayer;//音频
@@ -46,10 +44,9 @@ public class PinPuActivity extends AppCompatActivity {
 
         setVolumeControlStream(AudioManager.STREAM_MUSIC);//设置音频流 - STREAM_MUSIC：音乐回放即媒体音量
 
-
         mLayout = new LinearLayout(this);//代码创建布局
         mLayout.setOrientation(LinearLayout.VERTICAL);//设置为线性布局-上下排列
-//        mLayout.setBackgroundResource(R.drawable.ac88o);//设置界面背景
+        mLayout.setBackgroundResource(R.drawable.bg);//设置界面背景
         mLayout.setGravity(Gravity.CENTER);
         setContentView(mLayout);//将布局添加到 Activity
 
@@ -59,18 +56,12 @@ public class PinPuActivity extends AppCompatActivity {
         setupEqualizeFxAndUi();//添加均衡器到界面
         setupPlayButton();//添加按钮到界面
 
-
         mVisualizer.setEnabled(true);//false 则不显示
-        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-            }
+        mMediaPlayer.setOnCompletionListener(mp -> {
         });
 
         mMediaPlayer.start();//开始播放
         mMediaPlayer.setLooping(true);//循环播放
-
     }
 
     /**
@@ -119,9 +110,7 @@ public class PinPuActivity extends AppCompatActivity {
             maxDbTextView.setTextColor(Color.WHITE);
             maxDbTextView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             maxDbTextView.setText((maxEqualizer / 100) + " dB");
-
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 40);
-
 
             layoutParams.weight = 1;
             SeekBar seekbar = new SeekBar(this);
@@ -131,8 +120,6 @@ public class PinPuActivity extends AppCompatActivity {
             seekbar.setThumbOffset(20);
             seekbar.setMax(maxEqualizer - minEqualizer);
             seekbar.setProgress(mEqualizer.getBandLevel(band));
-
-
             seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
                 @Override
@@ -162,7 +149,6 @@ public class PinPuActivity extends AppCompatActivity {
         eqTextView.setTextSize(20);
 
         mLayout.addView(eqTextView);
-
     }
 
     /**
@@ -170,7 +156,6 @@ public class PinPuActivity extends AppCompatActivity {
      */
     private void setupVisualizerFxAndUi() {
         mBaseVisualizerView = new VisualizerView(this);
-
         mBaseVisualizerView.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.FILL_PARENT,//宽度
                 (int) (VISUALIZER_HEIGHT_DIP * getResources().getDisplayMetrics().density)//高度
@@ -190,16 +175,13 @@ public class PinPuActivity extends AppCompatActivity {
         play = new ImageButton(this);
         play.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         play.setBackgroundResource(R.drawable.new_main_activity_stop_up);
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mMediaPlayer.isPlaying()) {
-                    play.setBackgroundResource(R.drawable.new_main_activity_play_up);
-                    mMediaPlayer.pause();
-                } else {
-                    play.setBackgroundResource(R.drawable.new_main_activity_stop_up);
-                    mMediaPlayer.start();
-                }
+        play.setOnClickListener(view -> {
+            if (mMediaPlayer.isPlaying()) {
+                play.setBackgroundResource(R.drawable.new_main_activity_play_up);
+                mMediaPlayer.pause();
+            } else {
+                play.setBackgroundResource(R.drawable.new_main_activity_stop_up);
+                mMediaPlayer.start();
             }
         });
 

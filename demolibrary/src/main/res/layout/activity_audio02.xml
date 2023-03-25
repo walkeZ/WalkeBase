@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/audio02_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".audio.activity.AudioActivity02">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="频谱fft表现" />
 
     <walke.demolibrary.audio.widget.WaveformView
         android:id="@+id/audio02_waveformView"
@@ -57,5 +64,11 @@
         android:id="@+id/audio02_waveformView2"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
+
+<!--    <walke.demolibrary.pinpu.VisualizerView-->
+<!--        android:id="@+id/audio02_visualizerView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:layout_marginTop="10dp" />-->
 
 </LinearLayout>

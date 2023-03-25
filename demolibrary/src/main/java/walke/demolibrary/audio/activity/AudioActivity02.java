@@ -7,6 +7,8 @@ import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import java.io.IOException;
 
@@ -15,6 +17,7 @@ import walke.base.widget.TitleLayout;
 import walke.demolibrary.R;
 import walke.demolibrary.audio.widget.SimpleWaveformRenderer;
 import walke.demolibrary.audio.widget.WaveformView;
+import walke.demolibrary.pinpu.VisualizerView;
 
 
 /**
@@ -32,6 +35,8 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
     private Visualizer mVisualizer;
     private boolean mPlayPause;
     private WaveformView mWaveformView2;
+    private VisualizerView mVisualizerView;
+    private LinearLayout mLayout;
 
 //    /**
 //     * Called when the activity is first created.
@@ -50,6 +55,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
     @Override
     protected void initView(TitleLayout titleLayout) {
         titleLayout.setTitleText("波形 AudioActivity02");
+        init();
     }
 
     @Override
@@ -60,7 +66,6 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
     @Override
     protected void onResume() {
         super.onResume();
-        init();
     }
 
     @Override
@@ -84,14 +89,15 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         // it displays something
         mWaveformView = (WaveformView) findViewById(R.id.audio02_waveformView);
         mWaveformView2 = (WaveformView) findViewById(R.id.audio02_waveformView2);
+        mLayout = (LinearLayout) findViewById(R.id.audio02_root);
+//        mVisualizerView = (VisualizerView) findViewById(R.id.audio02_visualizerView);
         mWaveformView.setRenderer(new SimpleWaveformRenderer(Color.GREEN, new Paint(), new Path()));
         mWaveformView2.setRenderer(new SimpleWaveformRenderer(Color.GREEN, new Paint(), new Path()));
 
         mVisualizer = new Visualizer(mPlayer.getAudioSessionId());
         mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
 
-        mVisualizer.setDataCaptureListener(this,
-                Visualizer.getMaxCaptureRate() / 2, true, true);
+        mVisualizer.setDataCaptureListener(this, Visualizer.getMaxCaptureRate() / 2, true, true);
 
         // Enabled Visualizer and disable when we're done with the stream
         mVisualizer.setEnabled(true);
@@ -100,6 +106,15 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
             mVisualizer.setEnabled(false);
         });
 
+        mVisualizerView = new VisualizerView(this);
+        mVisualizerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,//宽度
+                (int) (150f * getResources().getDisplayMetrics().density)//高度
+        ));
+        //将频谱View添加到布局
+        mLayout.addView(mVisualizerView,0);
+        //设置允许波形表示，并且捕获它
+        mVisualizerView.setVisualizer(mVisualizer);
+        mVisualizerView.setDataCaptureListener(this);
     }
 
     private void cleanUp() {
@@ -128,6 +143,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         mPlayPause = true;
         mPlayer.pause();
     }
+
     public void stop(View view) {
         mPlayPause = false;
         mPlayer.stop();
