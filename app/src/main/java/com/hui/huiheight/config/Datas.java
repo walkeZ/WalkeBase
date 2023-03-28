@@ -2,6 +2,7 @@ package com.hui.huiheight.config;
 
 import walke.demolibrary.audio.activity.AudioActivity01;
 import walke.demolibrary.audio.activity.AudioActivity02;
+import walke.demolibrary.audio.volume.VolumeViewActivity;
 import walke.demolibrary.audio.waveform.WaveformActivity;
 import walke.demolibrary.layoutmanager.TTCardsActivity;
 import walke.demolibrary.pinpu.PinPuActivity;
@@ -59,6 +60,7 @@ public class Datas {
             "音频(波、谱)" + AudioActivity02.class.getSimpleName(),
             "音频(波)录制" + WaveformActivity.class.getSimpleName(),
             "音频-录制" + RecorderActivity.class.getSimpleName(),
+            "音频-音量波纹视图" + VolumeViewActivity.class.getSimpleName(),
             "Glide获取保存网络图片和本地图片",
             "123",
             "456",

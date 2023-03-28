@@ -23,6 +23,7 @@
         <activity android:name=".audio.waveform.DoubleFileActivity"/>
         <activity android:name=".audio.waveform.SingleChannelActivity"/>
         <activity android:name=".audio.waveform.SingleFileActivity"/>
+        <activity android:name=".audio.volume.VolumeViewActivity"/>
 <!--        <activity android:name=".glide.GlideActivity"/>-->
         <!-- Glide引用将RGB565改成ARGB8888需配置 -->
     <!--    <meta-data

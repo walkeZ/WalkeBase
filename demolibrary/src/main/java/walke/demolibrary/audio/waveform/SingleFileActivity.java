@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import androidx.annotation.Nullable;
-
 import java.io.File;
 
 import walke.base.activity.TitleActivity;
@@ -60,14 +58,6 @@ public class SingleFileActivity extends TitleActivity implements View.OnClickLis
             }
         }
     };
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
-        setContentView(R.layout.single_file_layout);
-
-    }
 
     @Override
     protected int rootLayoutId() {

@@ -40,6 +40,7 @@ import walke.base.TestActivityTest;
 import walke.base.tool.SetUtil;
 import walke.demolibrary.audio.activity.AudioActivity01;
 import walke.demolibrary.audio.activity.AudioActivity02;
+import walke.demolibrary.audio.volume.VolumeViewActivity;
 import walke.demolibrary.audio.waveform.WaveformActivity;
 import walke.demolibrary.completion.CompletionActivity;
 import walke.demolibrary.interface1.Demo1Activity;
@@ -143,6 +144,7 @@ public class ChildFragment extends AppFragment {
             mActivities.add(new AudioActivity02());
             mActivities.add(new WaveformActivity());
             mActivities.add(new RecorderActivity());
+            mActivities.add(new VolumeViewActivity());
 //            mActivities.add(new GlideActivity());
         } else if ("views".equals(title)) {
 
