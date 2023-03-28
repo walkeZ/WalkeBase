@@ -81,7 +81,8 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
     }
 
     private void init() {
-        mPlayer = MediaPlayer.create(this, R.raw.ski);
+//        mPlayer = MediaPlayer.create(this, R.raw.ski);
+        mPlayer = MediaPlayer.create(this, R.raw.aaaass);
         mPlayer.setLooping(true);
         mPlayer.start();
 
@@ -93,10 +94,11 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
 //        mVisualizerView = (VisualizerView) findViewById(R.id.audio02_visualizerView);
         mWaveformView.setRenderer(new SimpleWaveformRenderer(Color.GREEN, new Paint(), new Path()));
         mWaveformView2.setRenderer(new SimpleWaveformRenderer(Color.GREEN, new Paint(), new Path()));
-
+        // 实例化mVisualizer
         mVisualizer = new Visualizer(mPlayer.getAudioSessionId());
+        // 设置内容长度为1024
         mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
-
+        // Visualizer.getMaxCaptureRate()-获取最大采样率,采样速率为512MHz，(3、4 -> true, true)设置同时获取时域、频域波形数据
         mVisualizer.setDataCaptureListener(this, Visualizer.getMaxCaptureRate() / 2, true, true);
 
         // Enabled Visualizer and disable when we're done with the stream
@@ -150,13 +152,13 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         mVisualizer.setEnabled(false);
     }
 
-    //捕获波形数据
+    //捕获波形数,时域波形数据
     @Override
     public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes, int i) {
         mWaveformView.setWaveform(bytes);
     }
 
-    //捕获傅里叶数据
+    //捕获傅里叶数据,频域波形数据
     @Override
     public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int i) {
         mWaveformView2.setWaveform(bytes);

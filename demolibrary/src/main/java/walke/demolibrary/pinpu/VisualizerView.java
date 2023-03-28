@@ -17,7 +17,7 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
     private static final int DN_SW = 5;//单个音频块高度
 
     private int hgap = 0;
-    private int vgap = 0;
+    private int vgap = 0; // 频谱块高度
     private int levelStep = 0;
     private float strokeWidth = 0;
     private float strokeLength = 0;
@@ -95,10 +95,11 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
     @Override
     public void onDraw(Canvas canvas) {
-        int j = -4;
-        for (int i = 0; i < CYLINDER_NUM / 2 - 4; i++) { //绘制 CYLINDER_NUM 个能量柱
+        for (int i = 0; i < CYLINDER_NUM / 2 - 4; i++) {
+            //绘制 CYLINDER_NUM 个能量柱
             drawCylinder(canvas, strokeWidth / 2 + hgap + i * (hgap + strokeLength), mData[i]);
         }
+        int j = -4;
         for (int i = CYLINDER_NUM; i >= CYLINDER_NUM / 2 - 3; i--) {
             j++;
             drawCylinder(canvas, strokeWidth / 2 + hgap + (CYLINDER_NUM / 2 + j - 1) * (hgap + strokeLength), mData[i - 1]);
@@ -116,7 +117,8 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
                 visualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[0]);
             }
             levelStep = 230 / MAX_LEVEL;
-            visualizer.setDataCaptureListener(this, Visualizer.getMaxCaptureRate() / 2, false, true);
+            // 采样速率为512MHz，设置同时获取时域、频域波形数据
+            visualizer.setDataCaptureListener(this, Visualizer.getMaxCaptureRate() / 2, true, true);
 
         } else {
 
@@ -129,16 +131,21 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
     }
 
     //这个回调应该采集的是快速傅里叶变换有关的数据
+    // （横坐标单位为频率 [0HZ, 44100000HZ]）
     @Override
     public void onFftDataCapture(Visualizer visualizer, byte[] fft, int samplingRate) {
         if (mDataCaptureListener != null) {
             mDataCaptureListener.onFftDataCapture(visualizer, fft, samplingRate);
         }
+        // http://events.jianshu.io/p/c95bb166fb28
+        // https://xie.infoq.cn/article/386cc569321fbf0a0f0dbe7e8
+        //1.快速傅里叶变换返回的是512个复数，下标为单是实数，下标为双的是虚数，对每一组复数进行计算即为最终可绘制的数据：
         byte[] model = new byte[fft.length / 2 + 1];
         if (mDataEn) {
             model[0] = (byte) Math.abs(fft[1]);
             int j = 1;
             for (int i = 2; i < fft.length; ) {
+                // Math.hypot(a,b); -> （a平方+b平方）的开方
                 model[j] = (byte) Math.hypot(fft[i], fft[i + 1]);
                 i += 2;
                 j++;
