@@ -18,6 +18,7 @@
         <activity android:name=".audio.activity.AudioActivity01"/>
         <activity android:name=".audio.activity.AudioActivity02"/>
         <activity android:name=".audio.waveform.WaveformActivity"/>
+        <activity android:name=".audio.recorder.RecorderActivity"/>
         <activity android:name=".audio.waveform.DoubleChannelActivity"/>
         <activity android:name=".audio.waveform.DoubleFileActivity"/>
         <activity android:name=".audio.waveform.SingleChannelActivity"/>

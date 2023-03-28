@@ -48,6 +48,7 @@ import walke.demolibrary.layoutmanager.TTCardsActivity;
 import walke.demolibrary.picture.BitmapColorActivity;
 import walke.demolibrary.pinpu.PinPuActivity;
 import walke.demolibrary.pinpu.PinPuActivity2;
+import walke.demolibrary.audio.recorder.RecorderActivity;
 import walke.widget.sunset.SunAnimationActivity;
 
 /**
@@ -141,6 +142,7 @@ public class ChildFragment extends AppFragment {
             mActivities.add(new AudioActivity01());
             mActivities.add(new AudioActivity02());
             mActivities.add(new WaveformActivity());
+            mActivities.add(new RecorderActivity());
 //            mActivities.add(new GlideActivity());
         } else if ("views".equals(title)) {
 

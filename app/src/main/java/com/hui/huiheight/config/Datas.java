@@ -6,6 +6,7 @@ import walke.demolibrary.audio.waveform.WaveformActivity;
 import walke.demolibrary.layoutmanager.TTCardsActivity;
 import walke.demolibrary.pinpu.PinPuActivity;
 import walke.demolibrary.pinpu.PinPuActivity2;
+import walke.demolibrary.audio.recorder.RecorderActivity;
 
 /**
  * Created by Walke.Z on 2017/4/21.
@@ -57,6 +58,7 @@ public class Datas {
             "音频(波、谱)" + AudioActivity01.class.getSimpleName(),
             "音频(波、谱)" + AudioActivity02.class.getSimpleName(),
             "音频(波)录制" + WaveformActivity.class.getSimpleName(),
+            "音频-录制" + RecorderActivity.class.getSimpleName(),
             "Glide获取保存网络图片和本地图片",
             "123",
             "456",

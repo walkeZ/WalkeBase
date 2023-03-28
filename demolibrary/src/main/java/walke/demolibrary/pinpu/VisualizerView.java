@@ -13,7 +13,7 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
     private static final int DN_W = 470;//view宽度与单个音频块占比 - 正常480 需微调
     private static final int DN_H = 360;//view高度与单个音频块占比
-    private static final int DN_SL = 15;//单个音频块宽度
+    private static final int DN_SL = 35;//单个音频块宽度
     private static final int DN_SW = 5;//单个音频块高度
 
     private int hgap = 0;
@@ -24,7 +24,7 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
     protected final static int MAX_LEVEL = 30;//音量柱·音频块 - 最大个数
 
-    protected final static int CYLINDER_NUM = 26;//音量柱 - 最大个数
+    protected final static int CYLINDER_NUM = 8;//音量柱 - 最大个数
 
     protected Visualizer mVisualizer = null;//频谱器
 
@@ -74,10 +74,12 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
     //绘制频谱块和倒影
     protected void drawCylinder(Canvas canvas, float x, byte value) {
-    	if (value == 0) {value = 1;}//最少有一个频谱块
+        if (value == 0) {
+            value = 1;
+        }//最少有一个频谱块
         for (int i = 0; i < value; i++) { //每个能量柱绘制value个能量块
-            float y = (getHeight()/2 - i * vgap - vgap);//计算y轴坐标
-            float y1=(getHeight()/2+i * vgap + vgap);
+            float y = (getHeight() / 2 - i * vgap - vgap);//计算y轴坐标
+            float y1 = (getHeight() / 2 + i * vgap + vgap);
             //绘制频谱块
             mPaint.setColor(Color.BLUE);//画笔颜色
             canvas.drawLine(x, y, (x + strokeLength), y, mPaint);//绘制频谱块
@@ -93,14 +95,13 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
     @Override
     public void onDraw(Canvas canvas) {
-    	int j=-4;
-        for (int i = 0; i < CYLINDER_NUM/2-4; i++) { //绘制25个能量柱
-        	
+        int j = -4;
+        for (int i = 0; i < CYLINDER_NUM / 2 - 4; i++) { //绘制 CYLINDER_NUM 个能量柱
             drawCylinder(canvas, strokeWidth / 2 + hgap + i * (hgap + strokeLength), mData[i]);
         }
-        for(int i =CYLINDER_NUM; i>=CYLINDER_NUM/2-4; i--){
-        j++;
-        	drawCylinder(canvas, strokeWidth / 2 + hgap + (CYLINDER_NUM/2+j-1 )* (hgap + strokeLength), mData[i-1]);
+        for (int i = CYLINDER_NUM; i >= CYLINDER_NUM / 2 - 3; i--) {
+            j++;
+            drawCylinder(canvas, strokeWidth / 2 + hgap + (CYLINDER_NUM / 2 + j - 1) * (hgap + strokeLength), mData[i - 1]);
         }
     }
 
@@ -147,6 +148,7 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
                 model[i] = 0;
             }
         }
+        // 能量柱，CYLINDER_NUM 个
         for (int i = 0; i < CYLINDER_NUM; i++) {
             final byte a = (byte) (Math.abs(model[CYLINDER_NUM - i]) / levelStep);
 
