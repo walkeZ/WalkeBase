@@ -24,6 +24,7 @@ import walke.demolibrary.audio.widget.WaveformView;
 import walke.demolibrary.movedsp.views.VisualizerFFTView;
 import walke.demolibrary.movedsp.views.VisualizerWaveView;
 import walke.demolibrary.pinpu.VisualizerView;
+import walke.demolibrary.pinpu.VisualizerView2;
 
 
 /**
@@ -43,6 +44,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
     private boolean mPlayPause;
     private WaveformView mWaveformView2;
     private VisualizerView mVisualizerView;
+    private VisualizerView2 mVisualizerView2;
     private LinearLayout mLayout;
     private VisualizerWaveView mVisualizerWaveView;
     private VisualizerFFTView mVisualizerFFTView;
@@ -52,6 +54,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
+            if (mPlayer == null) return;
             progress.setProgress(mPlayer.getCurrentPosition());
             if (mHandler.hasMessages(UPDATE_PROGRESS)) return;
             mHandler.sendEmptyMessageDelayed(UPDATE_PROGRESS, 200);
@@ -133,9 +136,12 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         });
 
         mVisualizerView = findViewById(R.id.audio02_VisualizerView);
+        mVisualizerView2 = findViewById(R.id.audio02_VisualizerView2);
         //设置允许波形表示，并且捕获它
         mVisualizerView.setVisualizer(mVisualizer);
+        mVisualizerView2.setVisualizer(mVisualizer);
         mVisualizerView.setDataCaptureListener(this);
+        mVisualizerView2.setDataCaptureListener(this);
 
         duration = mPlayer.getDuration();
         progress.setMax(duration);
@@ -184,6 +190,12 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         mPlayPause = false;
         mPlayer.stop();
         mVisualizer.setEnabled(false);
+        stopSyncProgress();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         stopSyncProgress();
     }
 

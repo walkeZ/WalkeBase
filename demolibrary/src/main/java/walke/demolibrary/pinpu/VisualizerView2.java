@@ -10,7 +10,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-public class VisualizerView extends View implements Visualizer.OnDataCaptureListener {
+public class VisualizerView2 extends View implements Visualizer.OnDataCaptureListener {
 
     private static final int DN_W = 470;//view宽度与单个音频块占比 - 正常480 需微调
     private static final int DN_H = 360;//view高度与单个音频块占比
@@ -18,14 +18,14 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
     private static final int DN_SW = 5;//单个音频块高度
 
     private int hgap = 0;
-    private int vgap = 0;
+    private int vgap = 0; // 频谱块高度
     private int levelStep = 0;
     private float strokeWidth = 0;
     private float strokeLength = 0;
 
     protected final static int MAX_LEVEL = 30;//音量柱·音频块 - 最大个数
 
-    protected final static int CYLINDER_NUM = 26;//音量柱 - 最大个数
+    protected final static int CYLINDER_NUM = 8;//音量柱 - 最大个数
 
     protected Visualizer mVisualizer = null;//频谱器
 
@@ -37,18 +37,17 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
     private Visualizer.OnDataCaptureListener mDataCaptureListener;
 
-
-    public VisualizerView(Context context) {
+    //构造函数初始化画笔
+    public VisualizerView2(Context context) {
         this(context, null);
     }
 
-    public VisualizerView(Context context, @Nullable AttributeSet attrs) {
+    public VisualizerView2(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public VisualizerView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public VisualizerView2(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        //构造函数初始化画笔
         mPaint = new Paint();//初始化画笔工具
         mPaint.setAntiAlias(true);//抗锯齿
         mPaint.setColor(Color.BLUE);//画笔颜色
@@ -61,11 +60,14 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
         mDataCaptureListener = dataCaptureListener;
     }
 
+
     //执行 Layout 操作
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
+
         float w, h, xr, yr;
+
         w = right - left;
         h = bottom - top;
         xr = w / (float) DN_W;
@@ -102,11 +104,11 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
     @Override
     public void onDraw(Canvas canvas) {
-        int j = -4;
-        for (int i = 0; i < CYLINDER_NUM / 2 - 4; i++) { //绘制25个能量柱
+        for (int i = 0; i < CYLINDER_NUM / 2 - 4; i++) {
             //绘制 CYLINDER_NUM 个能量柱
             drawCylinder(canvas, strokeWidth / 2 + hgap + i * (hgap + strokeLength), mData[i]);
         }
+        int j = -4;
         for (int i = CYLINDER_NUM; i >= CYLINDER_NUM / 2 - 3; i--) {
             j++;
             drawCylinder(canvas, strokeWidth / 2 + hgap + (CYLINDER_NUM / 2 + j - 1) * (hgap + strokeLength), mData[i - 1]);
@@ -125,7 +127,7 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
             }
             levelStep = 230 / MAX_LEVEL;
             // 采样速率为512MHz，设置同时获取时域、频域波形数据
-            visualizer.setDataCaptureListener(this, Visualizer.getMaxCaptureRate() / 2, false, true);
+            visualizer.setDataCaptureListener(this, Visualizer.getMaxCaptureRate() / 2, true, true);
 
         } else {
 
@@ -187,4 +189,3 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
         }
     }
 }
-

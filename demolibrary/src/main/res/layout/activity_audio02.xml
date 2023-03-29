@@ -106,10 +106,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="频谱fft表现8个--另一view" />
+            android:text="频谱fft表现--另一view,8个" />
 
         <walke.demolibrary.pinpu.VisualizerView
             android:id="@+id/audio02_VisualizerView"
+            android:layout_width="match_parent"
+            android:layout_height="160dp" />
+
+        <walke.demolibrary.pinpu.VisualizerView2
+            android:id="@+id/audio02_VisualizerView2"
             android:layout_width="match_parent"
             android:layout_height="160dp" />
 
