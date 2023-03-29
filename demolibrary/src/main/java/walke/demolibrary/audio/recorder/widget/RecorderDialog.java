@@ -420,7 +420,10 @@ public class RecorderDialog {
 
                         recodeTime += 0.2;
                         if (RECODE_STATE == RECORD_ING) {
-                            // 获取录制音量
+                            // 获取录制音量，// 得到录音时的最大振幅
+                            // getMaxAmplitude()返回值就是从上一次调用getMaxAmplitude( )的时刻到这一次调用getMaxAmplitude( )时刻之间的音频振幅绝对值的最大值，
+                            // 如果控制两个getMaxAmplitude()调用的间隔比较小的话，就可以实时得到当前的音频的振幅的绝对值了。
+                            //——：https://blog.csdn.net/weixin_42371234/article/details/114572625
                             voiceValue = recorderUtil.getAmplitude();
                             handler.sendEmptyMessage(MSG_RECORDING);
                         }
