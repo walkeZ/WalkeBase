@@ -1,6 +1,6 @@
 package com.hui.huiheight;
 
-import android.app.Application;
+import walke.demolibrary.movedsp.utils.CustomApplication;
 
 /**
  * Created by walke.Z on 2017/6/16.
@@ -16,7 +16,7 @@ import android.app.Application;
  * git使用测试01
  */
 
-public class App extends Application {
+public class App extends CustomApplication {
 
 
     @Override

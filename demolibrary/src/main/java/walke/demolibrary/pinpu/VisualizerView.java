@@ -4,16 +4,17 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Cap;
-import android.graphics.Paint.Join;
 import android.media.audiofx.Visualizer;
+import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 public class VisualizerView extends View implements Visualizer.OnDataCaptureListener {
 
     private static final int DN_W = 470;//view宽度与单个音频块占比 - 正常480 需微调
     private static final int DN_H = 360;//view高度与单个音频块占比
-    private static final int DN_SL = 35;//单个音频块宽度
+    private static final int DN_SL = 15;//单个音频块宽度
     private static final int DN_SW = 5;//单个音频块高度
 
     private int hgap = 0;
@@ -24,7 +25,7 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
     protected final static int MAX_LEVEL = 30;//音量柱·音频块 - 最大个数
 
-    protected final static int CYLINDER_NUM = 8;//音量柱 - 最大个数
+    protected final static int CYLINDER_NUM = 20;//音量柱 - 最大个数
 
     protected Visualizer mVisualizer = null;//频谱器
 
@@ -36,21 +37,29 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
     private Visualizer.OnDataCaptureListener mDataCaptureListener;
 
-    public void setDataCaptureListener(Visualizer.OnDataCaptureListener dataCaptureListener) {
-        mDataCaptureListener = dataCaptureListener;
-    }
-
     //构造函数初始化画笔
     public VisualizerView(Context context) {
-        super(context);
+        this(context, null);
+    }
 
+    public VisualizerView(Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public VisualizerView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         mPaint = new Paint();//初始化画笔工具
         mPaint.setAntiAlias(true);//抗锯齿
         mPaint.setColor(Color.BLUE);//画笔颜色
 
-        mPaint.setStrokeJoin(Join.ROUND); //频块圆角
-        mPaint.setStrokeCap(Cap.ROUND); //频块圆角
+        mPaint.setStrokeJoin(Paint.Join.ROUND); //频块圆角
+        mPaint.setStrokeCap(Paint.Cap.ROUND); //频块圆角
     }
+
+    public void setDataCaptureListener(Visualizer.OnDataCaptureListener dataCaptureListener) {
+        mDataCaptureListener = dataCaptureListener;
+    }
+
 
     //执行 Layout 操作
     @Override

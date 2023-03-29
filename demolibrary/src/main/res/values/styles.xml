@@ -46,4 +46,12 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <style name="lineView" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dip</item>
+        <item name="android:background">#0099ff</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
 </resources>

@@ -46,6 +46,7 @@ import walke.demolibrary.completion.CompletionActivity;
 import walke.demolibrary.interface1.Demo1Activity;
 import walke.demolibrary.interface3.Demo3Activity;
 import walke.demolibrary.layoutmanager.TTCardsActivity;
+import walke.demolibrary.movedsp.activitys.FlashScreenActivity;
 import walke.demolibrary.picture.BitmapColorActivity;
 import walke.demolibrary.pinpu.PinPuActivity;
 import walke.demolibrary.pinpu.PinPuActivity2;
@@ -145,6 +146,7 @@ public class ChildFragment extends AppFragment {
             mActivities.add(new WaveformActivity());
             mActivities.add(new RecorderActivity());
             mActivities.add(new VolumeViewActivity());
+            mActivities.add(new FlashScreenActivity());
 //            mActivities.add(new GlideActivity());
         } else if ("views".equals(title)) {
 

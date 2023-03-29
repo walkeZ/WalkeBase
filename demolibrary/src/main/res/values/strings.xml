@@ -21,4 +21,14 @@
     <string name="button_stop">停止</string>
     <string name="button_random_volume_start">开始随机音量</string>
     <string name="button_random_volume_stop">停止随机音量</string>
+
+    <string name="title_activity_main_group">MainGroupActivity</string>
+    <string name="title_activity_signal_collect">SignalCollectActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_music_list">MusicListActivity</string>
+    <string name="title_activity_low_pass">LowPassActivity</string>
+    <string name="title_activity_enter">EnterActivity</string>
+    <string name="title_activity_band_stop">BandStopActivity</string>
+    <string name="filterTips">50HzIIR陷波器（直接Ⅱ型）\n滤波器参数：\n*阻带上下边界频率：49.9Hz、50.1Hz\n*通带上下边界频率：49Hz、51Hz\n*通带最大衰减：1dB\n*阻带最小衰减：60dB\n*采样率：1000Hz\n*三种类型选择：巴特沃斯、切比雪夫Ⅰ、切比雪夫Ⅱ</string>
+    <string name="statement">Made By\nscuter_victor\nVersion: 1.0.0</string>
 </resources>

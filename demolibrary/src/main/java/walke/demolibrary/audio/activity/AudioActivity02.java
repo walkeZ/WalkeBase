@@ -5,10 +5,14 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+
+import androidx.annotation.NonNull;
 
 import java.io.IOException;
 
@@ -17,6 +21,8 @@ import walke.base.widget.TitleLayout;
 import walke.demolibrary.R;
 import walke.demolibrary.audio.widget.SimpleWaveformRenderer;
 import walke.demolibrary.audio.widget.WaveformView;
+import walke.demolibrary.movedsp.views.VisualizerFFTView;
+import walke.demolibrary.movedsp.views.VisualizerWaveView;
 import walke.demolibrary.pinpu.VisualizerView;
 
 
@@ -27,6 +33,7 @@ import walke.demolibrary.pinpu.VisualizerView;
  * 波形页面
  */
 public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataCaptureListener {
+    private static final int UPDATE_PROGRESS = 10;
     private MediaPlayer mPlayer;
     private WaveformView mWaveformView;
     /**
@@ -37,6 +44,19 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
     private WaveformView mWaveformView2;
     private VisualizerView mVisualizerView;
     private LinearLayout mLayout;
+    private VisualizerWaveView mVisualizerWaveView;
+    private VisualizerFFTView mVisualizerFFTView;
+    private int duration;
+    private ProgressBar progress;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            progress.setProgress(mPlayer.getCurrentPosition());
+            if (mHandler.hasMessages(UPDATE_PROGRESS)) return;
+            mHandler.sendEmptyMessageDelayed(UPDATE_PROGRESS, 200);
+        }
+    };
 
 //    /**
 //     * Called when the activity is first created.
@@ -86,11 +106,15 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         mPlayer.setLooping(true);
         mPlayer.start();
 
+        mVisualizerWaveView = findViewById(R.id.audio02_VisualizerWaveView);
+        mVisualizerFFTView = findViewById(R.id.audio02_VisualizerFFTView);
+        progress = findViewById(R.id.audio02_progressBar);
+
         // We need to link the visualizer view to the media player so that
         // it displays something
-        mWaveformView = (WaveformView) findViewById(R.id.audio02_waveformView);
-        mWaveformView2 = (WaveformView) findViewById(R.id.audio02_waveformView2);
-        mLayout = (LinearLayout) findViewById(R.id.audio02_root);
+        mWaveformView = findViewById(R.id.audio02_waveformView);
+        mWaveformView2 = findViewById(R.id.audio02_waveformView2);
+        mLayout = findViewById(R.id.audio02_root);
 //        mVisualizerView = (VisualizerView) findViewById(R.id.audio02_visualizerView);
         mWaveformView.setRenderer(new SimpleWaveformRenderer(Color.GREEN, new Paint(), new Path()));
         mWaveformView2.setRenderer(new SimpleWaveformRenderer(Color.GREEN, new Paint(), new Path()));
@@ -108,15 +132,23 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
             mVisualizer.setEnabled(false);
         });
 
-        mVisualizerView = new VisualizerView(this);
-        mVisualizerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,//宽度
-                (int) (150f * getResources().getDisplayMetrics().density)//高度
-        ));
-        //将频谱View添加到布局
-        mLayout.addView(mVisualizerView,0);
+        mVisualizerView = findViewById(R.id.audio02_VisualizerView);
         //设置允许波形表示，并且捕获它
         mVisualizerView.setVisualizer(mVisualizer);
         mVisualizerView.setDataCaptureListener(this);
+
+        duration = mPlayer.getDuration();
+        progress.setMax(duration);
+        startSyncProgress();
+    }
+
+    private void startSyncProgress() {
+        if (mHandler.hasMessages(UPDATE_PROGRESS)) return;
+        mHandler.sendEmptyMessageDelayed(UPDATE_PROGRESS, 200);
+    }
+
+    private void stopSyncProgress() {
+        mHandler.removeMessages(UPDATE_PROGRESS);
     }
 
     private void cleanUp() {
@@ -139,28 +171,33 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
             mVisualizer.setEnabled(true);
         }
         mPlayPause = false;
+        startSyncProgress();
     }
 
     public void pause(View view) {
         mPlayPause = true;
         mPlayer.pause();
+        stopSyncProgress();
     }
 
     public void stop(View view) {
         mPlayPause = false;
         mPlayer.stop();
         mVisualizer.setEnabled(false);
+        stopSyncProgress();
     }
 
     //捕获波形数,时域波形数据
     @Override
-    public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes, int i) {
-        mWaveformView.setWaveform(bytes);
+    public void onWaveFormDataCapture(Visualizer visualizer, byte[] waveform, int i) {
+        mWaveformView.setWaveform(waveform);
+        mVisualizerWaveView.updateVisualizer(waveform);
     }
 
     //捕获傅里叶数据,频域波形数据
     @Override
-    public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int i) {
-        mWaveformView2.setWaveform(bytes);
+    public void onFftDataCapture(Visualizer visualizer, byte[] fft, int i) {
+        mWaveformView2.setWaveform(fft);
+        mVisualizerFFTView.updateVisualizer(fft);
     }
 }
