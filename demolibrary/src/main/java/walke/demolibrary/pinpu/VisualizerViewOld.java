@@ -10,41 +10,43 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-public class VisualizerView extends View implements Visualizer.OnDataCaptureListener {
+public class VisualizerViewOld extends View implements Visualizer.OnDataCaptureListener {
 
     private static final int DN_W = 470;//view宽度与单个音频块占比 - 正常480 需微调
     private static final int DN_H = 360;//view高度与单个音频块占比
-    private static final int DN_SL = 8;//单个音频块宽度
-    private static final int DN_SW = 3;//单个音频块高度
+    private static final int DN_SL = 15;//单个音频块宽度
+    private static final int DN_SW = 5;//单个音频块高度
 
     private int hgap = 0;
     private int vgap = 0;
-    private int levelConvert = 0; // 音量强度级别转换
+    private int levelStep = 0;
     private float strokeWidth = 0;
     private float strokeLength = 0;
 
-    protected final static int MAX_LEVEL = 20; // 音量柱·音频块 - 最大个数
+    protected final static int MAX_LEVEL = 30;//音量柱·音频块 - 最大个数
 
-    protected final static int CYLINDER_NUM = 32; // 音量柱 - 最大个数
+    protected final static int CYLINDER_NUM = 26;//音量柱 - 最大个数
 
-    protected Visualizer mVisualizer = null; // 频谱器
+    protected Visualizer mVisualizer = null;//频谱器
 
-    protected Paint mPaint = null; // 画笔
+    protected Paint mPaint = null;//画笔
 
     protected byte[] mData = new byte[CYLINDER_NUM];//音量柱 数组
+
+    boolean mDataEn = true;
 
     private Visualizer.OnDataCaptureListener mDataCaptureListener;
 
 
-    public VisualizerView(Context context) {
+    public VisualizerViewOld(Context context) {
         this(context, null);
     }
 
-    public VisualizerView(Context context, @Nullable AttributeSet attrs) {
+    public VisualizerViewOld(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public VisualizerView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public VisualizerViewOld(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         //构造函数初始化画笔
         mPaint = new Paint();//初始化画笔工具
@@ -105,7 +107,7 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
             //绘制 CYLINDER_NUM 个能量柱
             drawCylinder(canvas, strokeWidth / 2 + hgap + i * (hgap + strokeLength), mData[i]);
         }
-        for (int i = CYLINDER_NUM; i >= CYLINDER_NUM / 2 - 4; i--) {
+        for (int i = CYLINDER_NUM; i >= CYLINDER_NUM / 2 - 3; i--) {
             j++;
             drawCylinder(canvas, strokeWidth / 2 + hgap + (CYLINDER_NUM / 2 + j - 1) * (hgap + strokeLength), mData[i - 1]);
         }
@@ -121,7 +123,7 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
             if (!visualizer.getEnabled()) {
                 visualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[0]);
             }
-            levelConvert = 255 / MAX_LEVEL; // byte除以最大强度级别，强度级别转换比率
+            levelStep = 230 / MAX_LEVEL;
             // 采样速率为512MHz，设置同时获取时域、频域波形数据
             visualizer.setDataCaptureListener(this, Visualizer.getMaxCaptureRate() / 2, false, true);
 
@@ -146,30 +148,31 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
         // https://xie.infoq.cn/article/386cc569321fbf0a0f0dbe7e8
         //1.快速傅里叶变换返回的是512个复数，下标为单是实数，下标为双的是虚数，对每一组复数进行计算即为最终可绘制的数据：
         byte[] model = new byte[fft.length / 2 + 1]; // 512个复数 加上第一个
-        model[0] = (byte) Math.abs(fft[0]); // 第一个。
-        int j = 1;
-        // 2~513个数值
-        for (int i = 2; i < fft.length; ) {
-            // Math.hypot(a,b); -> （a平方+b平方）的开方
-            model[j] = (byte) Math.hypot(fft[i], fft[i + 1]);
-            i += 2;
-            j++;
+        if (mDataEn) {
+            // 第一个。
+            model[0] = (byte) Math.abs(fft[1]);
+            int j = 1;
+            // 2~513个数值
+            for (int i = 2; i < fft.length; ) {
+                // Math.hypot(a,b); -> （a平方+b平方）的开方
+                model[j] = (byte) Math.hypot(fft[i], fft[i + 1]);
+                i += 2;
+                j++;
+            }
+        } else {
+            for (int i = 0; i < CYLINDER_NUM; i++) {
+                model[i] = 0;
+            }
         }
         // 能量柱，CYLINDER_NUM 个
         for (int i = 0; i < CYLINDER_NUM; i++) {
-            if (i >= model.length) break;
-            final byte a = (byte) (Math.abs(model[i]) / levelConvert);
+            final byte a = (byte) (Math.abs(model[CYLINDER_NUM - i]) / levelStep);
             // mData[i] 音量柱强度数据组赋值
             final byte b = mData[i];
             if (a > b) {
-                // 该音量柱最高/当前强度,升高
                 mData[i] = a;
             } else {
-//                if (b > a) {
-//                    mData[i] = a; // 先快速降低, 会占了 慢慢减1，飘落的效果
-//                } else
-                    if (b > 0) {
-                    // 慢慢减1，飘落的效果
+                if (b > 0) {
                     mData[i]--;
                 }
             }

@@ -22,7 +22,8 @@ public class VisualizerFFTView extends View {
     private Rect mRect = new Rect();
 
     private Paint mForePaint = new Paint();
-    private int mSpectrumNum = 48;
+    private int mSpectrumNum = 32;
+//    private int mSpectrumNum = 26;
 
     public VisualizerFFTView(Context context) {
         this(context, null);
@@ -50,7 +51,7 @@ public class VisualizerFFTView extends View {
 
     public void updateVisualizer(byte[] fft) {
         byte[] model = new byte[fft.length / 2 + 1];
-
+        // 快速傅里叶变换返回的是512个复数，下标为单是实数，下标为双的是虚数，对每一组复数进行计算即为最终可绘制的数据：
         model[0] = (byte) Math.abs(fft[0]);
         for (int i = 2, j = 1; j < mSpectrumNum; ) {
             model[j] = (byte) Math.hypot(fft[i], fft[i + 1]);
@@ -70,7 +71,7 @@ public class VisualizerFFTView extends View {
         }
 
         if (mPoints == null || mPoints.length < mBytes.length * 4) {
-            mPoints = new float[mBytes.length * 4];
+            mPoints = new float[mBytes.length * 4]; // 4个点一个音量柱
         }
 
         mRect.set(0, 0, getWidth(), getHeight());

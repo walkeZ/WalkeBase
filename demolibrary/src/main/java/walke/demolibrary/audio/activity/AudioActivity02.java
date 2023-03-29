@@ -139,9 +139,9 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         mVisualizerView2 = findViewById(R.id.audio02_VisualizerView2);
         //设置允许波形表示，并且捕获它
         mVisualizerView.setVisualizer(mVisualizer);
-        mVisualizerView2.setVisualizer(mVisualizer);
+//        mVisualizerView2.setVisualizer(mVisualizer);
         mVisualizerView.setDataCaptureListener(this);
-        mVisualizerView2.setDataCaptureListener(this);
+//        mVisualizerView2.setDataCaptureListener(this);
 
         duration = mPlayer.getDuration();
         progress.setMax(duration);
