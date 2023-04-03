@@ -124,9 +124,14 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         // 实例化mVisualizer
         mVisualizer = new Visualizer(mPlayer.getAudioSessionId());
         // 设置内容长度为1024
-        mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
+//        mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
+        int i = Visualizer.getCaptureSizeRange()[1]; // Visualizer.getCaptureSizeRange() [128, 1024]
+        mVisualizer.setCaptureSize(i);
         // Visualizer.getMaxCaptureRate()-获取最大采样率,采样速率为512MHz，(3、4 -> true, true)设置同时获取时域、频域波形数据
-        mVisualizer.setDataCaptureListener(this, Visualizer.getMaxCaptureRate() / 2, true, true);
+        // 第一个参数是回调, 使用waveformdata或fftdata; 第二个是更新率; 第三个是判断使用waveformdata; 第四个是判断使用fftdata, 第三\四个均与回调的返回值有关
+//        int rate = Visualizer.getMaxCaptureRate() / 2; // Visualizer.getMaxCaptureRate() 20000
+        int rate = Visualizer.getMaxCaptureRate() / 2;
+        mVisualizer.setDataCaptureListener(this, rate, true, true);
 
         // Enabled Visualizer and disable when we're done with the stream
         mVisualizer.setEnabled(true);
@@ -204,12 +209,29 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
     public void onWaveFormDataCapture(Visualizer visualizer, byte[] waveform, int i) {
         mWaveformView.setWaveform(waveform);
         mVisualizerWaveView.updateVisualizer(waveform);
+
+        Visualizer.MeasurementPeakRms measurementPeakRms = new Visualizer.MeasurementPeakRms();
+        int x = mVisualizer.getMeasurementPeakRms(measurementPeakRms);
+        int rmsLevel = calculateRMSLevel(waveform);
+        Log.i("ArHui", "onWaveFormDataCapture: --> Rms = " + x + ",  " + rmsLevel);
     }
 
     //捕获傅里叶数据,频域波形数据
     @Override
     public void onFftDataCapture(Visualizer visualizer, byte[] fft, int i) {
-        mWaveformView2.setWaveform(fft);
+//        mWaveformView2.setWaveform(fft);
         mVisualizerFFTView.updateVisualizer(fft);
+    }
+
+    public int calculateRMSLevel(byte[] audioData) {
+        //System.out.println("::::: audioData :::::"+audioData);
+        double amplitude = 0;
+        for (int i = 0; i < audioData.length; i++) {
+            amplitude += Math.abs((double) (audioData[i] / 32768.0));
+        }
+        Log.w("ArHui", "onWaveFormDataCapture: --> amplitude = " + amplitude);
+        amplitude = amplitude / audioData.length;
+        //Add this data to buffer for display
+        return (int)amplitude;
     }
 }

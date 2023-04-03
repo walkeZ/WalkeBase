@@ -104,12 +104,7 @@ public class AudioVisualizerView extends View {
 
         // Enabled Visualizer and disable when we're done with the stream
         mVisualizer.setEnabled(true);
-        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                mVisualizer.setEnabled(false);
-            }
-        });
+        player.setOnCompletionListener(mediaPlayer -> mVisualizer.setEnabled(false));
     }
 
     public void addRenderer(Renderer renderer) {
