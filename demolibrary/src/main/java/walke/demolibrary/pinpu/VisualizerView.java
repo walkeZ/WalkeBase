@@ -23,9 +23,9 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
     private float strokeWidth = 0;
     private float strokeLength = 0;
 
-    protected final static int MAX_LEVEL = 20; // 音量柱·音频块 - 最大个数
+    protected final static int MAX_LEVEL = 26; // 音量柱·音频块 - 最大个数
 
-    protected final static int CYLINDER_NUM = 32; // 音量柱 - 最大个数
+    protected final static int CYLINDER_NUM = 64; // 音量柱 - 最大个数
 
     protected Visualizer mVisualizer = null; // 频谱器
 

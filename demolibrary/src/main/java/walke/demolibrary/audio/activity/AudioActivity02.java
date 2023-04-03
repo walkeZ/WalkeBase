@@ -78,6 +78,23 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
     @Override
     protected void initView(TitleLayout titleLayout) {
         titleLayout.setTitleText("波形 AudioActivity02");
+        mVisualizerView = findViewById(R.id.audio02_VisualizerView);
+        mVisualizerView2 = findViewById(R.id.audio02_VisualizerView2);
+
+
+        mVisualizerWaveView = findViewById(R.id.audio02_VisualizerWaveView);
+        mVisualizerFFTView = findViewById(R.id.audio02_VisualizerFFTView);
+        progress = findViewById(R.id.audio02_progressBar);
+
+        // We need to link the visualizer view to the media player so that
+        // it displays something
+        mWaveformView = findViewById(R.id.audio02_waveformView);
+        mWaveformView2 = findViewById(R.id.audio02_waveformView2);
+        mLayout = findViewById(R.id.audio02_root);
+
+//        mVisualizerView = (VisualizerView) findViewById(R.id.audio02_visualizerView);
+        mWaveformView.setRenderer(new SimpleWaveformRenderer(Color.GREEN, new Paint(), new Path()));
+        mWaveformView2.setRenderer(new SimpleWaveformRenderer(Color.GREEN, new Paint(), new Path()));
         init();
     }
 
@@ -109,18 +126,6 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         mPlayer.setLooping(true);
         mPlayer.start();
 
-        mVisualizerWaveView = findViewById(R.id.audio02_VisualizerWaveView);
-        mVisualizerFFTView = findViewById(R.id.audio02_VisualizerFFTView);
-        progress = findViewById(R.id.audio02_progressBar);
-
-        // We need to link the visualizer view to the media player so that
-        // it displays something
-        mWaveformView = findViewById(R.id.audio02_waveformView);
-        mWaveformView2 = findViewById(R.id.audio02_waveformView2);
-        mLayout = findViewById(R.id.audio02_root);
-//        mVisualizerView = (VisualizerView) findViewById(R.id.audio02_visualizerView);
-        mWaveformView.setRenderer(new SimpleWaveformRenderer(Color.GREEN, new Paint(), new Path()));
-        mWaveformView2.setRenderer(new SimpleWaveformRenderer(Color.GREEN, new Paint(), new Path()));
         // 实例化mVisualizer
         mVisualizer = new Visualizer(mPlayer.getAudioSessionId());
         // 设置内容长度为1024
@@ -140,8 +145,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
             mVisualizer.setEnabled(false);
         });
 
-        mVisualizerView = findViewById(R.id.audio02_VisualizerView);
-        mVisualizerView2 = findViewById(R.id.audio02_VisualizerView2);
+
         //设置允许波形表示，并且捕获它
         mVisualizerView.setVisualizer(mVisualizer);
 //        mVisualizerView2.setVisualizer(mVisualizer);
@@ -210,16 +214,16 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         mWaveformView.setWaveform(waveform);
         mVisualizerWaveView.updateVisualizer(waveform);
 
-        Visualizer.MeasurementPeakRms measurementPeakRms = new Visualizer.MeasurementPeakRms();
-        int x = mVisualizer.getMeasurementPeakRms(measurementPeakRms);
-        int rmsLevel = calculateRMSLevel(waveform);
-        Log.i("ArHui", "onWaveFormDataCapture: --> Rms = " + x + ",  " + rmsLevel);
+//        Visualizer.MeasurementPeakRms measurementPeakRms = new Visualizer.MeasurementPeakRms();
+//        int x = mVisualizer.getMeasurementPeakRms(measurementPeakRms);
+//        int rmsLevel = calculateRMSLevel(waveform);
+//        Log.i("ArHui", "onWaveFormDataCapture: --> Rms = " + x + ",  " + rmsLevel);
     }
 
     //捕获傅里叶数据,频域波形数据
     @Override
     public void onFftDataCapture(Visualizer visualizer, byte[] fft, int i) {
-//        mWaveformView2.setWaveform(fft);
+        mWaveformView2.setWaveform(fft);
         mVisualizerFFTView.updateVisualizer(fft);
     }
 
@@ -233,5 +237,61 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         amplitude = amplitude / audioData.length;
         //Add this data to buffer for display
         return (int)amplitude;
+    }
+
+    public void music1(View view) {
+        startMusic(R.raw.aaaass);
+    }
+
+    public void music2(View view) {
+        startMusic(R.raw.boom_clap);
+    }
+
+    public void music3(View view) {
+        startMusic(R.raw.another_day);
+    }
+    public void music4(View view) {
+        startMusic(R.raw.that_girl);
+    }
+    public void music5(View view) {
+        startMusic(R.raw.move_your_body);
+    }
+
+    private void startMusic(int raw) {
+        stopSyncProgress();
+        mPlayer.stop();
+        mPlayer.release();
+        mPlayer = null;
+        mVisualizer.setEnabled(false);
+        mVisualizer = null;
+
+        mPlayer = MediaPlayer.create(this, raw);
+        mPlayer.setLooping(true);
+        mPlayer.start();
+
+        // 实例化mVisualizer
+        mVisualizer = new Visualizer(mPlayer.getAudioSessionId());
+        // 设置内容长度为1024
+        int i = Visualizer.getCaptureSizeRange()[1]; // Visualizer.getCaptureSizeRange() [128, 1024]
+        mVisualizer.setCaptureSize(i);
+        // Visualizer.getMaxCaptureRate()【20000】-获取最大采样率,采样速率为512MHz，(3、4 -> true, true)设置同时获取时域、频域波形数据
+        // 第一个参数是回调, 使用waveformdata或fftdata; 第二个是更新率; 第三个是判断使用waveformdata; 第四个是判断使用fftdata, 第三\四个均与回调的返回值有关
+        int rate = Visualizer.getMaxCaptureRate() / 2;
+        mVisualizer.setDataCaptureListener(this, rate, true, true);
+
+        // Enabled Visualizer and disable when we're done with the stream
+        mVisualizer.setEnabled(true);
+        mPlayer.setOnCompletionListener(mediaPlayer -> {
+            Log.i("ArHui", "init: --> 播放完");
+            mVisualizer.setEnabled(false);
+        });
+        //设置允许波形表示，并且捕获它
+        mVisualizerView.setVisualizer(mVisualizer);
+//        mVisualizerView2.setVisualizer(mVisualizer);
+        mVisualizerView.setDataCaptureListener(this);
+//        mVisualizerView2.setDataCaptureListener(this);
+        duration = mPlayer.getDuration();
+        progress.setMax(duration);
+        startSyncProgress();
     }
 }

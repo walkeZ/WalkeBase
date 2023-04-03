@@ -14,7 +14,7 @@
         <walke.demolibrary.audio.widget.WaveformView
             android:id="@+id/audio02_waveformView"
             android:layout_width="match_parent"
-            android:layout_height="140dp" />
+            android:layout_height="115dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -22,14 +22,65 @@
             android:gravity="center"
             android:text="波形数据" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginVertical="4dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@drawable/btn_cornner"
+                android:gravity="center"
+                android:onClick="music1"
+                android:text="music1" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="0.5"
+                android:background="@drawable/btn_cornner"
+                android:gravity="center"
+                android:onClick="music2"
+                android:text="music2" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@drawable/btn_cornner"
+                android:gravity="center"
+                android:onClick="music3"
+                android:text="music3" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="0.5"
+                android:background="@drawable/btn_cornner"
+                android:gravity="center"
+                android:onClick="music4"
+                android:text="music4" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@drawable/btn_cornner"
+                android:gravity="center"
+                android:onClick="music5"
+                android:text="music5" />
+        </LinearLayout>
+
         <ProgressBar
             android:id="@+id/audio02_progressBar"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:layout_marginLeft="20dip"
-            android:layout_marginTop="10dip"
-            android:layout_marginRight="20dip"
+            android:layout_marginHorizontal="20dp"
             android:progressDrawable="@drawable/progressbar_drawable" />
 
         <LinearLayout
@@ -76,7 +127,7 @@
         <walke.demolibrary.audio.widget.WaveformView
             android:id="@+id/audio02_waveformView2"
             android:layout_width="match_parent"
-            android:layout_height="140dp" />
+            android:layout_height="115dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -87,7 +138,7 @@
         <walke.demolibrary.movedsp.views.VisualizerWaveView
             android:id="@+id/audio02_VisualizerWaveView"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="115dp"
             android:background="@color/black" />
 
         <TextView
@@ -99,7 +150,7 @@
         <walke.demolibrary.movedsp.views.VisualizerFFTView
             android:id="@+id/audio02_VisualizerFFTView"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:background="@color/black" />
 
         <TextView
@@ -111,12 +162,12 @@
         <walke.demolibrary.pinpu.VisualizerView
             android:id="@+id/audio02_VisualizerView"
             android:layout_width="match_parent"
-            android:layout_height="160dp" />
+            android:layout_height="130dp" />
 
         <walke.demolibrary.pinpu.VisualizerView2
             android:id="@+id/audio02_VisualizerView2"
             android:layout_width="match_parent"
-            android:layout_height="160dp" />
+            android:layout_height="130dp" />
 
     </LinearLayout>
 

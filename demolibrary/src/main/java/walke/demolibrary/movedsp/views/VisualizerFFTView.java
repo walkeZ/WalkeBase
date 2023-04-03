@@ -16,13 +16,12 @@ import androidx.annotation.Nullable;
  * @author smnan
  */
 public class VisualizerFFTView extends View {
-
     private byte[] mBytes;
     private float[] mPoints;
     private Rect mRect = new Rect();
 
     private Paint mForePaint = new Paint();
-    private int mSpectrumNum = 32;
+    private int mSpectrumNum = 108; // 观察柱之间的间隙
 //    private int mSpectrumNum = 26;
 
     public VisualizerFFTView(Context context) {
