@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.media.MediaPlayer;
+import android.media.audiofx.Equalizer;
 import android.media.audiofx.Visualizer;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import walke.base.activity.TitleActivity;
 import walke.base.widget.TitleLayout;
@@ -60,6 +62,14 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
             mHandler.sendEmptyMessageDelayed(UPDATE_PROGRESS, 200);
         }
     };
+    /**
+     * 采样值
+     */
+    private int mCaptureSize;
+    /**
+     * 最大采样频率
+     */
+    private int mMaxCaptureRate;
 
 //    /**
 //     * Called when the activity is first created.
@@ -127,22 +137,27 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         mPlayer.start();
 
         // 实例化mVisualizer
-        mVisualizer = new Visualizer(mPlayer.getAudioSessionId());
+        int audioSessionId = mPlayer.getAudioSessionId();
+        mVisualizer = new Visualizer(audioSessionId);
         // 设置内容长度为1024
 //        mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
-        int i = Visualizer.getCaptureSizeRange()[1]; // Visualizer.getCaptureSizeRange() [128, 1024]
-        mVisualizer.setCaptureSize(i);
+        mCaptureSize = Visualizer.getCaptureSizeRange()[1]; // Visualizer.getCaptureSizeRange() [128, 1024]
+        mVisualizer.setCaptureSize(mCaptureSize);
         // Visualizer.getMaxCaptureRate()-获取最大采样率,采样速率为512MHz，(3、4 -> true, true)设置同时获取时域、频域波形数据
         // 第一个参数是回调, 使用waveformdata或fftdata; 第二个是更新率; 第三个是判断使用waveformdata; 第四个是判断使用fftdata, 第三\四个均与回调的返回值有关
 //        int rate = Visualizer.getMaxCaptureRate() / 2; // Visualizer.getMaxCaptureRate() 20000
-        int rate = Visualizer.getMaxCaptureRate() / 2;
-        mVisualizer.setDataCaptureListener(this, rate, true, true);
+        mMaxCaptureRate = Visualizer.getMaxCaptureRate() / 2; // 10000
+        //2023-04-03 16:49:40.031 12931-12931 E init: --> onFftDataCapture =[128, 1024], 20000
+        Log.e("ArHui", "init: --> onFftDataCapture =" + Arrays.toString(Visualizer.getCaptureSizeRange()) + ", " + Visualizer.getMaxCaptureRate());
+        mVisualizer.setDataCaptureListener(this, mMaxCaptureRate, true, true);
 
         // Enabled Visualizer and disable when we're done with the stream
         mVisualizer.setEnabled(true);
+//        int scalingMode = mVisualizer.getScalingMode();
+//        mVisualizer.setScalingMode(SCALING_MODE_NORMALIZED);
         mPlayer.setOnCompletionListener(mediaPlayer -> {
             Log.i("ArHui", "init: --> 播放完");
-            mVisualizer.setEnabled(false);
+//            mVisualizer.setEnabled(false);
         });
 
 
@@ -155,6 +170,10 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         duration = mPlayer.getDuration();
         progress.setMax(duration);
         startSyncProgress();
+
+        // 以下两行音量是0也能有返回fft、waveform返回
+        Equalizer mEqualizer = new Equalizer(0, audioSessionId);
+        mEqualizer.setEnabled(true); // need to enable equalizer
     }
 
     private void startSyncProgress() {
@@ -208,23 +227,68 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         stopSyncProgress();
     }
 
-    //捕获波形数,时域波形数据
+    /**
+     * 捕获波形数,时域波形数据
+     * 时域（时间域-time domain）
+     * ——自变量是时间，即横轴是时间，纵轴是信号的变化。其动态信号 x（t）是描述信号在不同时刻取值的函数。
+     * <p>
+     * <p>
+     * 2023-04-03 16:47:03.219 27079-27079 I onFftDataCapture: --> 44100000, [86132, 172265, 258398, 344531, 430664, 516796, 602929, 689062]
+     * 2023-04-03 16:47:03.319 27079-27079 W onFftDataCapture: --> waveform 44100000
+     *
+     * @param visualizer
+     * @param waveform     waveform 是波形采样的字节数组，它包含一系列的 8 位（无符号）的 PCM 单声道样本
+     * @param samplingRate 采样频率 samplingRate 44100000, log发现：其他信息：音频CD 的采样率为 44100样本/秒。https://en.wikipedia.org/wiki/Nyquist_frequency
+     */
     @Override
-    public void onWaveFormDataCapture(Visualizer visualizer, byte[] waveform, int i) {
+    public void onWaveFormDataCapture(Visualizer visualizer, byte[] waveform, int samplingRate) {
         mWaveformView.setWaveform(waveform);
         mVisualizerWaveView.updateVisualizer(waveform);
-
+        Log.w("ArHui", "onFftDataCapture: --> waveform " + samplingRate);
 //        Visualizer.MeasurementPeakRms measurementPeakRms = new Visualizer.MeasurementPeakRms();
 //        int x = mVisualizer.getMeasurementPeakRms(measurementPeakRms);
 //        int rmsLevel = calculateRMSLevel(waveform);
 //        Log.i("ArHui", "onWaveFormDataCapture: --> Rms = " + x + ",  " + rmsLevel);
     }
 
-    //捕获傅里叶数据,频域波形数据
+
+    /**
+     * 捕获傅里叶数据,频域波形数据
+     * <p> https://xie.infoq.cn/article/386cc569321fbf0a0f0dbe7e8
+     * 频域（频率域- frequency domain）
+     * ——自变量是频率，【即横轴是频率，纵轴是该频率信号的幅度】，也就是通常说的频谱图。频谱图描述了信号的频率结构及频率与该频率信号幅度的关系。
+     * ——对信号进行时域分析时，有时一些信号的时域参数相同，但并不能说明信号就完全相同。因为信号不仅随时间变化，还与频率、相位等信息有关，这就
+     * ——需要进一步分析信号的频率结构，并在频率域中对信号进行描述。动态信号从时间域变换到频率域主要通过傅立叶级数和傅立叶变换等来实现。很简单
+     * ——时域分析的函数是参数是 t，也就是 y=f(t)，频域分析时，参数是 w，也就是 y=F(w)两者之间可以互相转化。
+     * 傅立叶变换：将一个表示波的函数从时域（时间与振幅的关系）转化为频域（频率与振幅的关系）的数学操作
+     *
+     * @param visualizer
+     * @param fft          包含频率表示的字节数组;是经过 FFT 转换后频率采样的字节数组，频率范围为 0（直流）到采样值的一半！
+     * @param samplingRate 采样率每秒采集音频流的点数。 第 k 个频率为(k*Fs)/(n/2)
+     *                     采样频率 samplingRate 44100000, log发现：其他信息：音频CD 的采样率为 44100样本/秒。https://en.wikipedia.org/wiki/Nyquist_frequency
+     */
     @Override
-    public void onFftDataCapture(Visualizer visualizer, byte[] fft, int i) {
+    public void onFftDataCapture(Visualizer visualizer, byte[] fft, int samplingRate) {
         mWaveformView2.setWaveform(fft);
         mVisualizerFFTView.updateVisualizer(fft);
+        int[] ks = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
+        int[] pinS = new int[ks.length];
+        for (int i = 0; i < ks.length; i++) {
+            //获得的频率范围= 0~采样率/2 = 0~22.05kHz之间   https://blog.csdn.net/gkw421178132/article/details/71081628
+            //即513个频率分布在 [ 0Hz，22.05kHz ]之间
+            //每相邻两个频率间隔(mHz) = 采样率 / (1024 / 2) = 44 100 000 / 512 = 86.132Hz分辨率为86.132Hz，再小的频率间隔将无法分辨
+            // k为0~512中的某个点，第k个点对应的频率 = k * frequencyEach，亦即
+            // k(Hz)=getSamplingRate() * k /(getCaptureSize()/2)
+            //版权声明：本文为CSDN博主「gkw421178132」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+            pinS[i] = ks[i] * samplingRate / (mCaptureSize / 2);
+            //
+//            pinS[i] = ks[i] * mMaxCaptureRate / (mCaptureSize / 2);
+//            pinS[i] = ks[i] * samplingRate / mCaptureSize;
+        }
+
+        // FFT 输出样本 k 处的频率由下式给出：https://stackoverflow.com/questions/4720512/android-2-3-visualizer-trouble-understanding-getfft?rq=1
+        // Fk = k * Fs / N,    k = 0,1,...,N-1 ; Fs是时间序列输入的采样频率；N是用于计算 FFT 的样本数
+        Log.i("ArHui", "onFftDataCapture: --> " + samplingRate + ", " + Arrays.toString(pinS) + ",  --> " + fft.length);
     }
 
     public int calculateRMSLevel(byte[] audioData) {
@@ -236,10 +300,11 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         Log.w("ArHui", "onWaveFormDataCapture: --> amplitude = " + amplitude);
         amplitude = amplitude / audioData.length;
         //Add this data to buffer for display
-        return (int)amplitude;
+        return (int) amplitude;
     }
 
     public void music1(View view) {
+        mMaxCaptureRate = Visualizer.getMaxCaptureRate() / 2;
         startMusic(R.raw.aaaass);
     }
 
@@ -250,11 +315,14 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
     public void music3(View view) {
         startMusic(R.raw.another_day);
     }
+
     public void music4(View view) {
-        startMusic(R.raw.that_girl);
-    }
-    public void music5(View view) {
         startMusic(R.raw.move_your_body);
+    }
+
+    public void music5(View view) {
+        mMaxCaptureRate = Visualizer.getMaxCaptureRate() / 4;
+        startMusic(R.raw.aaaass);
     }
 
     private void startMusic(int raw) {
@@ -272,12 +340,12 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         // 实例化mVisualizer
         mVisualizer = new Visualizer(mPlayer.getAudioSessionId());
         // 设置内容长度为1024
-        int i = Visualizer.getCaptureSizeRange()[1]; // Visualizer.getCaptureSizeRange() [128, 1024]
-        mVisualizer.setCaptureSize(i);
+        mCaptureSize = Visualizer.getCaptureSizeRange()[1]; // Visualizer.getCaptureSizeRange() [128, 1024]
+        mVisualizer.setCaptureSize(mCaptureSize);
         // Visualizer.getMaxCaptureRate()【20000】-获取最大采样率,采样速率为512MHz，(3、4 -> true, true)设置同时获取时域、频域波形数据
         // 第一个参数是回调, 使用waveformdata或fftdata; 第二个是更新率; 第三个是判断使用waveformdata; 第四个是判断使用fftdata, 第三\四个均与回调的返回值有关
-        int rate = Visualizer.getMaxCaptureRate() / 2;
-        mVisualizer.setDataCaptureListener(this, rate, true, true);
+
+        mVisualizer.setDataCaptureListener(this, mMaxCaptureRate, true, true);
 
         // Enabled Visualizer and disable when we're done with the stream
         mVisualizer.setEnabled(true);
