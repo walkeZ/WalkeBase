@@ -172,20 +172,15 @@ public class ChildFragment extends AppFragment {
      * @return
      */
     private boolean askPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            int RECORD_AUDIO = getActivity().checkSelfPermission(Manifest.permission.RECORD_AUDIO);
-            if (RECORD_AUDIO != PackageManager.PERMISSION_GRANTED) {
-                permissions.add(Manifest.permission.RECORD_AUDIO);
-            }
-
-            if (!permissions.isEmpty()) {
-                requestPermissions(permissions.toArray(new String[permissions.size()]), 1);
-            } else
-                return false;
-        } else
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
             return false;
+        int RECORD_AUDIO = getActivity().checkSelfPermission(Manifest.permission.RECORD_AUDIO);
+        if (RECORD_AUDIO != PackageManager.PERMISSION_GRANTED) {
+            permissions.add(Manifest.permission.RECORD_AUDIO);
+        }
+        if (permissions.isEmpty())
+            return false;
+        requestPermissions(permissions.toArray(new String[permissions.size()]), 1);
         return true;
-
     }
-
 }
