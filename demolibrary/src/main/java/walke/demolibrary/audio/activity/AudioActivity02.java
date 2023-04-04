@@ -244,7 +244,8 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
     public void onWaveFormDataCapture(Visualizer visualizer, byte[] waveform, int samplingRate) {
         mWaveformView.setWaveform(waveform);
         mVisualizerWaveView.updateVisualizer(waveform);
-        Log.w("ArHui", "onFftDataCapture: --> waveform " + samplingRate);
+        double amp = computedbAmp(waveform);
+        Log.w("ArHui", "onFftDataCapture: --> waveform " + samplingRate + ", amp = " + amp);
 //        Visualizer.MeasurementPeakRms measurementPeakRms = new Visualizer.MeasurementPeakRms();
 //        int x = mVisualizer.getMeasurementPeakRms(measurementPeakRms);
 //        int rmsLevel = calculateRMSLevel(waveform);
@@ -285,10 +286,31 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
 //            pinS[i] = ks[i] * mMaxCaptureRate / (mCaptureSize / 2);
 //            pinS[i] = ks[i] * samplingRate / mCaptureSize;
         }
-
+        double amp = computedbAmp(fft);
         // FFT 输出样本 k 处的频率由下式给出：https://stackoverflow.com/questions/4720512/android-2-3-visualizer-trouble-understanding-getfft?rq=1
         // Fk = k * Fs / N,    k = 0,1,...,N-1 ; Fs是时间序列输入的采样频率；N是用于计算 FFT 的样本数
-        Log.i("ArHui", "onFftDataCapture: --> " + samplingRate + ", " + Arrays.toString(pinS) + ",  --> " + fft.length);
+        Log.i("ArHui", "onFftDataCapture: --> " + samplingRate + ", " + Arrays.toString(pinS) + ",  --> " + fft.length + ", amp = " + amp);
+    }
+
+    /**
+     * http://www.360doc.com/content/19/1027/22/13328254_869435992.shtml
+     *
+     * @param audioData
+     * @return
+     */
+    public double computedbAmp(byte[] audioData) {
+        //System.out.println("::::: audioData :::::" audioData);
+        double amplitude = 0;
+        for (int i = 0; i < audioData.length / 2; i++) {
+            double y = (audioData[i * 2] | audioData[i * 2 + 1] << 8) / 32768.0;
+            // depending on your endianness:
+            // double y = (audioData[i*2]<<8 | audioData[i*2 1]) / 32768.0;
+//            amplitude = Math.abs(y);
+            amplitude += y * y;
+        }
+        double rms = Math.sqrt(amplitude / audioData.length / 2);
+        double dbAmp = 10.0 * Math.log10(rms);
+        return dbAmp;
     }
 
     public int calculateRMSLevel(byte[] audioData) {

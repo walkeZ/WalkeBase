@@ -68,8 +68,14 @@ public class SimpleWaveformRenderer implements WaveformRenderer {
         }
         canvas.drawPath(mWaveformPath, mForegroundPaint);
         drawVolume(canvas, waveform);
+        drawVolume2(canvas, waveform);
     }
 
+    /**
+     * 画声量
+     * @param canvas
+     * @param waveform
+     */
     private void drawVolume(Canvas canvas, byte[] waveform) {
         if (waveform == null) return;
         float width = canvas.getWidth();
@@ -99,7 +105,40 @@ public class SimpleWaveformRenderer implements WaveformRenderer {
 
         Log.w("ArHui", "drawVolume: --> count " + count);
         canvas.drawLine(50, height, 50, height - count, mTestPaint);//绘制频谱块
+    }  /**
+     * 画声量
+     * @param canvas
+     * @param waveform
+     */
+    private void drawVolume2(Canvas canvas, byte[] waveform) {
+        if (waveform == null) return;
+        float amp = (float) computedbAmp(waveform);
+        float height = canvas.getHeight();
+        Log.w("ArHui", "drawVolume: --> count " + amp);
+        canvas.drawLine(150, height, 150, height + amp, mTestPaint);//绘制频谱块
     }
+
+    /**
+     * http://www.360doc.com/content/19/1027/22/13328254_869435992.shtml
+     *
+     * @param audioData
+     * @return
+     */
+    public double computedbAmp(byte[] audioData) {
+        //System.out.println("::::: audioData :::::" audioData);
+        double amplitude = 0;
+        for (int i = 0; i < audioData.length / 2; i++) {
+            double y = (audioData[i * 2] | audioData[i * 2 + 1] << 8) / 32768.0;
+            // depending on your endianness:
+            // double y = (audioData[i*2]<<8 | audioData[i*2 1]) / 32768.0;
+//            amplitude = Math.abs(y);
+            amplitude = y * y;
+        }
+        double rms = Math.sqrt(amplitude / audioData.length / 2);
+        double dbAmp = 20.0 * Math.log10(rms);
+        return dbAmp;
+    }
+
 
 
     private void renderWaveform(byte[] waveform, float width, float height) {
