@@ -23,6 +23,7 @@ import walke.base.widget.TitleLayout;
 import walke.demolibrary.R;
 import walke.demolibrary.audio.widget.SimpleWaveformRenderer;
 import walke.demolibrary.audio.widget.WaveformView;
+import walke.demolibrary.movedsp.views.CustomVisualizerFFTView;
 import walke.demolibrary.movedsp.views.VisualizerFFTView;
 import walke.demolibrary.movedsp.views.VisualizerWaveView;
 import walke.demolibrary.pinpu.VisualizerView;
@@ -70,6 +71,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
      * 最大采样频率
      */
     private int mMaxCaptureRate;
+    private CustomVisualizerFFTView mCustomVisualizerFFTView;
 
 //    /**
 //     * Called when the activity is first created.
@@ -94,6 +96,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
 
         mVisualizerWaveView = findViewById(R.id.audio02_VisualizerWaveView);
         mVisualizerFFTView = findViewById(R.id.audio02_VisualizerFFTView);
+        mCustomVisualizerFFTView = findViewById(R.id.audio02_CustomVisualizerFFTView);
         progress = findViewById(R.id.audio02_progressBar);
 
         // We need to link the visualizer view to the media player so that
@@ -272,6 +275,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
     public void onFftDataCapture(Visualizer visualizer, byte[] fft, int samplingRate) {
         mWaveformView2.setWaveform(fft);
         mVisualizerFFTView.updateVisualizer(fft);
+        mCustomVisualizerFFTView.updateVisualizer(fft);
         int[] ks = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
         int[] pinS = new int[ks.length];
         for (int i = 0; i < ks.length; i++) {
