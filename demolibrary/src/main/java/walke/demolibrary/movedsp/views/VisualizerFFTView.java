@@ -8,12 +8,11 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
-import androidx.annotation.Nullable;
 
 /**
- * 显示频谱fft的自定义view
- *
- * @author smnan
+ * @author walker
+ * @date 2023/4/4
+ * @desc
  */
 public class VisualizerFFTView extends View {
     private byte[] mBytes;
@@ -28,15 +27,14 @@ public class VisualizerFFTView extends View {
         this(context, null);
     }
 
-    public VisualizerFFTView(Context context, @Nullable AttributeSet attrs) {
+    public VisualizerFFTView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public VisualizerFFTView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public VisualizerFFTView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
-
 
     /**
      * 初始化
@@ -78,22 +76,17 @@ public class VisualizerFFTView extends View {
         //绘制频谱  
         final int baseX = mRect.width() / mSpectrumNum;
         final int height = mRect.height();
-
+        mForePaint.setTextSize(18);
         for (int i = 0; i < mSpectrumNum; i++) {
-            if (mBytes[i] < 0) {
-                mBytes[i] = 127;
-            }
-
+            int intValue =  mBytes[i] & 255;
             final int xi = baseX * i + baseX / 2;
-
             mPoints[i * 4] = xi;
             mPoints[i * 4 + 1] = height;
-
             mPoints[i * 4 + 2] = xi;
-            mPoints[i * 4 + 3] = height - mBytes[i];
+            int top = height - intValue;
+            mPoints[i * 4 + 3] = top;
+            canvas.drawText("" + intValue, xi - 10, top - 5, mForePaint);
         }
-
         canvas.drawLines(mPoints, mForePaint);
     }
-
 }

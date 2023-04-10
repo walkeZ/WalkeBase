@@ -131,6 +131,7 @@ public class CustomVisualizerFFTView extends View {
             sumDuan = sumDuan * 2;
             int top = height - sumDuan;
             mPoints[p * 4 + 3] = top;
+            canvas.drawText("" + sumDuan, xi - 10, top - 5, mForePaint);
         }
 
         canvas.drawLines(mPoints, mForePaint);
