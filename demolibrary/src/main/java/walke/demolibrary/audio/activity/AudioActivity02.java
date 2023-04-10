@@ -141,6 +141,10 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
 
         // 实例化mVisualizer
         int audioSessionId = mPlayer.getAudioSessionId();
+        audioSessionId = 0;
+        // 同一个MediaPlayer，audioSessionId相同。new的时候就有 2023-04-10 14:45:25.772  3645-3645  com.het.massagestick I (PlayService.java:52).onCreate audioSessionId 753
+        // 2023-04-10 14:33:51.863 30823-30823 clife com.het.massagestick I(PlayService.java:180).activeAssetsMp3 audioSessionId 745,  fileName Music/CushionDemoBgm.mp3
+        // 2023-04-10 14:34:21.453 30823-30823 clife com.het.massagestick I(PlayService.java:180).activeAssetsMp3 audioSessionId 745,  fileName Music/tik_tok.m4a
         mVisualizer = new Visualizer(audioSessionId);
         // 设置内容长度为1024
 //        mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
@@ -174,7 +178,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         progress.setMax(duration);
         startSyncProgress();
 
-        // 以下两行音量是0也能有返回fft、waveform返回
+        // 以下两行音量是0也能有返回fft、waveform返回。需要对应音源的audioSessionId
         Equalizer mEqualizer = new Equalizer(0, audioSessionId);
         mEqualizer.setEnabled(true); // need to enable equalizer
     }
@@ -192,6 +196,11 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         if (mPlayer != null) {
             mPlayer.release();
             mPlayer = null;
+        }
+        if (mVisualizer != null) {
+            mVisualizer.setEnabled(false);
+            mVisualizer.release();
+            mVisualizer = null;
         }
     }
 
@@ -363,8 +372,10 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         mPlayer.setLooping(true);
         mPlayer.start();
 
-        // 实例化mVisualizer
-        mVisualizer = new Visualizer(mPlayer.getAudioSessionId());
+        // 实例化mVisualizer， 手机音频可视化类，不传入对应音源的audioSessionId的也可以，但需要有发声(系统音量>0)
+        int audioSessionId = mPlayer.getAudioSessionId();
+        audioSessionId = 0;
+        mVisualizer = new Visualizer(audioSessionId);
         // 设置内容长度为1024
         mCaptureSize = Visualizer.getCaptureSizeRange()[1]; // Visualizer.getCaptureSizeRange() [128, 1024]
         mVisualizer.setCaptureSize(mCaptureSize);
@@ -387,5 +398,9 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         duration = mPlayer.getDuration();
         progress.setMax(duration);
         startSyncProgress();
+
+        // 以下两行音量是0也能有返回fft、waveform返回， 需要对应音源的audioSessionId
+        Equalizer mEqualizer = new Equalizer(0, audioSessionId);
+        mEqualizer.setEnabled(true); // need to enable equalizer
     }
 }
