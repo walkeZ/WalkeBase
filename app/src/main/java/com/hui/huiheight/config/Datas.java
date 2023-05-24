@@ -55,7 +55,7 @@ public class Datas {
             "Android填空题实现",
             "Android编程之图片颜色处理方法",
             "探探卡片" + TTCardsActivity.class.getSimpleName(),
-            "频谱" + PinPuActivity.class.getSimpleName(),
+            "频谱" + PinPuActivity.class.getSimpleName() + " 优先级队列",
             "频谱" + PinPuActivity2.class.getSimpleName(),
             "音频(波、谱)" + AudioActivity01.class.getSimpleName(),
             "音频(波、谱)" + AudioActivity02.class.getSimpleName(),
