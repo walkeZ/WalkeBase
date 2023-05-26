@@ -42,6 +42,8 @@ public class PinPuActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//去掉信息栏
         PriorityQueueTest.test1();
+        PriorityQueueTest.test12();
+        PriorityQueueTest.test2();
         setVolumeControlStream(AudioManager.STREAM_MUSIC);//设置音频流 - STREAM_MUSIC：音乐回放即媒体音量
 
         mLayout = new LinearLayout(this);//代码创建布局
