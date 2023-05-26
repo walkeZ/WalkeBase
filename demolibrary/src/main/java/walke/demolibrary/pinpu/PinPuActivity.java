@@ -26,12 +26,10 @@ import walke.demolibrary.R;
  */
 public class PinPuActivity extends AppCompatActivity {
     private static final float VISUALIZER_HEIGHT_DIP = 150f;//频谱View高度
-
-    private MediaPlayer mMediaPlayer;//音频
-    private Visualizer mVisualizer;//频谱器
-    private Equalizer mEqualizer; //均衡器
-
-    private LinearLayout mLayout;//代码布局
+    private MediaPlayer mMediaPlayer; // 音频
+    private Visualizer mVisualizer; // 频谱器
+    private Equalizer mEqualizer; // 均衡器
+    private LinearLayout mLayout; // 代码布局
     VisualizerView mBaseVisualizerView;
 
     ImageButton play;

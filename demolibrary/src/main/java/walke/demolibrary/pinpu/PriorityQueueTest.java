@@ -55,7 +55,10 @@ public class PriorityQueueTest {
         Student zy = new Student(3, "赵云", 17);
         queue.add(zy);
 
-        System.out.println("PriorityQueueTest test12 contains, " + queue.contains(new Student(2, "张三", 33)) + ", " + queue.contains(new Student(20, "张三", 33)));
+        Student zs = new Student(2, "张三", 33);
+        boolean contains = queue.contains(zs);
+        System.out.println("PriorityQueueTest test12 contains, " + contains + ", " + queue.contains(new Student(20, "张三", 33)));
+//        if (contains) queue.remove(zs); // 移除
         System.out.println("PriorityQueueTest test12 contains, " + queue.contains(zy));
         zy.setId(30);
         System.out.println("PriorityQueueTest test12 contains, " + queue.contains(zy));
@@ -72,6 +75,37 @@ public class PriorityQueueTest {
         //  I  PriorityQueueTest peek, Student{id=2, name='王昭君', age=18}, 3
         //  I  PriorityQueueTest remove, Student{id=0, name='吕布0', age=20}, 3
         //  I  PriorityQueueTest peek, Student{id=2, name='王昭君', age=18}, 3
+
+        while (queue.peek() != null) {
+            System.out.println("PriorityQueueTest test12 ----> while poll, " + queue.poll());
+        }
+
+        //   有 if (contains) queue.remove(zs); // 移除
+        //I  PriorityQueueTest test12 contains, true, false
+        //I  PriorityQueueTest test12 contains, true
+        //I  PriorityQueueTest test12 contains, true
+        //I  PriorityQueueTest test12 poll(原4), Student{id=1, name='吕布', age=19}, 2
+        //I  PriorityQueueTest test12 peek, Student{id=4, name='貂蝉', age=16}, 2
+        //I  PriorityQueueTest test12 remove, Student{id=0, name='吕布0', age=20}, 2
+        //I  PriorityQueueTest test12 peek, Student{id=4, name='貂蝉', age=16}, 2
+        //I  PriorityQueueTest test12 ----> while poll, Student{id=4, name='貂蝉', age=16}
+        //I  PriorityQueueTest test12 ----> while poll, Student{id=30, name='赵云', age=17}
+
+        //  // 注释：  if (contains) queue.remove(zs); // 移除
+        //I  PriorityQueueTest poll(原4), Student{id=1, name='吕布', age=19}, 3
+        //I  PriorityQueueTest peek, Student{id=2, name='王昭君', age=18}, 3
+        //I  PriorityQueueTest remove, Student{id=0, name='吕布0', age=20}, 3
+        //I  PriorityQueueTest peek, Student{id=2, name='王昭君', age=18}, 3
+        //I  PriorityQueueTest test12 contains, true, false
+        //I  PriorityQueueTest test12 contains, true
+        //I  PriorityQueueTest test12 contains, true
+        //I  PriorityQueueTest test12 poll(原4), Student{id=1, name='吕布', age=19}, 3
+        //I  PriorityQueueTest test12 peek, Student{id=2, name='王昭君', age=18}, 3
+        //I  PriorityQueueTest test12 remove, Student{id=0, name='吕布0', age=20}, 3
+        //I  PriorityQueueTest test12 peek, Student{id=2, name='王昭君', age=18}, 3
+        //I  PriorityQueueTest test12 ----> while poll, Student{id=2, name='王昭君', age=18}
+        //I  PriorityQueueTest test12 ----> while poll, Student{id=4, name='貂蝉', age=16}
+        //I  PriorityQueueTest test12 ----> while poll, Student{id=30, name='赵云', age=17}
     }
 
 
