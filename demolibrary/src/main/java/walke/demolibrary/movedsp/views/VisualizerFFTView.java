@@ -51,7 +51,7 @@ public class VisualizerFFTView extends View {
         // 快速傅里叶变换返回的是512个复数，下标为单是实数，下标为双的是虚数，对每一组复数进行计算即为最终可绘制的数据：
         model[0] = (byte) Math.abs(fft[0]);
         for (int i = 2, j = 1; j < mSpectrumNum; ) {
-            model[j] = (byte) Math.hypot(fft[i], fft[i + 1]);
+            model[j] = (byte) Math.hypot(fft[i], fft[i + 1]); // 返回两个参数的平方和的平方根
             i += 2;
             j++;
         }
