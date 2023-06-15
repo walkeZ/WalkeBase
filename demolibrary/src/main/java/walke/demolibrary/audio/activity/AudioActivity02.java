@@ -141,7 +141,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
 
         // 实例化mVisualizer
         int audioSessionId = mPlayer.getAudioSessionId();
-        audioSessionId = 0;
+//        audioSessionId = 0; // 设置0，还有频谱但是，声量0时没有声谱。即 Equalizer 无效
         // 同一个MediaPlayer，audioSessionId相同。new的时候就有 2023-04-10 14:45:25.772  3645-3645  com.het.massagestick I (PlayService.java:52).onCreate audioSessionId 753
         // 2023-04-10 14:33:51.863 30823-30823 clife com.het.massagestick I(PlayService.java:180).activeAssetsMp3 audioSessionId 745,  fileName Music/CushionDemoBgm.mp3
         // 2023-04-10 14:34:21.453 30823-30823 clife com.het.massagestick I(PlayService.java:180).activeAssetsMp3 audioSessionId 745,  fileName Music/tik_tok.m4a
@@ -166,7 +166,6 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
             Log.i("ArHui", "init: --> 播放完");
 //            mVisualizer.setEnabled(false);
         });
-
 
         //设置允许波形表示，并且捕获它
         mVisualizerView.setVisualizer(mVisualizer);
@@ -387,7 +386,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
 
         // 实例化mVisualizer， 手机音频可视化类，不传入对应音源的audioSessionId的也可以，但需要有发声(系统音量>0)
         int audioSessionId = mPlayer.getAudioSessionId();
-        audioSessionId = 0;
+//        audioSessionId = 0; // 设置0，还有频谱但是，声量0时没有声谱。即 Equalizer 无效
         mVisualizer = new Visualizer(audioSessionId);
         // 设置内容长度为1024
         mCaptureSize = Visualizer.getCaptureSizeRange()[1]; // Visualizer.getCaptureSizeRange() [128, 1024]
