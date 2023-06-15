@@ -142,6 +142,11 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
 
         // 实例化mVisualizer
         int audioSessionId = mPlayer.getAudioSessionId();
+
+        // 以下两行音量是0也能有返回fft、waveform返回。需要对应音源的audioSessionId
+        Equalizer mEqualizer = new Equalizer(0, audioSessionId);
+        mEqualizer.setEnabled(true); // need to enable equalizer
+
 //        audioSessionId = 0; // 设置0，还有频谱但是，声量0时没有声谱。即 Equalizer 无效
         // 同一个MediaPlayer，audioSessionId相同。new的时候就有 2023-04-10 14:45:25.772  3645-3645  com.het.massagestick I (PlayService.java:52).onCreate audioSessionId 753
         // 2023-04-10 14:33:51.863 30823-30823 clife com.het.massagestick I(PlayService.java:180).activeAssetsMp3 audioSessionId 745,  fileName Music/CushionDemoBgm.mp3
@@ -178,9 +183,9 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         progress.setMax(duration);
         startSyncProgress();
 
-        // 以下两行音量是0也能有返回fft、waveform返回。需要对应音源的audioSessionId
-        Equalizer mEqualizer = new Equalizer(Equalizer.PARAM_NUM_BANDS, audioSessionId);
-        mEqualizer.setEnabled(true); // need to enable equalizer
+//        // 以下两行音量是0也能有返回fft、waveform返回。需要对应音源的audioSessionId
+//        Equalizer mEqualizer = new Equalizer(Equalizer.PARAM_NUM_BANDS, audioSessionId);
+//        mEqualizer.setEnabled(true); // need to enable equalizer
     }
 
     private void startSyncProgress() {
@@ -387,6 +392,11 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
 
         // 实例化mVisualizer， 手机音频可视化类，不传入对应音源的audioSessionId的也可以，但需要有发声(系统音量>0)
         int audioSessionId = mPlayer.getAudioSessionId();
+
+        // 以下两行音量是0也能有返回fft、waveform返回。需要对应音源的audioSessionId
+        Equalizer mEqualizer = new Equalizer(0, audioSessionId);
+        mEqualizer.setEnabled(true); // need to enable equalizer
+
 //        audioSessionId = 0; // 设置0，还有频谱但是，声量0时没有声谱。即 Equalizer 无效
         mVisualizer = new Visualizer(audioSessionId);
         // 设置内容长度为1024
@@ -413,7 +423,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         startSyncProgress();
 
         // 以下两行音量是0也能有返回fft、waveform返回， 需要对应音源的audioSessionId
-        Equalizer mEqualizer = new Equalizer(Equalizer.PARAM_BAND_FREQ_RANGE, audioSessionId);
-        mEqualizer.setEnabled(true); // need to enable equalizer
+//        Equalizer mEqualizer = new Equalizer(Equalizer.PARAM_BAND_FREQ_RANGE, audioSessionId);
+//        mEqualizer.setEnabled(true); // need to enable equalizer
     }
 }
