@@ -3,6 +3,7 @@ package walke.demolibrary.audio.activity;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.audiofx.Equalizer;
 import android.media.audiofx.Visualizer;
@@ -113,7 +114,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
 
     @Override
     protected void initData() {
-
+        setVolumeControlStream(AudioManager.STREAM_MUSIC); // 小米pad 5不起作用
     }
 
     @Override
@@ -178,7 +179,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         startSyncProgress();
 
         // 以下两行音量是0也能有返回fft、waveform返回。需要对应音源的audioSessionId
-        Equalizer mEqualizer = new Equalizer(0, audioSessionId);
+        Equalizer mEqualizer = new Equalizer(Equalizer.PARAM_NUM_BANDS, audioSessionId);
         mEqualizer.setEnabled(true); // need to enable equalizer
     }
 
