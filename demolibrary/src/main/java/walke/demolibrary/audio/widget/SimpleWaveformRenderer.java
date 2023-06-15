@@ -4,9 +4,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.util.Log;
 
 import androidx.annotation.ColorInt;
+
+import walke.demolibrary.AppLog;
 
 /**
  * 项目名称：AudioWaveShow
@@ -90,7 +91,7 @@ public class SimpleWaveformRenderer implements WaveformRenderer {
 //            sum = sum - 100000;
 //        }
 //        sum = sum / 300;
-//        Log.w("ArHui", "drawVolume: --> " + sum);
+//        AppLog.w("drawVolume: --> " + sum);
 //        canvas.drawLine(50, height, 50, height - sum, mTestPaint);//绘制频谱块
 
         int count = 0;
@@ -103,7 +104,7 @@ public class SimpleWaveformRenderer implements WaveformRenderer {
         }
         count = count / 2;
 
-        Log.w("ArHui", "drawVolume: --> count " + count);
+//        AppLog.w("drawVolume: --> count " + count);
         canvas.drawLine(50, height, 50, height - count, mTestPaint);//绘制频谱块
     }  /**
      * 画声量
@@ -114,7 +115,7 @@ public class SimpleWaveformRenderer implements WaveformRenderer {
         if (waveform == null) return;
         float amp = (float) computedbAmp(waveform);
         float height = canvas.getHeight();
-        Log.w("ArHui", "drawVolume: --> count " + amp);
+//        AppLog.w("drawVolume: --> count " + amp);
         canvas.drawLine(150, height, 150, height + amp, mTestPaint);//绘制频谱块
     }
 

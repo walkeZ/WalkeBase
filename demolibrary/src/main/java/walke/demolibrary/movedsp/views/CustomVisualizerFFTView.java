@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -14,6 +13,8 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import walke.demolibrary.AppLog;
 
 /**
  * @author walker
@@ -59,6 +60,7 @@ public class CustomVisualizerFFTView extends View {
     }
 
     public void updateVisualizer(byte[] fft) {
+//        AppLog.st();
         byte[] model = new byte[fft.length / 2 + 1];
         // 快速傅里叶变换返回的是512个复数，下标为单是实数，下标为双的是虚数，对每一组复数进行计算即为最终可绘制的数据：
         model[0] = (byte) Math.abs(fft[0]);
@@ -126,7 +128,7 @@ public class CustomVisualizerFFTView extends View {
                 }
             }
 //            sumDuan = (int) (sumDuan / 3.0);
-            Log.i("ArHui", "onDraw: --> sum =" + sumDuan + ", duan " + p + ", duanNum = " + duanNum + ", duan i " + Arrays.toString(integerList.toArray()));
+            AppLog.i("onDraw: --> sum =" + sumDuan + ", duan " + p + ", duanNum = " + duanNum + ", duan i " + Arrays.toString(integerList.toArray()));
             sumDuan = sumDuan / duanNum;
             sumDuan = sumDuan * 2;
             int top = height - sumDuan;
