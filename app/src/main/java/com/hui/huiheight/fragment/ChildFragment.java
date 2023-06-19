@@ -51,6 +51,7 @@ import walke.demolibrary.picture.BitmapColorActivity;
 import walke.demolibrary.pinpu.PinPuActivity;
 import walke.demolibrary.pinpu.PinPuActivity2;
 import walke.demolibrary.audio.recorder.RecorderActivity;
+import walke.demolibrary.wifi.WifiActivity01;
 import walke.widget.sunset.SunAnimationActivity;
 
 /**
@@ -147,6 +148,7 @@ public class ChildFragment extends AppFragment {
             mActivities.add(new RecorderActivity());
             mActivities.add(new VolumeViewActivity());
             mActivities.add(new FlashScreenActivity());
+            mActivities.add(new WifiActivity01());
 //            mActivities.add(new GlideActivity());
         } else if ("views".equals(title)) {
 

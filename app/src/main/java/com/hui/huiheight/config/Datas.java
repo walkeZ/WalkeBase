@@ -63,6 +63,7 @@ public class Datas {
             "音频-录制" + RecorderActivity.class.getSimpleName(),
             "音频-音量波纹视图" + VolumeViewActivity.class.getSimpleName(),
             "音频-fft" + FlashScreenActivity.class.getSimpleName(),
+            "音频-fft" + FlashScreenActivity.class.getSimpleName(),
             "Glide获取保存网络图片和本地图片",
             "123",
             "456",
