@@ -11,7 +11,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="500dp"
             android:background="#8A98F498">
 
             <walke.widget.gradient.LinearGradientView
@@ -21,7 +21,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="100dp"
             android:background="#BE87ACF4">
 
             <walke.widget.gradient.LinearGradientTextView
@@ -29,6 +29,14 @@
                 android:layout_height="match_parent" />
         </FrameLayout>
 
+        <walke.widget.gradient.LinearGradientTextView2
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <walke.widget.gradient.LinearGradientTextView3
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#FFFFFC" />
 
     </LinearLayout>
 
