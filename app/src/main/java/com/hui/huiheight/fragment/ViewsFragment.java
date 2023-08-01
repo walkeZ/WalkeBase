@@ -40,6 +40,7 @@ import walke.base.AppFragment;
 import walke.base.tool.SetUtil;
 import walke.widget.flowlayout.FlowLayoutActivity;
 import walke.widget.gallery.GalleryActivity;
+import walke.widget.gradient.GradientActivity;
 import walke.widget.img.ImgActivity;
 import walke.widget.img.ImgActivity2;
 import walke.widget.luckypan.LuckyPanActivity;
@@ -100,6 +101,7 @@ public class ViewsFragment extends AppFragment {
         activities.add(new ImgActivity2());
         activities.add(new GalleryActivity());
         activities.add(new TextActivity());
+        activities.add(new GradientActivity());
         mAdapter.setItemClickListener(position -> startActivity(new Intent(getContext(),activities.get(position).getClass())));
     }
 }

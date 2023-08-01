@@ -26,6 +26,7 @@
         <activity android:name="walke.widget.img.ImgActivity2"/>
         <activity android:name="walke.widget.gallery.GalleryActivity"/>
         <activity android:name="walke.widget.text.TextActivity"/>
+        <activity android:name="walke.widget.gradient.GradientActivity"/>
 
     </application>
 
