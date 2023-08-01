@@ -1,18 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#000000"
-                android:paddingTop="36dp" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <walke.widget.text.ReflectTextView
-        android:id="@+id/timeView"
-        android:textSize="20sp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="top|center_horizontal"
-        android:text="12344"
-        android:textColor="#ffffff"
-        android:layout_marginBottom="20dp"/>
-</RelativeLayout>
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#000000">
+
+            <walke.widget.text.ReflectTextView
+                android:id="@+id/text_timeView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20dp"
+                android:gravity="top|center_horizontal"
+                android:text="12344"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="16dp"
+            android:text="斜体加粗"
+            android:textColor="#00FA9A"
+            android:textSize="16sp"
+            android:textStyle="italic|bold" />
+
+        <TextView
+            android:id="@+id/text_tvGradient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="16sp"
+            android:text="字体渐变"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/text_tvMarquee"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:ellipsize="marquee"
+            android:scrollHorizontally="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:paddingHorizontal="16dp"
+            android:text="跑马灯当那繁华落尽，剩下的是满地忧伤。"
+            android:textColor="#FFC107"
+            android:textSize="16dp"
+            android:singleLine="true" />
+<!--        marqueeRepeatLimit="marquee_forever"属性控制循环次数-->
+
+        <TextView
+            android:id="@+id/text_tvMarquee2"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:ellipsize="marquee"
+            android:scrollHorizontally="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:paddingHorizontal="16dp"
+            android:text="跑马灯当那繁华落尽，剩下的是满地忧伤。"
+            android:textColor="#FFC107"
+            android:textSize="16dp"
+            android:singleLine="true" />
+
+    </LinearLayout>
+
+
+</ScrollView>
