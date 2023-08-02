@@ -168,7 +168,7 @@
         <walke.demolibrary.pinpu.VisualizerView
             android:id="@+id/audio02_VisualizerView"
             android:layout_width="match_parent"
-            android:layout_height="130dp" />
+            android:layout_height="130dp"/>
 
         <walke.demolibrary.pinpu.VisualizerView2
             android:id="@+id/audio02_VisualizerView2"

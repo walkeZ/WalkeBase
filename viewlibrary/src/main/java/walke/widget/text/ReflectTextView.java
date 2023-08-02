@@ -73,13 +73,18 @@ public class ReflectTextView extends TimeView {
         int width = getWidth();
         setDrawingCacheEnabled(true);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mDrawingCache = getDrawingCache();
-            }
-        }).start();
+        new Thread(() -> mDrawingCache = getDrawingCache()).start();
         if (mDrawingCache!=null) {
+            //E/AndroidRuntime: FATAL EXCEPTION: main
+            //    Process: com.hui.huiheight, PID: 17825
+            //    java.lang.IllegalArgumentException: cannot use a recycled source in createBitmap
+            //        at android.graphics.Bitmap.createBitmap(Bitmap.java:1004)
+            //        at walke.widget.text.ReflectTextView.onDraw(ReflectTextView.java:83)
+            //        at android.view.View.draw(View.java:22004)
+            //        at android.view.View.buildDrawingCacheImpl(View.java:21267)
+            //        at android.view.View.buildDrawingCache(View.java:21121)
+            //        at android.view.View.buildDrawingCache(View.java:21073)
+            //        at walke.widget.text.ReflectTextView.onTextChanged(ReflectTextView.java:100)
             Bitmap reflectionImage = Bitmap.createBitmap(mDrawingCache, 0, height / 5, width, height / 2, mMatrix, false);
             canvas.drawBitmap(reflectionImage, 0, height / 3f, null);
             if (mPaint == null) {

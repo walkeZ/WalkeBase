@@ -3,7 +3,9 @@ package walke.demolibrary.pinpu;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Shader;
 import android.media.audiofx.Visualizer;
 import android.util.AttributeSet;
 import android.view.View;
@@ -53,6 +55,11 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
         mPaint.setStrokeJoin(Paint.Join.ROUND); //频块圆角
         mPaint.setStrokeCap(Paint.Cap.ROUND); //频块圆角
+
+//        int[] colors = {Color.RED, Color.GREEN, Color.BLUE};
+//        float[] position = {0f, 0.6f, 1.0f};
+//        LinearGradient linearGradient = new LinearGradient(0, 0, getMeasuredWidth(), 0, colors, position, Shader.TileMode.CLAMP);
+//        mPaint.setShader(linearGradient);
     }
 
     public void setDataCaptureListener(Visualizer.OnDataCaptureListener dataCaptureListener) {
@@ -75,6 +82,13 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
         vgap = (int) (h / (MAX_LEVEL + 2));//频谱块高度
 
         mPaint.setStrokeWidth(strokeWidth); //设置频谱块宽度
+
+
+        int[] colors = {Color.RED, Color.GREEN, Color.BLUE};
+        float[] position = {0f, 0.6f, 1.0f};
+        // 在能有效获取到getMeasuredWidth()后就可以设置了
+        LinearGradient linearGradient = new LinearGradient(0, 0, getMeasuredWidth(), 0, colors, position, Shader.TileMode.CLAMP);
+        mPaint.setShader(linearGradient);
     }
 
     //绘制频谱块和倒影
@@ -100,6 +114,13 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
 
     @Override
     public void onDraw(Canvas canvas) {
+//        int[] colors = {Color.RED, Color.GREEN, Color.BLUE};
+//        float[] position = {0f, 0.6f, 1.0f};
+//        LinearGradient linearGradient = new LinearGradient(0, 0, getMeasuredWidth(), 0, colors, position, Shader.TileMode.CLAMP);
+//        mPaint.setShader(linearGradient);
+        // canvas.drawRect(0,0,getMeasuredWidth(),getMeasuredHeight(),mPaint);
+//        canvas.drawText("Android绘图小糊涂", 0, getMeasuredHeight() / 2, mPaint);
+
         int j = -4;
         for (int i = 0; i < CYLINDER_NUM / 2 - 4; i++) { //绘制25个能量柱
             //绘制 CYLINDER_NUM 个能量柱
