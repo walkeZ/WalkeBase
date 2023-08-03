@@ -7,8 +7,6 @@ import android.graphics.Path;
 
 import androidx.annotation.ColorInt;
 
-import walke.demolibrary.AppLog;
-
 /**
  * 项目名称：AudioWaveShow
  * 类描述：
@@ -74,6 +72,7 @@ public class SimpleWaveformRenderer implements WaveformRenderer {
 
     /**
      * 画声量
+     *
      * @param canvas
      * @param waveform
      */
@@ -103,11 +102,14 @@ public class SimpleWaveformRenderer implements WaveformRenderer {
             count -= 200;
         }
         count = count / 2;
-
+        mTestPaint.setStrokeCap(Paint.Cap.BUTT);
 //        AppLog.w("drawVolume: --> count " + count);
-        canvas.drawLine(50, height, 50, height - count, mTestPaint);//绘制频谱块
-    }  /**
+        canvas.drawLine(50, height - 20, 50, height - count, mTestPaint);//绘制频谱块
+    }
+
+    /**
      * 画声量
+     *
      * @param canvas
      * @param waveform
      */
@@ -116,7 +118,9 @@ public class SimpleWaveformRenderer implements WaveformRenderer {
         float amp = (float) computedbAmp(waveform);
         float height = canvas.getHeight();
 //        AppLog.w("drawVolume: --> count " + amp);
-        canvas.drawLine(150, height, 150, height + amp, mTestPaint);//绘制频谱块
+        // 设置笔刷的图形样式
+        mTestPaint.setStrokeCap(Paint.Cap.ROUND);
+        canvas.drawLine(150, height - 30, 150, height + amp, mTestPaint);//绘制频谱块
     }
 
     /**
@@ -139,7 +143,6 @@ public class SimpleWaveformRenderer implements WaveformRenderer {
         double dbAmp = 20.0 * Math.log10(rms);
         return dbAmp;
     }
-
 
 
     private void renderWaveform(byte[] waveform, float width, float height) {
