@@ -3,9 +3,7 @@ package walke.demolibrary.pinpu;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.Paint;
-import android.graphics.Shader;
 import android.media.audiofx.Visualizer;
 import android.util.AttributeSet;
 import android.view.View;
@@ -84,11 +82,11 @@ public class VisualizerView extends View implements Visualizer.OnDataCaptureList
         mPaint.setStrokeWidth(strokeWidth); //设置频谱块宽度
 
 
-        int[] colors = {Color.RED, Color.GREEN, Color.BLUE};
-        float[] position = {0f, 0.6f, 1.0f};
-        // 在能有效获取到getMeasuredWidth()后就可以设置了
-        LinearGradient linearGradient = new LinearGradient(0, 0, getMeasuredWidth(), 0, colors, position, Shader.TileMode.CLAMP);
-        mPaint.setShader(linearGradient);
+//        int[] colors = {Color.RED, Color.GREEN, Color.BLUE};
+//        float[] position = {0f, 0.6f, 1.0f};
+//        // 在能有效获取到getMeasuredWidth()后就可以设置了
+//        LinearGradient linearGradient = new LinearGradient(0, 0, getMeasuredWidth(), 0, colors, position, Shader.TileMode.CLAMP);
+//        mPaint.setShader(linearGradient);
     }
 
     //绘制频谱块和倒影

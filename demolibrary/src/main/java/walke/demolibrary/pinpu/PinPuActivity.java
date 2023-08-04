@@ -25,7 +25,7 @@ import walke.demolibrary.R;
  * @desc : 音频频谱
  */
 public class PinPuActivity extends AppCompatActivity {
-    private static final float VISUALIZER_HEIGHT_DIP = 150f;//频谱View高度
+    private static final float VISUALIZER_HEIGHT_DIP = 100f;//频谱View高度
     private MediaPlayer mMediaPlayer; // 音频
     private Visualizer mVisualizer; // 频谱器
     private Equalizer mEqualizer; // 均衡器
@@ -33,6 +33,7 @@ public class PinPuActivity extends AppCompatActivity {
     VisualizerView mBaseVisualizerView;
 
     ImageButton play;
+    private VisualizerGradientView mVisualizerGradientView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,6 +161,7 @@ public class PinPuActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.FILL_PARENT,//宽度
                 (int) (VISUALIZER_HEIGHT_DIP * getResources().getDisplayMetrics().density)//高度
         ));
+        mBaseVisualizerView.setBackgroundResource(R.color.alpha2);
         //将频谱View添加到布局
         mLayout.addView(mBaseVisualizerView);
         //实例化Visualizer，参数SessionId可以通过MediaPlayer的对象获得
@@ -168,6 +170,27 @@ public class PinPuActivity extends AppCompatActivity {
         mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
         //设置允许波形表示，并且捕获它
         mBaseVisualizerView.setVisualizer(mVisualizer);
+
+
+        mVisualizerGradientView = new VisualizerGradientView(this);
+        mVisualizerGradientView.setBackgroundColor(Color.WHITE);
+        mVisualizerGradientView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.FILL_PARENT,//宽度
+                (int) (VISUALIZER_HEIGHT_DIP * getResources().getDisplayMetrics().density)//高度
+        ));
+        //将频谱View添加到布局
+        mLayout.addView(mVisualizerGradientView);
+        mBaseVisualizerView.setDataCaptureListener(new Visualizer.OnDataCaptureListener() {
+            @Override
+            public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes, int i) {
+
+            }
+
+            @Override
+            public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int i) {
+                mVisualizerGradientView.setFftData(bytes);
+            }
+        });
     }
 
     //播放按钮
