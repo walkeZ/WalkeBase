@@ -9,6 +9,7 @@ import walke.demolibrary.layoutmanager.TTCardsActivity;
 import walke.demolibrary.movedsp.activitys.FlashScreenActivity;
 import walke.demolibrary.pinpu.PinPuActivity;
 import walke.demolibrary.pinpu.PinPuActivity2;
+import walke.demolibrary.wifi.WifiActivity01;
 
 /**
  * Created by Walke.Z on 2017/4/21.
@@ -65,7 +66,8 @@ public class Datas {
             "音频-fft" + FlashScreenActivity.class.getSimpleName(),
             "音频-fft" + FlashScreenActivity.class.getSimpleName(),
             "Glide获取保存网络图片和本地图片",
-            "123",
+            "wifi 自连 " + WifiActivity01.class.getSimpleName(),
+            "--",
             "456",
 
     };

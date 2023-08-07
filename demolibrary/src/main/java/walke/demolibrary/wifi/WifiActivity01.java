@@ -1,5 +1,6 @@
 package walke.demolibrary.wifi;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -46,12 +47,17 @@ public class WifiActivity01 extends AppCompatActivity {
     }
 
     public void connect(View view) {
-        WifiApUtil.connectWifiApByNameAndPwd(this, "HeT-iot", "iot@1234", connectResult -> {
-            AppLog.w("connectResult" + connectResult);
-        });
-
+//        WifiApUtil.connectWifiApByNameAndPwd(this, "HeT-iot", "iot@1234", connectResult -> {
+//            AppLog.w("connectResult" + connectResult);
+//        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            WifiUtil.connectWifiApByNameAndPwd(this,"HeT-iot", "iot@1234", connectResult -> {
+                AppLog.w("connectResult" + connectResult);
+            });
+        }
     }
 
     public void disconnect(View view) {
+
     }
 }
