@@ -149,7 +149,7 @@
         <walke.demolibrary.movedsp.views.CustomVisualizerFFTView
             android:id="@+id/audio02_CustomVisualizerFFTView"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="100dp"
             android:background="@color/black" />
 
         <walke.demolibrary.movedsp.views.VisualizerFFTView
@@ -157,7 +157,13 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="@color/black"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="4dp"/>
+        <walke.demolibrary.pinpu.VisualizerGradientView2
+            android:id="@+id/audio02_VisualizerGradientView2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/black"
+            android:layout_marginTop="4dp"/>
 
         <TextView
             android:layout_width="match_parent"

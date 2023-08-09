@@ -27,6 +27,7 @@ import walke.demolibrary.audio.widget.WaveformView;
 import walke.demolibrary.movedsp.views.CustomVisualizerFFTView;
 import walke.demolibrary.movedsp.views.VisualizerFFTView;
 import walke.demolibrary.movedsp.views.VisualizerWaveView;
+import walke.demolibrary.pinpu.VisualizerGradientView2;
 import walke.demolibrary.pinpu.VisualizerView;
 import walke.demolibrary.pinpu.VisualizerView2;
 
@@ -73,6 +74,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
      */
     private int mMaxCaptureRate;
     private CustomVisualizerFFTView mCustomVisualizerFFTView;
+    private VisualizerGradientView2 mVisualizerGradientView2;
 
 //    /**
 //     * Called when the activity is first created.
@@ -98,6 +100,7 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         mVisualizerWaveView = findViewById(R.id.audio02_VisualizerWaveView);
         mVisualizerFFTView = findViewById(R.id.audio02_VisualizerFFTView);
         mCustomVisualizerFFTView = findViewById(R.id.audio02_CustomVisualizerFFTView);
+        mVisualizerGradientView2 = findViewById(R.id.audio02_VisualizerGradientView2);
         progress = findViewById(R.id.audio02_progressBar);
 
         // We need to link the visualizer view to the media player so that
@@ -311,7 +314,6 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
             //每相邻两个频率间隔(mHz) = 采样率 / (1024 / 2) = 44 100 000 / 512 = 86.132Hz分辨率为86.132Hz，再小的频率间隔将无法分辨
             // k为0~512中的某个点，第k个点对应的频率 = k * frequencyEach，亦即
             // k(Hz)=getSamplingRate() * k /(getCaptureSize()/2)
-            //版权声明：本文为CSDN博主「gkw421178132」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
             pinS[i] = ks[i] * samplingRate / (mCaptureSize / 2);
             //
 //            pinS[i] = ks[i] * mMaxCaptureRate / (mCaptureSize / 2);
@@ -321,6 +323,21 @@ public class AudioActivity02 extends TitleActivity implements Visualizer.OnDataC
         // FFT 输出样本 k 处的频率由下式给出：https://stackoverflow.com/questions/4720512/android-2-3-visualizer-trouble-understanding-getfft?rq=1
         // Fk = k * Fs / N,    k = 0,1,...,N-1 ; Fs是时间序列输入的采样频率；N是用于计算 FFT 的样本数
 //        AppLog.i("onFftDataCapture: --> " + samplingRate + ", " + Arrays.toString(pinS) + ",  --> " + fft.length + ", amp = " + amp);
+
+
+
+        byte[] model = new byte[fft.length / 2 + 1];
+        // 快速傅里叶变换返回的是512个复数，下标为单是实数，下标为双的是虚数，对每一组复数进行计算即为最终可绘制的数据：
+        model[0] = (byte) Math.abs(fft[0]);
+        int[] data = new int[108];
+        data[0] = (model[0] & 255);
+        for (int i = 2, j = 1; j < 108; ) {
+            model[j] = (byte) Math.hypot(fft[i], fft[i + 1]); // 返回两个参数的平方和的平方根
+            data[j] = (model[j] & 255);
+            i += 2;
+            j++;
+        }
+        mVisualizerGradientView2.bindData(data);
     }
 
     /**

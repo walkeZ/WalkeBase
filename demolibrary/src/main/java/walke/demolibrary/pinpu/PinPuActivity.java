@@ -34,6 +34,7 @@ public class PinPuActivity extends AppCompatActivity {
 
     ImageButton play;
     private VisualizerGradientView mVisualizerGradientView;
+    private VisualizerGradientView2 mVisualizerGradientView2;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,7 +172,6 @@ public class PinPuActivity extends AppCompatActivity {
         //设置允许波形表示，并且捕获它
         mBaseVisualizerView.setVisualizer(mVisualizer);
 
-
         mVisualizerGradientView = new VisualizerGradientView(this);
         mVisualizerGradientView.setBackgroundColor(Color.WHITE);
         mVisualizerGradientView.setLayoutParams(new ViewGroup.LayoutParams(
@@ -180,6 +180,17 @@ public class PinPuActivity extends AppCompatActivity {
         ));
         //将频谱View添加到布局
         mLayout.addView(mVisualizerGradientView);
+
+
+        mVisualizerGradientView2 = new VisualizerGradientView2(this);
+        mVisualizerGradientView2.setBackgroundResource(R.color.alpha2);
+        mVisualizerGradientView2.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.FILL_PARENT,//宽度
+                (int) (VISUALIZER_HEIGHT_DIP * getResources().getDisplayMetrics().density)//高度
+        ));
+
+        //将频谱View添加到布局
+        mLayout.addView(mVisualizerGradientView2);
         mBaseVisualizerView.setDataCaptureListener(new Visualizer.OnDataCaptureListener() {
             @Override
             public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes, int i) {
@@ -189,6 +200,25 @@ public class PinPuActivity extends AppCompatActivity {
             @Override
             public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int i) {
                 mVisualizerGradientView.setFftData(bytes);
+
+                int[] data = new int[100];
+                // http://events.jianshu.io/p/c95bb166fb28
+                // https://xie.infoq.cn/article/386cc569321fbf0a0f0dbe7e8
+                //1.快速傅里叶变换返回的是512个复数，下标为单是实数，下标为双的是虚数，对每一组复数进行计算即为最终可绘制的数据：
+                byte[] model = new byte[bytes.length / 2 + 1]; // 512个复数 加上第一个
+                model[0] = (byte) Math.abs(bytes[0]); // 第一个。
+                data[0] = (model[0] & 255);
+                int j = 1;
+                // 2~513个数值
+                for (int k = 2; k < bytes.length; ) {
+                    // Math.hypot(a,b); -> （a平方+b平方）的开方
+                    model[j] = (byte) Math.hypot(bytes[k], bytes[k + 1]);
+                    if (j < 100)
+                        data[j] = (model[j] & 255); // byte 转int：b & 255。
+                    k += 2;
+                    j++;
+                }
+                mVisualizerGradientView2.bindData(data);
             }
         });
     }

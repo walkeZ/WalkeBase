@@ -11,7 +11,7 @@ import java.util.Locale;
  */
 public class AppLog {
     public static String TAG = "HET_IB";
-    public static boolean isDebug;
+    public static boolean isDebug = true;
 
     public static void e(String msg) {
         if (isDebug) {
