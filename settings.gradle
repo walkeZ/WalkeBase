@@ -1,2 +1,3 @@
 include ':app', ':xrecyclerview', ':wheelviewlibrary', ':base', ':viewlibrary', ':demolibrary', ':camerademo', ':TouchToCameraFocusMeteringZoom'
 include ':launchdemo'
+include ':cdemo'
