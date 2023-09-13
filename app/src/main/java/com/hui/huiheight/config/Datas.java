@@ -6,6 +6,7 @@ import walke.demolibrary.audio.recorder.RecorderActivity;
 import walke.demolibrary.audio.volume.VolumeViewActivity;
 import walke.demolibrary.audio.waveform.WaveformActivity;
 import walke.demolibrary.layoutmanager.TTCardsActivity;
+import walke.demolibrary.log.LogActivity;
 import walke.demolibrary.movedsp.activitys.FlashScreenActivity;
 import walke.demolibrary.pinpu.PinPuActivity;
 import walke.demolibrary.pinpu.PinPuActivity2;
@@ -67,6 +68,7 @@ public class Datas {
             "音频-fft" + FlashScreenActivity.class.getSimpleName(),
             "Glide获取保存网络图片和本地图片",
             "wifi 自连 " + WifiActivity01.class.getSimpleName(),
+            "日志留存 " + LogActivity.class.getSimpleName(),
             "--",
             "456",
 

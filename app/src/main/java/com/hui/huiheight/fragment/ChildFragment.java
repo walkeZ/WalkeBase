@@ -46,6 +46,7 @@ import walke.demolibrary.completion.CompletionActivity;
 import walke.demolibrary.interface1.Demo1Activity;
 import walke.demolibrary.interface3.Demo3Activity;
 import walke.demolibrary.layoutmanager.TTCardsActivity;
+import walke.demolibrary.log.LogActivity;
 import walke.demolibrary.movedsp.activitys.FlashScreenActivity;
 import walke.demolibrary.picture.BitmapColorActivity;
 import walke.demolibrary.pinpu.PinPuActivity;
@@ -149,6 +150,7 @@ public class ChildFragment extends AppFragment {
             mActivities.add(new VolumeViewActivity());
             mActivities.add(new FlashScreenActivity());
             mActivities.add(new WifiActivity01());
+            mActivities.add(new LogActivity());
 //            mActivities.add(new GlideActivity());
         } else if ("views".equals(title)) {
 
@@ -176,9 +178,19 @@ public class ChildFragment extends AppFragment {
     private boolean askPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
             return false;
+        // 音频权限
         int RECORD_AUDIO = getActivity().checkSelfPermission(Manifest.permission.RECORD_AUDIO);
         if (RECORD_AUDIO != PackageManager.PERMISSION_GRANTED) {
             permissions.add(Manifest.permission.RECORD_AUDIO);
+        }
+        // 文件读写
+        int sdCardWrite = getActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int sdCardRead = getActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (sdCardWrite != PackageManager.PERMISSION_GRANTED) {
+            permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (sdCardRead != PackageManager.PERMISSION_GRANTED) {
+            permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
         if (permissions.isEmpty())
             return false;

@@ -36,6 +36,7 @@
         <activity android:name=".movedsp.activitys.EnterActivity"/>
         <activity android:name=".movedsp.activitys.MoveDspActivity"/>
         <activity android:name=".wifi.WifiActivity01"/>
+        <activity android:name=".log.LogActivity"/>
 <!--        <activity android:name=".glide.GlideActivity"/>-->
         <!-- Glide引用将RGB565改成ARGB8888需配置 -->
     <!--    <meta-data
