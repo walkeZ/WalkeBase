@@ -55,16 +55,65 @@
 #define LOGI(...) \
   ((void)__android_log_print(ANDROID_LOG_INFO, "mini-lzo ", __VA_ARGS__))
 
+#define IN_LEN      (128*1024ul)
+#define OUT_LEN     (IN_LEN + IN_LEN / 16 + 64 + 3)
+
+static unsigned char __LZO_MMODEL in  [ IN_LEN ];
+static unsigned char __LZO_MMODEL out [ OUT_LEN ];
+
+#define HEAP_ALLOC(var,size) \
+    lzo_align_t __LZO_MMODEL var [ ((size) + (sizeof(lzo_align_t) - 1)) / sizeof(lzo_align_t) ]
+
+static HEAP_ALLOC(wrkmem, LZO1X_1_MEM_COMPRESS);
+
 JNIEXPORT jbyteArray JNICALL
 Java_com_example_cdemo_MiniLzo_compress(JNIEnv *env, jclass clazz, jbyteArray buffer) {
 
     // 调试调用返回
     jbyteArray firstMacArray = (*env)->NewByteArray(env, 6);
-    jbyte *bytes = (*env)->GetByteArrayElements(env, firstMacArray, 0);
-    for (int i = 0; i < 6; i++) {
-        bytes[i] = 6 - i;
+    //    jbyte *bytes = (*env)->GetByteArrayElements(env, firstMacArray, 0);
+//    for (int i = 0; i < 6; i++) {
+//        bytes[i] = 6 - i;
+//    }
+//    (*env)->SetByteArrayRegion(env, firstMacArray, 0, 6, bytes);
+//    return firstMacArray;
+
+    lzo_uint in_len;
+    lzo_uint out_len;
+    lzo_uint new_len;
+
+    //  Step 1: initialize the LZO library
+    if (lzo_init() != LZO_E_OK){
+        LOGI("internal error - lzo_init() failed !!!\n");
+        LOGI("(this usually indicates a compiler bug - try recompiling\nwithout optimizations, and enable '-DLZO_DEBUG' for diagnostics)\n");
+        return 3;
     }
-    (*env)->SetByteArrayRegion(env, firstMacArray, 0, 6, bytes);
+    // Step 2: prepare the input block that will get compressed. We just fill it with zeros in this example program,
+    // but you would use your real-world data here.
+    in_len = IN_LEN;
+    lzo_memset(in,0,in_len);
+    // Step 3: compress from 'in' to 'out' with LZO1X-1
+
+    int r = lzo1x_1_compress(in,in_len,out,&out_len,wrkmem);
+    if (r == LZO_E_OK)
+        LOGI("compressed %lu bytes into %lu bytes\n", (unsigned long) in_len, (unsigned long) out_len);
+    else {
+        LOGI("internal error - compression failed: %d\n", r);
+        return 2;
+    }
+
+    // Step 4: decompress again, now going from 'out' to 'in'
+    new_len = in_len;
+    r = lzo1x_decompress(out,out_len,in,&new_len,NULL);
+    if (r == LZO_E_OK && new_len == in_len)
+        LOGI("decompressed %lu bytes back into %lu bytes\n", (unsigned long) out_len, (unsigned long) in_len);
+    else{
+        // this should NEVER happen
+        LOGI("internal error - decompression failed: %d", r);
+        return 1;
+    }
+
+    LOGI("miniLZO simple compression test passed.");
     return firstMacArray;
 }
 
@@ -79,12 +128,20 @@ Java_com_example_cdemo_MiniLzo_uncompress(JNIEnv *env, jclass clazz, jbyteArray 
 //    (*env)->SetByteArrayRegion(env, firstMacArray, 0, 6, bytes);
 //    return firstMacArray;
 
-    int len = (*env)->GetArrayLength(env, buffer);
+    if (lzo_init() != LZO_E_OK)
+    {
+        LOGI("internal error - lzo_init() failed !!!\n");
+        LOGI("(this usually indicates a compiler bug - try recompiling\nwithout optimizations, and enable '-DLZO_DEBUG' for diagnostics)\n");
+        return 3;
+    }
+
+    int len = (*env) -> GetArrayLength(env, buffer);
     LOGI("MiniLzo_uncompress: 原数据长度 %d" , len);
     jbyteArray out = (*env)->NewByteArray(env, 2048);
+    int deLen  =0 ;
 
     int r;
-//    r = lzo1x_decompress(buffer,len,out,2048,NULL);
+//    r = lzo1x_decompress(buffer, len, &out, &deLen, NULL);
     return out;
 }
 

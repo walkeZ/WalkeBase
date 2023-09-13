@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         // miniLzo C 库官网（源码） http://www.oberhumer.com/opensource/lzo/#minilzo
         byte[] compress = MiniLzo.compress(originalBytes);
         Log.i("testLZO ","compress: " + Arrays.toString(compress));
-        return new byte[0];
+        return compress;
     }
 
     /**
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         // TODO: 2023/8/22 miniLzo 解压
         byte[] uncompress = MiniLzo.uncompress(compress);
         Log.i("testLZO ","uncompress: " + Arrays.toString(uncompress));
-        return new byte[0];
+        return uncompress;
     }
 
     public void jump(View view) {
