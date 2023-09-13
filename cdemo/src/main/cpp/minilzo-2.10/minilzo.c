@@ -120,13 +120,6 @@ Java_com_example_cdemo_MiniLzo_compress(JNIEnv *env, jclass clazz, jbyteArray bu
     // W  MiniLzo 压缩后释放前 resultArray长度 2243
     // W  MiniLzo 压缩后释放后 resultArray长度 2243
 
-//
-//    // 截取数据
-//    jbyteArray resultBuffer = (*env) -> NewByteArray(env, out_len);
-//    jbyte *outBuffer = (*env) -> GetByteArrayElements(env, resultBuffer, NULL);
-//    (*env) -> GetByteArrayRegion(env, resultArray,0, out_len, outBuffer);
-////    LOGI("MiniLzo 截取压缩数据: resultBuffer , %s", , byteArrayToHexString(outBuffer,out_len));
-
     // 释放获取的字节数组数据和内存
     (*env) -> ReleaseByteArrayElements(env, buffer, in, JNI_ABORT);
     (*env) -> ReleaseByteArrayElements(env, resultArray, out, 0);
@@ -137,6 +130,38 @@ Java_com_example_cdemo_MiniLzo_compress(JNIEnv *env, jclass clazz, jbyteArray bu
         // 压缩失败，可以抛出异常或进行其他处里
         return NULL;
     }
+    //
+//    jsize ra_len = (*env) -> GetArrayLength(env, resultArray);
+//    LOGW("MiniLzo 截取压缩数据: start resultArray 长度 %d, 只需 % d", ra_len, out_len);
+//    // 截取数据
+//    jbyteArray resultBuffer = (*env) -> NewByteArray(env, out_len);
+//    jbyte *outBuffer = (*env) -> GetByteArrayElements(env, resultBuffer, NULL);
+//    (*env) -> GetByteArrayRegion(env, resultArray,0, out_len, outBuffer);
+//
+//    // 释放获取的字节数组数据和内存
+//    (*env) -> ReleaseByteArrayElements(env, buffer, in, JNI_ABORT);
+//    (*env) -> ReleaseByteArrayElements(env, resultBuffer, outBuffer, 0);
+//
+//    LOGW("MiniLzo 截取压缩数据: end resultArray 长度 %d, 只需 % d", ra_len, out_len);
+
+
+    jsize ra_len = (*env) -> GetArrayLength(env, resultArray);
+    LOGW("MiniLzo 截取压缩数据: start resultArray 长度 %d, 只需 % d", ra_len, out_len);
+    // 截取数据
+//    unsigned char* cs[out_len]; // 声明字符长度
+//    (*env) -> GetByteArrayRegion(env, resultArray,0, out_len, (jbyte *)cs); // 赋值到cs
+//    (*env) -> DeleteLocalRef(env, resultArray); // 赋值到cs
+
+    jbyteArray resultBuffer = (*env) -> NewByteArray(env, out_len);
+    jbyte *outBuffer = (*env) -> GetByteArrayElements(env, resultBuffer, NULL);
+    (*env) -> GetByteArrayRegion(env, resultArray,0, out_len, outBuffer); // 赋值到outBuffer
+    // 释放获取的字节数组数据和内存 []
+    (*env) -> ReleaseByteArrayElements(env, buffer, in, JNI_ABORT);
+    (*env) -> ReleaseByteArrayElements(env, resultBuffer, outBuffer, 0);
+    char* str = byteArrayToHexString(outBuffer, out_len);
+    int  strLen = strlen(str);
+    LOGW("MiniLzo 截取压缩数据: end resultBuffer 长度 %d, 字符 %d , %s", out_len, strLen, str);
+
     // 解压操作
     new_len = in_len;
     LOGI("MiniLzo 解压结果 %d 解压前, in_len %d ", r,  (unsigned long ) in_len);
@@ -156,7 +181,7 @@ Java_com_example_cdemo_MiniLzo_compress(JNIEnv *env, jclass clazz, jbyteArray bu
     (*env) -> ReleaseByteArrayElements(env, buffer, in, JNI_ABORT);
 
     // 返回压缩后的数据
-    return resultArray;
+    return resultBuffer;
 }
 
 JNIEXPORT jbyteArray JNICALL
