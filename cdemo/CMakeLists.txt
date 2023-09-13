@@ -17,12 +17,21 @@ add_library( # Specifies the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        src/main/cpp/hello-jni.c )
+        src/main/cpp/hello-jni.c)
+# 调试Jni byte[]
+add_library( # Specifies the name of the library.
+        hello-lzo
+
+        # Sets the library as a shared library.
+        SHARED
+
+        # Provides a relative path to your source file(s).
+        src/main/cpp/lzo-test/hello-lzo.c)
 
 # Specifies a path to native header files.
 #include_directories(src/main/cpp/include/)
 
-## ndk 系统库
+# ndk 系统库
 #find_library( # Defines the name of the path variable that stores the
 #        # location of the NDK library.
 #        log-lib
@@ -30,9 +39,8 @@ add_library( # Specifies the name of the library.
 #        # Specifies the name of the NDK library that
 #        # CMake needs to locate.
 #        log )
-## 关联库
-#target_link_libraries( # Specifies the target library.
-#        hello-jni
-#
-#        # Links the log library to the target library.
-#        ${log-lib} )
+# 关联库：https://github.com/android/ndk-samples/blob/main/hello-libs/app/src/main/cpp/CMakeLists.txt
+target_link_libraries(
+        hello-lzo
+        android
+        log)
