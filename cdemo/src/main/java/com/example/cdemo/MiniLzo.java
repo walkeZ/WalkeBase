@@ -9,6 +9,8 @@ public class MiniLzo {
         System.loadLibrary("mini-lzo");
     }
 
+    public static native int init();
+
     public static native byte[] compress(byte[] originalBytes);
 
     public static native byte[] uncompress(byte[] originalBytes);

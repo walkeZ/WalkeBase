@@ -44,106 +44,94 @@
 #endif
 #include <limits.h>
 #include <stddef.h>
-
 #include "minilzo.h"
 
 // 新增start---------
 #include <jni.h>
 
 #include <android/log.h>
+#include <stdio.h>
 
 #define LOGI(...) \
   ((void)__android_log_print(ANDROID_LOG_INFO, "mini-lzo ", __VA_ARGS__))
 
-#define LOGW(...) \
-  ((void)__android_log_print(ANDROID_LOG_WARN, "mini-lzo ", __VA_ARGS__))
-
-//#define IN_LEN      (128*1024ul)
-#define OUT_LEN     (500)
+#define IN_LEN      (128*1024ul)
 #define OUT_LEN     (IN_LEN + IN_LEN / 16 + 64 + 3)
 
+static unsigned char __LZO_MMODEL in  [ IN_LEN ];
+static unsigned char __LZO_MMODEL out [ OUT_LEN ];
+
+/* Work-memory needed for compression. Allocate memory in units
+ * of 'lzo_align_t' (instead of 'char') to make sure it is properly aligned.
+ */
 #define HEAP_ALLOC(var,size) \
     lzo_align_t __LZO_MMODEL var [ ((size) + (sizeof(lzo_align_t) - 1)) / sizeof(lzo_align_t) ]
 
 static HEAP_ALLOC(wrkmem, LZO1X_1_MEM_COMPRESS);
 
+JNIEXPORT jint JNICALL
+Java_com_example_cdemo_MiniLzo_init(JNIEnv *env, jclass clazz) {
+    int result = lzo_init();
+    LOGI("MiniLzo 初始化结果 %d", result);
+    return result;
+}
+
+const char* byteArrayToHexString(const jbyte *array, jsize len) {
+    static char hexBuffer[1024]; // 调整为足够大的缓冲区
+    char *p = hexBuffer;
+    for (int i = 0; i < len; ++i) {
+        p += sprintf(p, "%02X", (unsigned char ) array[i]);
+    }
+    return hexBuffer;
+}
+
 JNIEXPORT jbyteArray JNICALL
-Java_com_example_cdemo_MiniLzo_compress(JNIEnv *env, jclass clazz, jbyteArray javaArray) {
-
-    // 调试调用返回
-//    jbyteArray firstMacArray = (*env)->NewByteArray(env, 6);
-//    jbyte *bytes = (*env)->GetByteArrayElements(env, firstMacArray, 0);
-//    for (int i = 0; i < 6; i++) {
-//        bytes[i] = 6 - i;
-//    }
-//    (*env)->SetByteArrayRegion(env, firstMacArray, 0, 6, bytes);
-//    return firstMacArray;
-
-    int bLen = (*env) -> GetArrayLength(env, javaArray);
-    jbyteArray firstMacArray = (*env) -> NewByteArray(env, bLen);
-    jbyte *bytes = (*env) -> GetByteArrayElements(env, firstMacArray, 0);
-
-
-    (*env)->set(env, bytes , 0, bLen, firstMacArray);
-
-    int size = sizeof(firstMacArray);
-    LOGI("compressed111  %lu , bLen  %lu", size, bLen);
-    for (int i = 0; i < bLen; i++) {
-        LOGI("compressed111 %lu bytes into %lu bytes\n",  i, bytes[i]);
-    }
-
-//    static unsigned char __LZO_MMODEL in  [ IN_LEN ];
-    static unsigned char __LZO_MMODEL out [ OUT_LEN ];
-
-    lzo_uint in_len;
-    lzo_uint out_len;
+Java_com_example_cdemo_MiniLzo_compress(JNIEnv *env, jclass clazz, jbyteArray buffer) {
+    int r;
     lzo_uint new_len;
+    // 获取Java字节数组的长度和数据；
+    jsize in_len = (*env) -> GetArrayLength(env, buffer);
+    jbyte *in = (*env) -> GetByteArrayElements(env, buffer, NULL);
+    // 打印字节数组的内容（16进制格式）
+    LOGI("MiniLzo压缩数据: %s", byteArrayToHexString(in,in_len));
 
-    //  Step 1: initialize the LZO library
-    if (lzo_init() != LZO_E_OK){
-        LOGI("internal error - lzo_init() failed !!!\n");
-        LOGI("(this usually indicates a compiler bug - try recompiling\nwithout optimizations, and enable '-DLZO_DEBUG' for diagnostics)\n");
-        return 3;
-    }
-    // Step 2: prepare the input block that will get compressed. We just fill it with zeros in this example program,
-    // but you would use your real-world data here.
-    in_len = (*env) -> GetArrayLength(env, javaArray);
-    lzo_memset(javaArray,0,in_len);
-    // Step 3: compress from 'in' to 'out' with LZO1X-1
+    // 计算压缩后的最大长度
+    lzo_uint out_len = in_len + in_len/16 + 64 +3;
+    //创建用于存储压缩结果的字节数组
+    jbyteArray resultArray = (*env) -> NewByteArray(env, out_len);
+    jbyte *out = (*env) -> GetByteArrayElements(env, resultArray, NULL);
 
-    int r = lzo1x_1_compress(javaArray, in_len,out, &out_len, wrkmem);
-    if (r == LZO_E_OK)
-        LOGI("compressed %lu bytes into %lu bytes\n", (unsigned long) in_len, (unsigned long) out_len);
-    else {
-        LOGI("internal error - compression failed: %d\n", r);
-        return 2;
-    }
+    // 进行压缩操作
+    r = lzo1x_1_compress((const unsigned char *)in, in_len, (unsigned char *) out, &out_len, wrkmem);
+    LOGI("MiniLzo 压缩结果 %d", r);
 
-    LOGW("miniLZO simple compress %d", (unsigned long) out_len);
-    for (int i = 0; i < sizeof(out); ++i) {
-        LOGW("miniLZO simple out compress %lu value %lu", i, out[i]);
+    // 释放获取的字节数组数据和内存
+    (*env) -> ReleaseByteArrayElements(env, buffer, in, JNI_ABORT);
+    (*env) -> ReleaseByteArrayElements(env, resultArray, out, 0);
+
+    if (r != LZO_E_OK) {
+        // 压缩失败，可以抛出异常或进行其他处里
+        return NULL;
     }
-    // Step 4: decompress again, now going from 'out' to 'in'
+    // 解压操作
     new_len = in_len;
-
-    static unsigned char __LZO_MMODEL in  [ 2048 ];
-    r = lzo1x_decompress(out, out_len, in, &new_len, NULL);
-    if (r == LZO_E_OK && new_len == in_len)
-        LOGI("decompressed %lu bytes back into %lu bytes\n", (unsigned long) out_len, (unsigned long) in_len);
-    else{
-        // this should NEVER happen
-        LOGI("internal error - decompression failed: %d", r);
-        return 1;
+    r = lzo1x_decompress((const unsigned char *)out, out_len, (unsigned char *)in,&new_len, NULL);
+    LOGI("MiniLzo 解压结果 %d", r);
+    if (r == LZO_E_OK && new_len == in_len) {
+        LOGI("MiniLzo 解压成功");
     }
+    // 释放解压的内存并在后续操作之前重新获取数据指针。
+    (*env) -> ReleaseByteArrayElements(env, buffer, in, 0);
+    in = (*env) -> GetByteArrayElements(env, buffer, NULL);
 
-    LOGW("miniLZO simple compress new_len %d", (unsigned long) new_len);
-    for (int k = 0; k < 300; ++k ) {
-        LOGW("miniLZO simple in compress %lu value %lu", k, in[k]);
-    }
+    // 打印字节数组的内容（16进制格式）
+    LOGI("MiniLzo解压数据: %s", byteArrayToHexString(in,in_len));
 
+    // 释放重新获取的指针数据
+    (*env) -> ReleaseByteArrayElements(env, buffer, in, JNI_ABORT);
 
-    LOGI("miniLZO simple compression test passed. ");
-    return firstMacArray;
+    // 返回压缩后的数据
+    return resultArray;
 }
 
 JNIEXPORT jbyteArray JNICALL
@@ -157,50 +145,13 @@ Java_com_example_cdemo_MiniLzo_uncompress(JNIEnv *env, jclass clazz, jbyteArray 
 //    (*env)->SetByteArrayRegion(env, firstMacArray, 0, 6, bytes);
 //    return firstMacArray;
 
-    lzo_uint in_len;
-    lzo_uint out_len;
-    lzo_uint new_len;
+    int len = (*env)->GetArrayLength(env, buffer);
+    LOGI("MiniLzo_uncompress: 原数据长度 %d" , len);
+    jbyteArray out = (*env)->NewByteArray(env, 2048);
 
-    //
-    static unsigned char __LZO_MMODEL outt [1075];
-    static unsigned char __LZO_MMODEL inn  [2048];
-
-    if (lzo_init() != LZO_E_OK){
-        LOGI("internal error - lzo_init() failed !!!\n");
-        return 3;
-    }
-    // Step 2: prepare the input block that will get compressed.
-    in_len = 2048;
-    lzo_memset(inn,0, in_len);
-
-    // Step 3: compress from 'in' to 'out' with LZO1X-1
-    LOGW("MiniLzo_uncompress: 原数据长度 in_len %d" , in_len);
-    int r = lzo1x_1_compress(inn,in_len,outt,&out_len,wrkmem);
-    if (r == LZO_E_OK)
-        LOGI("MiniLzo_uncompress %lu bytes into %lu bytes\n", (unsigned long) in_len, (unsigned long) out_len);
-    else {
-        LOGI("MiniLzo_uncompress error - compression failed: %d\n", r);
-        return 2;
-    }
-
-    // Step 4: decompress again, now going from 'out' to 'in'
-    int alen = (*env) -> GetArrayLength(env, buffer);
-    LOGW("MiniLzo_uncompress: 原数据长度 %d" , alen);
-    out_len = alen;
-
-//    LOGW("MiniLzo_uncompress: 555 原数据长度 %d" , out_len);
-//    r = lzo1x_decompress(buffer, out_len, inn, &new_len, wrkmem);
-////    int r = 10;
-//    if (r == LZO_E_OK && new_len == in_len)
-//        LOGI("decompressed %lu bytes back into %lu bytes\n", (unsigned long) out_len, (unsigned long) in_len);
-//    else{
-//        // this should NEVER happen
-//        LOGI("internal error - decompression failed: %d", r);
-//        return 1;
-//    }
-//    LOGW("MiniLzo_uncompress simple compression test passed.");
-    jbyteArray firstMacArray = (*env)->NewByteArray(env, 6);
-    return firstMacArray;
+    int r;
+//    r = lzo1x_decompress(buffer,len,out,2048,NULL);
+    return out;
 }
 
 // 新增END---------
@@ -4676,10 +4627,10 @@ _lzo_config_check(void)
 #endif
 #if defined(lzo_bitops_ctlz32)
     { unsigned i = 0; lzo_uint32_t v;
-    for (v = 1; v != 0 && r == 1; v <<= 1, i++) {
-        r &= lzo_bitops_ctlz32(v) == 31 - i;
-        r &= lzo_bitops_ctlz32_func(v) == 31 - i;
-    }}
+        for (v = 1; v != 0 && r == 1; v <<= 1, i++) {
+            r &= lzo_bitops_ctlz32(v) == 31 - i;
+            r &= lzo_bitops_ctlz32_func(v) == 31 - i;
+        }}
 #endif
 #if defined(lzo_bitops_ctlz64)
     { unsigned i = 0; lzo_uint64_t v;
@@ -4690,10 +4641,10 @@ _lzo_config_check(void)
 #endif
 #if defined(lzo_bitops_cttz32)
     { unsigned i = 0; lzo_uint32_t v;
-    for (v = 1; v != 0 && r == 1; v <<= 1, i++) {
-        r &= lzo_bitops_cttz32(v) == i;
-        r &= lzo_bitops_cttz32_func(v) == i;
-    }}
+        for (v = 1; v != 0 && r == 1; v <<= 1, i++) {
+            r &= lzo_bitops_cttz32(v) == i;
+            r &= lzo_bitops_cttz32_func(v) == i;
+        }}
 #endif
 #if defined(lzo_bitops_cttz64)
     { unsigned i = 0; lzo_uint64_t v;
@@ -5169,20 +5120,20 @@ literal:
                 {
                     op[-2] = LZO_BYTE(op[-2] | t);
 #if (LZO_OPT_UNALIGNED32)
-                    UA_COPY4(op, ii);
-                op += t;
+                            UA_COPY4(op, ii);
+                    op += t;
 #else
                     { do *op++ = *ii++; while (--t > 0); }
 #endif
                 }
 #if (LZO_OPT_UNALIGNED32) || (LZO_OPT_UNALIGNED64)
-                    else if (t <= 16)
-            {
-                *op++ = LZO_BYTE(t - 3);
-                UA_COPY8(op, ii);
-                UA_COPY8(op+8, ii+8);
-                op += t;
-            }
+                else if (t <= 16)
+                {
+                    *op++ = LZO_BYTE(t - 3);
+                            UA_COPY8(op, ii);
+                            UA_COPY8(op+8, ii+8);
+                    op += t;
+                }
 #endif
                 else
                 {
@@ -5203,10 +5154,10 @@ literal:
                     }
 #if (LZO_OPT_UNALIGNED32) || (LZO_OPT_UNALIGNED64)
                     do {
-                    UA_COPY8(op, ii);
-                    UA_COPY8(op+8, ii+8);
-                    op += 16; ii += 16; t -= 16;
-                } while (t >= 16); if (t > 0)
+                                UA_COPY8(op, ii);
+                                UA_COPY8(op+8, ii+8);
+                        op += 16; ii += 16; t -= 16;
+                    } while (t >= 16); if (t > 0)
 #endif
                     { do *op++ = *ii++; while (--t > 0); }
                 }
@@ -5246,30 +5197,30 @@ literal:
 #endif
 #elif (LZO_OPT_UNALIGNED32)
             lzo_uint32_t v;
-        v = UA_GET_NE32(ip + m_len) ^ UA_GET_NE32(m_pos + m_len);
-        if __lzo_unlikely(v == 0) {
-            do {
-                m_len += 4;
-                v = UA_GET_NE32(ip + m_len) ^ UA_GET_NE32(m_pos + m_len);
-                if (v != 0)
-                    break;
-                m_len += 4;
-                v = UA_GET_NE32(ip + m_len) ^ UA_GET_NE32(m_pos + m_len);
-                if __lzo_unlikely(ip + m_len >= ip_end)
-                    goto m_len_done;
-            } while (v == 0);
-        }
+            v = UA_GET_NE32(ip + m_len) ^ UA_GET_NE32(m_pos + m_len);
+            if __lzo_unlikely(v == 0) {
+                do {
+                    m_len += 4;
+                    v = UA_GET_NE32(ip + m_len) ^ UA_GET_NE32(m_pos + m_len);
+                    if (v != 0)
+                        break;
+                    m_len += 4;
+                    v = UA_GET_NE32(ip + m_len) ^ UA_GET_NE32(m_pos + m_len);
+                    if __lzo_unlikely(ip + m_len >= ip_end)
+                        goto m_len_done;
+                } while (v == 0);
+            }
 #if (LZO_ABI_BIG_ENDIAN) && defined(lzo_bitops_ctlz32)
-        m_len += lzo_bitops_ctlz32(v) / CHAR_BIT;
+            m_len += lzo_bitops_ctlz32(v) / CHAR_BIT;
 #elif (LZO_ABI_BIG_ENDIAN)
-        if ((v >> (32 - CHAR_BIT)) == 0) do {
+            if ((v >> (32 - CHAR_BIT)) == 0) do {
             v <<= CHAR_BIT;
             m_len += 1;
         } while ((v >> (32 - CHAR_BIT)) == 0);
 #elif (LZO_ABI_LITTLE_ENDIAN) && defined(lzo_bitops_cttz32)
-        m_len += lzo_bitops_cttz32(v) / CHAR_BIT;
+            m_len += lzo_bitops_cttz32(v) / CHAR_BIT;
 #elif (LZO_ABI_LITTLE_ENDIAN)
-        if ((v & UCHAR_MAX) == 0) do {
+            if ((v & UCHAR_MAX) == 0) do {
             v >>= CHAR_BIT;
             m_len += 1;
         } while ((v & UCHAR_MAX) == 0);
@@ -5280,33 +5231,33 @@ literal:
 #endif
 #else
             if __lzo_unlikely(ip[m_len] == m_pos[m_len]) {
-                do {
-                    m_len += 1;
-                    if (ip[m_len] != m_pos[m_len])
-                        break;
-                    m_len += 1;
-                    if (ip[m_len] != m_pos[m_len])
-                        break;
-                    m_len += 1;
-                    if (ip[m_len] != m_pos[m_len])
-                        break;
-                    m_len += 1;
-                    if (ip[m_len] != m_pos[m_len])
-                        break;
-                    m_len += 1;
-                    if (ip[m_len] != m_pos[m_len])
-                        break;
-                    m_len += 1;
-                    if (ip[m_len] != m_pos[m_len])
-                        break;
-                    m_len += 1;
-                    if (ip[m_len] != m_pos[m_len])
-                        break;
-                    m_len += 1;
-                    if __lzo_unlikely(ip + m_len >= ip_end)
-                        goto m_len_done;
-                } while (ip[m_len] == m_pos[m_len]);
-            }
+            do {
+                m_len += 1;
+                if (ip[m_len] != m_pos[m_len])
+                    break;
+                m_len += 1;
+                if (ip[m_len] != m_pos[m_len])
+                    break;
+                m_len += 1;
+                if (ip[m_len] != m_pos[m_len])
+                    break;
+                m_len += 1;
+                if (ip[m_len] != m_pos[m_len])
+                    break;
+                m_len += 1;
+                if (ip[m_len] != m_pos[m_len])
+                    break;
+                m_len += 1;
+                if (ip[m_len] != m_pos[m_len])
+                    break;
+                m_len += 1;
+                if (ip[m_len] != m_pos[m_len])
+                    break;
+                m_len += 1;
+                if __lzo_unlikely(ip + m_len >= ip_end)
+                    goto m_len_done;
+            } while (ip[m_len] == m_pos[m_len]);
+        }
 #endif
         }
         m_len_done:
@@ -5649,18 +5600,18 @@ DO_DECOMPRESS  ( const lzo_bytep in , lzo_uint  in_len,
             if (t > 1) { *op++ = *ip++; if (t > 2) { *op++ = *ip++; } }
         }
 #elif (LZO_OPT_UNALIGNED32) || (LZO_ALIGNED_OK_4)
-        #if !(LZO_OPT_UNALIGNED32)
+#if !(LZO_OPT_UNALIGNED32)
         if (PTR_ALIGNED2_4(op,ip))
         {
 #endif
-        UA_COPY4(op,ip);
+                UA_COPY4(op,ip);
         op += 4; ip += 4;
         if (--t > 0)
         {
             if (t >= 4)
             {
                 do {
-                    UA_COPY4(op,ip);
+                            UA_COPY4(op,ip);
                     op += 4; ip += 4; t -= 4;
                 } while (t >= 4);
                 if (t > 0) do *op++ = *ip++; while (--t > 0);
@@ -5911,7 +5862,7 @@ DO_DECOMPRESS  ( const lzo_bytep in , lzo_uint  in_len,
             }
             else
 #elif (LZO_OPT_UNALIGNED32) || (LZO_ALIGNED_OK_4)
-            #if !(LZO_OPT_UNALIGNED32)
+#if !(LZO_OPT_UNALIGNED32)
             if (t >= 2 * 4 - (3 - 1) && PTR_ALIGNED2_4(op,m_pos))
             {
                 assert((op - m_pos) >= 4);
@@ -5919,10 +5870,10 @@ DO_DECOMPRESS  ( const lzo_bytep in , lzo_uint  in_len,
             if (t >= 2 * 4 - (3 - 1) && (op - m_pos) >= 4)
             {
 #endif
-                UA_COPY4(op,m_pos);
+                        UA_COPY4(op,m_pos);
                 op += 4; m_pos += 4; t -= 4 - (3 - 1);
                 do {
-                    UA_COPY4(op,m_pos);
+                            UA_COPY4(op,m_pos);
                     op += 4; m_pos += 4; t -= 4;
                 } while (t >= 4);
                 if (t > 0) do *op++ = *m_pos++; while (--t > 0);
@@ -6173,7 +6124,7 @@ DO_DECOMPRESS  ( const lzo_bytep in , lzo_uint  in_len,
         }
         assert(t > 0); NEED_OP(t+3); NEED_IP(t+6);
 #if (LZO_OPT_UNALIGNED64) && (LZO_OPT_UNALIGNED32)
-        t += 3;
+            t += 3;
         if (t >= 8) do
         {
             UA_COPY8(op,ip);
@@ -6190,18 +6141,18 @@ DO_DECOMPRESS  ( const lzo_bytep in , lzo_uint  in_len,
             if (t > 1) { *op++ = *ip++; if (t > 2) { *op++ = *ip++; } }
         }
 #elif (LZO_OPT_UNALIGNED32) || (LZO_ALIGNED_OK_4)
-        #if !(LZO_OPT_UNALIGNED32)
-        if (PTR_ALIGNED2_4(op,ip))
+#if !(LZO_OPT_UNALIGNED32)
+            if (PTR_ALIGNED2_4(op,ip))
         {
 #endif
-        UA_COPY4(op,ip);
+                UA_COPY4(op,ip);
         op += 4; ip += 4;
         if (--t > 0)
         {
             if (t >= 4)
             {
                 do {
-                    UA_COPY4(op,ip);
+                            UA_COPY4(op,ip);
                     op += 4; ip += 4; t -= 4;
                 } while (t >= 4);
                 if (t > 0) do *op++ = *ip++; while (--t > 0);
@@ -6452,7 +6403,7 @@ DO_DECOMPRESS  ( const lzo_bytep in , lzo_uint  in_len,
             }
             else
 #elif (LZO_OPT_UNALIGNED32) || (LZO_ALIGNED_OK_4)
-            #if !(LZO_OPT_UNALIGNED32)
+#if !(LZO_OPT_UNALIGNED32)
             if (t >= 2 * 4 - (3 - 1) && PTR_ALIGNED2_4(op,m_pos))
             {
                 assert((op - m_pos) >= 4);
@@ -6460,10 +6411,10 @@ DO_DECOMPRESS  ( const lzo_bytep in , lzo_uint  in_len,
             if (t >= 2 * 4 - (3 - 1) && (op - m_pos) >= 4)
             {
 #endif
-                UA_COPY4(op,m_pos);
+                        UA_COPY4(op,m_pos);
                 op += 4; m_pos += 4; t -= 4 - (3 - 1);
                 do {
-                    UA_COPY4(op,m_pos);
+                            UA_COPY4(op,m_pos);
                     op += 4; m_pos += 4; t -= 4;
                 } while (t >= 4);
                 if (t > 0) do *op++ = *m_pos++; while (--t > 0);
@@ -6526,3 +6477,4 @@ DO_DECOMPRESS  ( const lzo_bytep in , lzo_uint  in_len,
 #endif
 
 /***** End of minilzo.c *****/
+
