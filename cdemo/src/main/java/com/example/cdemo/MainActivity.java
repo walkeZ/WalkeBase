@@ -15,13 +15,15 @@ import java.util.Arrays;
  * @email 1126648815@qq.ocm
  * @desc : 新建一个使用C语言的Demo
  * 参考：https://www.51c51.com/danpianji/xinxi/84/786987.html
+ *
+ * .so库在/build/intermediates/cmake/debug/obj/
  */
 public class MainActivity extends AppCompatActivity {
 
     /**
      *  数据样例在：doc/数据样例_data_len1075.txt
      */
-    String originalHex = "0000000000000000000c0a0b0c080000000000080e0f0009090000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a08000000000000000000000000000000" +
+    String mOriginalHex = "0000000000000000000c0a0b0c080000000000080e0f0009090000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a08000000000000000000000000000000" +
             "0000000000000000000000000000090c0b090a0d090b08080809000008000000000000000000000000000000000a0d0f0e0d0f160f150e0e0d0d00080a080000000000000000000000000000090e1113100f131b121b1212110f090a0b0a0000000000000000000000000000000c0c0e0d0d12160f170f0d0d0d000809080000" +
             "000000000000000000000000000a0b0c0d0c0f110c110c090a0c00000a000000000000000000000000000000080c0e10110f10110b130d0d0e0e00080b000000000000000000000000000000000b0f11161411120c150d10120f080a0b000000000000000000000000000000000b1212161310110d130c0f100e090b0e0a0000" +
             "00000000000000000000000000090e1010110e0e0a0e0b13130e0a090b0900000000000000000000000000000000090e121413120a0f0b1514110e110b000000000000000000000000000000080b0f0f161616150b110c12131611140d0900000000000000000000000000000a1312111612100f090d0a10171c0f100f0b0900" +
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 压缩数据，对应 originalHex 压缩。即originalHex压缩后的数据
      */
-    String compressHex = "0200000000007000020c0a0b0c0860010400080e0f0009098801202b11000ab40b3648010b090c0b090a0d090b0808080900002fac000c0a0d0f0e0d0f160f150e0e0d0d00082e30010f090e1113100f131b121b1212110f090a0b0a2d9c01080c0c0e0d"
+    String mCompressHex = "0200000000007000020c0a0b0c0860010400080e0f0009098801202b11000ab40b3648010b090c0b090a0d090b0808080900002fac000c0a0d0f0e0d0f160f150e0e0d0d00082e30010f090e1113100f131b121b1212110f090a0b0a2d9c01080c0c0e0d"
             + "0d12160f170f0d7d07092e80010c0a0b0c0d0c0f110c110c090a0c00002ef8000e080c0e10110f10110b130d0d0e0e00080b2d78010d000b0f11161411120c150d10120f080a307c000c1212161310110d130c0f100e090b0e2e80010d090e1010110e0e"
             + "0a0e0b13130e0a090b2ffc050b090e121413120a0f0b1514110e112e7c010e080b0f0f161616150b110c12131611140d2dfc000e0a1312111612100f090d0a10171c0f100f2c8001000108000e11111b1311110d0e0c0e151d1412100c2a80030f0a0900"
             + "0c1d1013120f100d140c0f141614107d0b08278800640100021111140f0f1410170e111615120f100800000b0b7c0200030000080d0d0000000b121611131710191014181611850200de030c0f70210a090f14131616111910161b17122b7a041010600d"
@@ -68,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void testLZO(View view) {
-        byte[] originalBytes = DataUtil.hexStringToBytes(originalHex); // compressHex： 原数据
-        byte[] compressBytes = DataUtil.hexStringToBytes(compressHex); // compressHex：compressHex压缩后的数据
+        byte[] originalBytes = DataUtil.hexStringToBytes(mOriginalHex); // compressHex： 原数据
+        byte[] compressBytes = DataUtil.hexStringToBytes(mCompressHex); // compressHex：compressHex压缩后的数据
         Log.i("testLZO ", " origin（原数据） " + originalBytes.length + ", " + Arrays.toString(originalBytes));
         Log.i("testLZO ", " miniLzo（嵌入式的）compress " + compressBytes.length + ", " + Arrays.toString(compressBytes));
         Log.i("testLZO ",  "---\n");
@@ -136,19 +138,27 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void lzoCompress(View view) {
-        byte[] originalBytes = DataUtil.hexStringToBytes(originalHex); // compressHex： 原数据
+        byte[] originalBytes = DataUtil.hexStringToBytes(mOriginalHex); // compressHex： 原数据
         byte[] compress1 = compress(originalBytes);
-        Log.w("testLZO ", " 压缩数据对比 " + compressHex.equals(DataUtil.bytesToHexString(compress1))+ ", 压缩数据长度(byte) " + compress1.length);
+        String hexCompress = DataUtil.bytesToHexString(compress1);
+        Log.w("testLZO ", " 压缩数据对比 " + mCompressHex.toUpperCase().equals(hexCompress.toUpperCase()) + ", 压缩数据长度(byte) " + compress1.length);
+        Log.i("testLZO ", "原压 " + mCompressHex.toUpperCase());
+        deCompress(hexCompress);
+        Log.i("testLZO ", "hexCompress " + hexCompress);
     }
 
     public void lzoDecompress(View view) {
+        deCompress(mCompressHex);
+    }
+
+    private void deCompress(String compressHex) {
         byte[] compressBytes = DataUtil.hexStringToBytes(compressHex); // compressHex：compressHex压缩后的数据
         byte[] uncompress = uncompress(compressBytes);
         // 验证
         String oldHex = DataUtil.bytesToHexString(uncompress);
-        Log.w("testLZO ", " 原数据对比 " + originalHex.toLowerCase().equals(oldHex.toLowerCase()) + ", 原数据长度(byte) " + uncompress.length + ", " + oldHex);
-        Log.i("testLZO ", "无压" + originalHex.length() + ", " + originalHex.toUpperCase());
-        Log.i("testLZO ", "解压" + oldHex.length() + ", " + oldHex.toUpperCase());
+        Log.w("testLZO ", " 原数据对比 " + mOriginalHex.toUpperCase().equals(oldHex.toUpperCase()) + ", 原数据长度(byte) " + uncompress.length + ", " + oldHex);
+        Log.i("testLZO ", " 无压 " + mOriginalHex.length() + ", " + mOriginalHex.toUpperCase());
+        Log.i("testLZO ", " 解压 " + oldHex.length() + ", " + oldHex.toUpperCase());
     }
 
     public void jump(View view) {
