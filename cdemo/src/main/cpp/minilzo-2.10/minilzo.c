@@ -44,6 +44,54 @@
 #endif
 #include <limits.h>
 #include <stddef.h>
+
+#include "minilzo.h"
+
+// 新增start---------
+#include <jni.h>
+
+#include <android/log.h>
+
+#define LOGI(...) \
+  ((void)__android_log_print(ANDROID_LOG_INFO, "mini-lzo ", __VA_ARGS__))
+
+JNIEXPORT jbyteArray JNICALL
+Java_com_example_cdemo_MiniLzo_compress(JNIEnv *env, jclass clazz, jbyteArray buffer) {
+
+    // 调试调用返回
+    jbyteArray firstMacArray = (*env)->NewByteArray(env, 6);
+    jbyte *bytes = (*env)->GetByteArrayElements(env, firstMacArray, 0);
+    for (int i = 0; i < 6; i++) {
+        bytes[i] = 6 - i;
+    }
+    (*env)->SetByteArrayRegion(env, firstMacArray, 0, 6, bytes);
+    return firstMacArray;
+}
+
+JNIEXPORT jbyteArray JNICALL
+Java_com_example_cdemo_MiniLzo_uncompress(JNIEnv *env, jclass clazz, jbyteArray buffer) {
+    // 调试调用返回
+//    jbyteArray firstMacArray = (*env)->NewByteArray(env, 6);
+//    jbyte *bytes = (*env)->GetByteArrayElements(env, firstMacArray, 0);
+//    for (int i = 0; i < 6; i++) {
+//        bytes[i] = i;
+//    }
+//    (*env)->SetByteArrayRegion(env, firstMacArray, 0, 6, bytes);
+//    return firstMacArray;
+
+    int len = (*env)->GetArrayLength(env, buffer);
+    LOGI("MiniLzo_uncompress: 原数据长度 %d" , len);
+    jbyteArray out = (*env)->NewByteArray(env, 2048);
+
+    int r;
+//    r = lzo1x_decompress(buffer,len,out,2048,NULL);
+    return out;
+}
+
+// 新增END---------
+
+
+
 #if defined(MINILZO_CFG_USE_INTERNAL_LZODEFS)
 
 #ifndef __LZODEFS_H_INCLUDED

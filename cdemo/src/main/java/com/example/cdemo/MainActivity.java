@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i("testLZO ", " miniLzo（嵌入式的）compress " + compressBytes.length + ", " + Arrays.toString(compressBytes));
         try {
             byte[] compress1 = compress(originalBytes);
-            byte[] uncompress = uncompress(compress1);
+            byte[] uncompress1 = uncompress(compress1);
+            byte[] uncompress = uncompress(compressBytes);
             // 验证
             Log.i("testLZO ", " 原数据对比 " + DataUtil.bytesToHexString(originalBytes).equals(DataUtil.bytesToHexString(uncompress)) + ", 压缩数据长度(byte) " + compress1.length);
             Log.i("testLZO ", " 压缩数据对比 " + DataUtil.bytesToHexString(compressBytes).equals(DataUtil.bytesToHexString(compress1)));
@@ -109,17 +110,21 @@ public class MainActivity extends AppCompatActivity {
     private byte[] compress(byte[] originalBytes) {
         // TODO: 2023/8/22 miniLzo 压缩
         // miniLzo C 库官网（源码） http://www.oberhumer.com/opensource/lzo/#minilzo
+        byte[] compress = MiniLzo.compress(originalBytes);
+        Log.i("testLZO ","compress: " + Arrays.toString(compress));
         return new byte[0];
     }
 
     /**
      * 解压
      *
-     * @param compress1 压缩后的数据
+     * @param compress 压缩后的数据
      * @return 原数据
      */
-    private byte[] uncompress(byte[] compress1) {
+    private byte[] uncompress(byte[] compress) {
         // TODO: 2023/8/22 miniLzo 解压
+        byte[] uncompress = MiniLzo.uncompress(compress);
+        Log.i("testLZO ","uncompress: " + Arrays.toString(uncompress));
         return new byte[0];
     }
 

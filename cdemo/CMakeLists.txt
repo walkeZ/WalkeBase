@@ -44,3 +44,18 @@ target_link_libraries(
         hello-lzo
         android
         log)
+
+# 接入miniLZO库
+add_library( # Specifies the name of the library.
+        mini-lzo
+
+        # Sets the library as a shared library.
+        SHARED
+
+        # Provides a relative path to your source file(s).
+        src/main/cpp/minilzo-2.10/minilzo.c )
+
+target_link_libraries(
+        mini-lzo
+        android
+        log)
