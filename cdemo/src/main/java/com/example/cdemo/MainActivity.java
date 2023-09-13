@@ -134,6 +134,23 @@ public class MainActivity extends AppCompatActivity {
         return uncompress;
     }
 
+
+    public void lzoCompress(View view) {
+        byte[] originalBytes = DataUtil.hexStringToBytes(originalHex); // compressHex： 原数据
+        byte[] compress1 = compress(originalBytes);
+        Log.w("testLZO ", " 压缩数据对比 " + compressHex.equals(DataUtil.bytesToHexString(compress1))+ ", 压缩数据长度(byte) " + compress1.length);
+    }
+
+    public void lzoDecompress(View view) {
+        byte[] compressBytes = DataUtil.hexStringToBytes(compressHex); // compressHex：compressHex压缩后的数据
+        byte[] uncompress = uncompress(compressBytes);
+        // 验证
+        String oldHex = DataUtil.bytesToHexString(uncompress);
+        Log.w("testLZO ", " 原数据对比 " + originalHex.toLowerCase().equals(oldHex.toLowerCase()) + ", 原数据长度(byte) " + uncompress.length + ", " + oldHex);
+        Log.i("testLZO ", "无压" + originalHex.length() + ", " + originalHex.toUpperCase());
+        Log.i("testLZO ", "解压" + oldHex.length() + ", " + oldHex.toUpperCase());
+    }
+
     public void jump(View view) {
         startActivity(new Intent(this, HelloJniActivity.class));
     }

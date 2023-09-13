@@ -51,15 +51,20 @@
 
 #include <android/log.h>
 #include <stdio.h>
+#include <string.h>
 
 #define LOGI(...) \
   ((void)__android_log_print(ANDROID_LOG_INFO, "mini-lzo ", __VA_ARGS__))
 
+#define LOGW(...) \
+  ((void)__android_log_print(ANDROID_LOG_WARN, "mini-lzo ", __VA_ARGS__))
+
+
 #define IN_LEN      (128*1024ul)
 #define OUT_LEN     (IN_LEN + IN_LEN / 16 + 64 + 3)
 
-static unsigned char __LZO_MMODEL in  [ IN_LEN ];
-static unsigned char __LZO_MMODEL out [ OUT_LEN ];
+//static unsigned char __LZO_MMODEL in  [ IN_LEN ];
+//static unsigned char __LZO_MMODEL out [ OUT_LEN ];
 
 /* Work-memory needed for compression. Allocate memory in units
  * of 'lzo_align_t' (instead of 'char') to make sure it is properly aligned.
@@ -93,30 +98,50 @@ Java_com_example_cdemo_MiniLzo_compress(JNIEnv *env, jclass clazz, jbyteArray bu
     jsize in_len = (*env) -> GetArrayLength(env, buffer);
     jbyte *in = (*env) -> GetByteArrayElements(env, buffer, NULL);
     // 打印字节数组的内容（16进制格式）
-    LOGI("MiniLzo压缩数据: %s", byteArrayToHexString(in,in_len));
+    char* cc =byteArrayToHexString(in,in_len);
+    int cl= strlen(cc);
+    LOGI("MiniLzo 压缩数据:  Java 数组长度 %d , hex 字符长度 %d,  hex字符 %s", in_len, cl, cc);
 
     // 计算压缩后的最大长度
     lzo_uint out_len = in_len + in_len/16 + 64 +3;
     //创建用于存储压缩结果的字节数组
     jbyteArray resultArray = (*env) -> NewByteArray(env, out_len);
     jbyte *out = (*env) -> GetByteArrayElements(env, resultArray, NULL);
-
+//    jsize ra_len = (*env) -> GetArrayLength(env, resultArray);
+//    LOGW("MiniLzo 压缩前 resultArray长度 %d, out_len %d ", ra_len, out_len);
     // 进行压缩操作
     r = lzo1x_1_compress((const unsigned char *)in, in_len, (unsigned char *) out, &out_len, wrkmem);
-    LOGI("MiniLzo 压缩结果 %d", r);
+    LOGW("MiniLzo 压缩结果 %d 解压后长度 out_len %d , %s", r, out_len, byteArrayToHexString(out, out_len));
+
+//    ra_len = (*env) -> GetArrayLength(env, resultArray);
+//    LOGW("MiniLzo 压缩后释放前 resultArray长度 %d ", ra_len);
+    // W  MiniLzo 压缩前 resultArray长度 2243, out_len 2243
+    // W  MiniLzo 压缩结果 0 解压后长度 out_len 1075
+    // W  MiniLzo 压缩后释放前 resultArray长度 2243
+    // W  MiniLzo 压缩后释放后 resultArray长度 2243
+
+//
+//    // 截取数据
+//    jbyteArray resultBuffer = (*env) -> NewByteArray(env, out_len);
+//    jbyte *outBuffer = (*env) -> GetByteArrayElements(env, resultBuffer, NULL);
+//    (*env) -> GetByteArrayRegion(env, resultArray,0, out_len, outBuffer);
+////    LOGI("MiniLzo 截取压缩数据: resultBuffer , %s", , byteArrayToHexString(outBuffer,out_len));
 
     // 释放获取的字节数组数据和内存
     (*env) -> ReleaseByteArrayElements(env, buffer, in, JNI_ABORT);
     (*env) -> ReleaseByteArrayElements(env, resultArray, out, 0);
 
+//    ra_len = (*env) -> GetArrayLength(env, resultArray);
+//    LOGW("MiniLzo 压缩后释放后 resultArray长度 %d ", ra_len);
     if (r != LZO_E_OK) {
         // 压缩失败，可以抛出异常或进行其他处里
         return NULL;
     }
     // 解压操作
     new_len = in_len;
+    LOGI("MiniLzo 解压结果 %d 解压前, in_len %d ", r,  (unsigned long ) in_len);
     r = lzo1x_decompress((const unsigned char *)out, out_len, (unsigned char *)in,&new_len, NULL);
-    LOGI("MiniLzo 解压结果 %d", r);
+    LOGI("MiniLzo 解压结果 %d 解压后长度 %d", r,  (unsigned long ) new_len);
     if (r == LZO_E_OK && new_len == in_len) {
         LOGI("MiniLzo 解压成功");
     }
@@ -125,7 +150,7 @@ Java_com_example_cdemo_MiniLzo_compress(JNIEnv *env, jclass clazz, jbyteArray bu
     in = (*env) -> GetByteArrayElements(env, buffer, NULL);
 
     // 打印字节数组的内容（16进制格式）
-    LOGI("MiniLzo解压数据: %s", byteArrayToHexString(in,in_len));
+    LOGI("MiniLzo 解压数据: %s", byteArrayToHexString(in,in_len));
 
     // 释放重新获取的指针数据
     (*env) -> ReleaseByteArrayElements(env, buffer, in, JNI_ABORT);
@@ -144,14 +169,28 @@ Java_com_example_cdemo_MiniLzo_uncompress(JNIEnv *env, jclass clazz, jbyteArray 
 //    }
 //    (*env)->SetByteArrayRegion(env, firstMacArray, 0, 6, bytes);
 //    return firstMacArray;
-
-    int len = (*env)->GetArrayLength(env, buffer);
-    LOGI("MiniLzo_uncompress: 原数据长度 %d" , len);
-    jbyteArray out = (*env)->NewByteArray(env, 2048);
-
     int r;
-//    r = lzo1x_decompress(buffer,len,out,2048,NULL);
-    return out;
+    lzo_uint new_len;
+    // 获取Java字节数组的长度和数据；
+    jsize enter_len = (*env) -> GetArrayLength(env, buffer);
+    jbyte *enter = (*env) -> GetByteArrayElements(env, buffer, NULL);
+    LOGI("MiniLzo 解压前数据 长度 %d , %s", enter_len, byteArrayToHexString(enter, enter_len));
+
+    // 解压操作
+    new_len = 2048;
+    //创建用于存储压缩结果的字节数组
+    jbyteArray resultArray = (*env) -> NewByteArray(env, new_len);
+    jbyte *outer = (*env) -> GetByteArrayElements(env, resultArray, NULL);
+
+    r = lzo1x_decompress((const unsigned char *)enter, enter_len, (unsigned char *)outer, &new_len, NULL);
+    LOGW("MiniLzo 解压结果 %d 解压后长度 %d , %s ", r,  (unsigned long ) new_len, byteArrayToHexString(outer, new_len));
+    if (r == LZO_E_OK && new_len == 2048) {
+        LOGW("MiniLzo 解压成功");
+    }
+    // 释放获取的字节数组数据和内存 [这两行必要，否则返回的是0...0]
+    (*env) -> ReleaseByteArrayElements(env, buffer, enter, JNI_ABORT);
+    (*env) -> ReleaseByteArrayElements(env, resultArray, outer, 0);
+    return resultArray;
 }
 
 // 新增END---------
