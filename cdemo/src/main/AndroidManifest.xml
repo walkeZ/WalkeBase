@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WalkeBase">
         <activity
-            android:name=".MainActivity"
+            android:name=".HelloJniActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
