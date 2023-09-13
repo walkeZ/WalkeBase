@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("testLZO ", " miniLzo（嵌入式的）compress " + compressBytes.length + ", " + Arrays.toString(compressBytes));
         try {
             byte[] compress1 = compress(originalBytes);
-            byte[] uncompress1 = uncompress(compress1);
+//            byte[] uncompress1 = uncompress(compress1);
             byte[] uncompress = uncompress(compressBytes);
             // 验证
             Log.i("testLZO ", " 原数据对比 " + DataUtil.bytesToHexString(originalBytes).equals(DataUtil.bytesToHexString(uncompress)) + ", 压缩数据长度(byte) " + compress1.length);
