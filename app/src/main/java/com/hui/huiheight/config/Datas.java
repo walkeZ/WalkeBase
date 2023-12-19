@@ -69,6 +69,7 @@ public class Datas {
             "Glide获取保存网络图片和本地图片",
             "wifi 自连 " + WifiActivity01.class.getSimpleName(),
             "日志留存 " + LogActivity.class.getSimpleName(),
+            "VLC直播流" + LogActivity.class.getSimpleName(),
             "--",
             "456",
 

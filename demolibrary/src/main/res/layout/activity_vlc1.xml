@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".vlc1.VLC1Activity">
+
+    <SurfaceView
+        android:id="@+id/vlc1_svVideo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/vlc1_tvTips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="useTestRtsp"
+        android:padding="4dp"
+        android:text="默认播放网络视频，rtsp调试地址(IP摄像头App)：rtsp://192.168.1.107:8554/live  点击使用"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/vlc1_etAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:background="@android:color/white"
+        android:hint="输入rtsp地址后点击播放"
+        android:padding="4dp"
+        app:layout_constraintTop_toBottomOf="@id/vlc1_tvTips" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="playRtsp"
+        android:text="播放"
+        app:layout_constraintTop_toBottomOf="@id/vlc1_etAddress" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
