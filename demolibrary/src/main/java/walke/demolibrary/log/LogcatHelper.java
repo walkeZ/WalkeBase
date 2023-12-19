@@ -89,7 +89,7 @@ public class LogcatHelper {
             mPID = pid;
             try {
                 out = new FileOutputStream(new File(dir, "Log-"
-                        + MyDate.getLogFileName() + ".log"));
+                        + MyDate.getLogFileName() + ".log"),true);
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

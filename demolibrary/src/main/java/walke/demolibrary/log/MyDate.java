@@ -11,7 +11,7 @@ import java.util.Date;
 public class MyDate {
 
     public static String getLogFileName() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String date = format.format(new Date(System.currentTimeMillis()));
         return date;// 2012年10月03日 23:41:31
     }
