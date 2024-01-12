@@ -19,14 +19,14 @@ import walke.widget.R;
 /**
  * 吾日三省吾身：看脸，看秤，看余额。
  * Created by lanso on 2016/12/1.
- * 圆角图片
+ * 圆角图片，复用一个Paint
  */
 public class RoundImageView2 extends ImageView {
 
-    private static final int NORMAL=0;
-    private static final int CIRCLE=1;
-    private static final int RADIUS=2;
-    private int imgType =NORMAL;
+    private static final int NORMAL = 0;
+    private static final int CIRCLE = 1;
+    private static final int RADIUS = 2;
+    private int imgType = NORMAL;
     private Paint paint;
     private int mBorderWidth = 2;//边框宽度
     private int mBorderRadius = 2;//圆角宽度
@@ -47,14 +47,14 @@ public class RoundImageView2 extends ImageView {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView);
         for (int i = 0; i < a.getIndexCount(); i++) {
             int index = a.getIndex(i);
-            if (index==R.styleable.RoundImageView_imgType){
+            if (index == R.styleable.RoundImageView_imgType) {
                 imgType = a.getInt(index, NORMAL);
-            }else if (index==R.styleable.RoundImageView_borderColor)
+            } else if (index == R.styleable.RoundImageView_borderColor)
                 mBorderColor = a.getColor(index, Color.GRAY);
-            else if (index==R.styleable.RoundImageView_borderRadius)
-                mBorderRadius = a.getInt(index,0);
-            else if (index==R.styleable.RoundImageView_border_Width)
-                mBorderWidth = (int) a.getDimension(index,0f);
+            else if (index == R.styleable.RoundImageView_borderRadius)
+                mBorderRadius = a.getInt(index, 0);
+            else if (index == R.styleable.RoundImageView_border_Width)
+                mBorderWidth = (int) a.getDimension(index, 0f);
         }
         a.recycle();//资源回收，必要
 
@@ -75,7 +75,7 @@ public class RoundImageView2 extends ImageView {
 
     @Override
     public void draw(Canvas canvas) {
-        switch (imgType){
+        switch (imgType) {
             case CIRCLE://圆图片
 
                 break;

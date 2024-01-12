@@ -127,6 +127,7 @@ public class RoundImageView5 extends ImageView {
 
 
     /**
+     * 圆角+边框
      * @param canvas 参考：https://blog.csdn.net/zhuhai__yizhi/article/details/43412461
      */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -174,10 +175,10 @@ public class RoundImageView5 extends ImageView {
         path.close();
         canvas.drawPath(path, paint1);
 
-       //边框 https://my.oschina.net/smalant/blog/40328
-        int i = mBorderWidth/2;
+        //边框 https://my.oschina.net/smalant/blog/40328
+        int i = mBorderWidth / 2;
         //之前用 paint1 出现奇怪现象：颜色设置不起效,原因估计：paint绘图的PorterDuff.Mode.XX原因，用一个新的paint即可
-        canvas.drawOval(new RectF(i, i, mWidth- i, mHeight- i),paint3);
+        canvas.drawOval(new RectF(i, i, mWidth - i, mHeight - i), paint3);
 
 
     }
@@ -185,12 +186,14 @@ public class RoundImageView5 extends ImageView {
 
     private void drawBorder(Canvas canvas) {
         //边框 https://my.oschina.net/smalant/blog/40328
-        int i = mBorderWidth/2;
+        int i = mBorderWidth / 2;
         //之前用 paint1 出现奇怪现象：颜色设置不起效,原因估计：paint绘图的PorterDuff.Mode.XX原因，用一个新的paint即可
-        canvas.drawRect(new RectF(i, i, mWidth- i, mHeight- i),paint3);
+        canvas.drawRect(new RectF(i, i, mWidth - i, mHeight - i), paint3);
     }
 
-    /** 第二象限
+    /**
+     * 第二象限
+     *
      * @param canvas
      */
     private void drawLiftUp(Canvas canvas) {
@@ -205,13 +208,12 @@ public class RoundImageView5 extends ImageView {
         canvas.drawPath(path, paint1);
 
 
-
         //圆角边框 https://my.oschina.net/smalant/blog/40328
-        int i = mBorderWidth/2;
+        int i = mBorderWidth / 2;
         path.moveTo(0, mBorderRadius);
-        path.lineTo(0+i, 0+i);//边角点减去“奇怪的边距”
+        path.lineTo(0 + i, 0 + i);//边角点减去“奇怪的边距”
         path.lineTo(mBorderRadius, 0);
-        path.arcTo(new RectF(0+i, 0+i, right, bottom), -90, -90);
+        path.arcTo(new RectF(0 + i, 0 + i, right, bottom), -90, -90);
         path.close();
 
         paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
@@ -219,7 +221,9 @@ public class RoundImageView5 extends ImageView {
 
     }
 
-    /** 第三象限
+    /**
+     * 第三象限
+     *
      * @param canvas
      */
     private void drawLiftDown(Canvas canvas) {
@@ -236,18 +240,20 @@ public class RoundImageView5 extends ImageView {
 
 
         //边框 https://my.oschina.net/smalant/blog/40328
-        int i = mBorderWidth/2;
+        int i = mBorderWidth / 2;
         path.moveTo(0, getHeight() - mBorderRadius);
-        path.lineTo(0+i, getHeight()-i);//边角点减去“奇怪的边距”
+        path.lineTo(0 + i, getHeight() - i);//边角点减去“奇怪的边距”
         path.lineTo(mBorderRadius, getHeight());
-        path.arcTo(new RectF(0+i, top, right, bottom-i), 90, 90);
+        path.arcTo(new RectF(0 + i, top, right, bottom - i), 90, 90);
         path.close();
 
         canvas.drawPath(path, paint3);
     }
 
 
-    /** 第四象限
+    /**
+     * 第四象限
+     *
      * @param canvas
      */
     private void drawRightDown(Canvas canvas) {
@@ -261,12 +267,12 @@ public class RoundImageView5 extends ImageView {
 
 
         //边框 https://my.oschina.net/smalant/blog/40328
-        int i = mBorderWidth/2;
+        int i = mBorderWidth / 2;
 
         path.moveTo(getWidth() - mBorderRadius, getHeight());
-        path.lineTo(getWidth()-i, getHeight()-i);
+        path.lineTo(getWidth() - i, getHeight() - i);
         path.lineTo(getWidth(), getHeight() - mBorderRadius);
-        path.arcTo(new RectF(getWidth() - mBorderRadius * 2, getHeight() - mBorderRadius * 2, getWidth()-i, getHeight()-i), 0, 90);
+        path.arcTo(new RectF(getWidth() - mBorderRadius * 2, getHeight() - mBorderRadius * 2, getWidth() - i, getHeight() - i), 0, 90);
 //        path.arcTo(new RectF(getWidth() - mBorderRadius * 2, getHeight() - mBorderRadius * 2, getWidth(), getHeight()), 0, 90);
         path.close();
 
@@ -275,7 +281,9 @@ public class RoundImageView5 extends ImageView {
 
     }
 
-    /** 第一象限
+    /**
+     * 第一象限
+     *
      * @param canvas
      */
     private void drawRightUp(Canvas canvas) {
@@ -289,11 +297,11 @@ public class RoundImageView5 extends ImageView {
 
 
         //边框 https://my.oschina.net/smalant/blog/40328
-        int i = mBorderWidth/2;
+        int i = mBorderWidth / 2;
         path.moveTo(getWidth(), mBorderRadius);
         path.lineTo(getWidth(), 0);
         path.lineTo(getWidth() - mBorderRadius, 0);
-        path.arcTo(new RectF(getWidth() - mBorderRadius * 2, 0+i, getWidth()-i, 0 + mBorderRadius * 2), -90, 90);
+        path.arcTo(new RectF(getWidth() - mBorderRadius * 2, 0 + i, getWidth() - i, 0 + mBorderRadius * 2), -90, 90);
         path.close();
 
         paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));

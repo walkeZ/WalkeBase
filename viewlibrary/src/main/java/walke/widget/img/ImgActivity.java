@@ -1,5 +1,7 @@
 package walke.widget.img;
 
+import android.view.View;
+
 import walke.base.activity.TitleActivity;
 import walke.base.widget.TitleLayout;
 import walke.widget.R;
@@ -9,6 +11,9 @@ import walke.widget.R;
  */
 
 public class ImgActivity extends TitleActivity {
+
+    private View ivNormal1, ivNormal2;
+
     @Override
     protected int rootLayoutId() {
         return R.layout.activity_img;
@@ -16,7 +21,10 @@ public class ImgActivity extends TitleActivity {
 
     @Override
     protected void initView(TitleLayout titleLayout) {
-
+        ivNormal1 = findViewById(R.id.img_normal1);
+        ivNormal2 = findViewById(R.id.img_normal2);
+        CornerUtils.clipViewCircle(ivNormal1);
+        CornerUtils.clipViewCornerByDp(ivNormal2, 30);
     }
 
     @Override

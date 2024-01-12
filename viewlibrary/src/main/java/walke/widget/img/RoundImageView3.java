@@ -105,7 +105,6 @@ public class RoundImageView3 extends ImageView {
             default:
                 super.draw(canvas);
         }
-
     }
 
     /**
@@ -133,8 +132,6 @@ public class RoundImageView3 extends ImageView {
         path.close();
         canvas.drawPath(path, paint1);
 
-
-
         //第三象限
 //        path.moveTo(0, mHeight/2);//第1点：控件左边中心点坐标       ---成功
 //        path.lineTo(0, mHeight);//第2点：控件左下角坐标
@@ -156,7 +153,6 @@ public class RoundImageView3 extends ImageView {
         //startAngle：开始角度，sweepAngle滑过的角度，sweepAngle是正数--按顺时针方向旋转，是负数--逆时针方向旋转
         path.close();
         canvas.drawPath(path, paint1);
-
 
     }
 

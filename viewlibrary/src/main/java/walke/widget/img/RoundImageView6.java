@@ -30,8 +30,8 @@ public class RoundImageView6 extends ImageView {
     private static final int CIRCLE = 1;
     private static final int RADIUS = 2;
     private int imgType = NORMAL;
-    private int mBorderWidth = 2;//边框宽度
-    private int mBorderRadius = 2;//圆角宽度
+    private int mBorderWidth = 2; // 边框宽度
+    private int mBorderRadius = 2; // 圆角宽度
     private Paint paint1;
     private Paint paint2;
     private Paint paint3;
@@ -177,10 +177,10 @@ public class RoundImageView6 extends ImageView {
 
 
         paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-       //边框 https://my.oschina.net/smalant/blog/40328
-        int i = mBorderWidth/2;
+        //边框 https://my.oschina.net/smalant/blog/40328
+        int i = mBorderWidth / 2;
         //之前用 paint1 出现奇怪现象：颜色设置不起效,原因估计：paint绘图的PorterDuff.Mode.XX原因，用一个新的paint即可
-        canvas.drawOval(new RectF(i, i, mWidth- i, mHeight- i),paint3);
+        canvas.drawOval(new RectF(i, i, mWidth - i, mHeight - i), paint3);
 
     }
 
@@ -190,33 +190,33 @@ public class RoundImageView6 extends ImageView {
 //        paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
         paint3.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
-        int i = mBorderWidth/2;
+        int i = mBorderWidth / 2;
         //之前用 paint1 出现奇怪现象：颜色设置不起效,原因估计：paint绘图的PorterDuff.Mode.XX原因，用一个新的paint即可
-        canvas.drawRect(new RectF(i, i, mWidth- i, mHeight- i),paint3);
+        canvas.drawRect(new RectF(i, i, mWidth - i, mHeight - i), paint3);
 
         //圆角边框 https://my.oschina.net/smalant/blog/40328
         //第二象限
         Path path = new Path();
         path.moveTo(0, mBorderRadius);
-        path.lineTo(0+i, 0+i);//边角点减去“奇怪的边距”
+        path.lineTo(0 + i, 0 + i);//边角点减去“奇怪的边距”
         path.lineTo(mBorderRadius, 0);
-        path.arcTo(new RectF(0+i, 0+i, mBorderRadius * 2, mBorderRadius * 2), -90, -90);
+        path.arcTo(new RectF(0 + i, 0 + i, mBorderRadius * 2, mBorderRadius * 2), -90, -90);
         path.close();
         canvas.drawPath(path, paint3);
 
         //第三象限
         path.moveTo(0, getHeight() - mBorderRadius);
-        path.lineTo(0+i, getHeight()-i);//边角点减去“奇怪的边距”
+        path.lineTo(0 + i, getHeight() - i);//边角点减去“奇怪的边距”
         path.lineTo(mBorderRadius, getHeight());
-        path.arcTo(new RectF(0+i, getHeight() - mBorderRadius * 2, mBorderRadius * 2, mHeight-i), 90, 90);
+        path.arcTo(new RectF(0 + i, getHeight() - mBorderRadius * 2, mBorderRadius * 2, mHeight - i), 90, 90);
         path.close();
         canvas.drawPath(path, paint3);
 
         //第四象限
         path.moveTo(getWidth() - mBorderRadius, getHeight());
-        path.lineTo(getWidth()-i, getHeight()-i);
+        path.lineTo(getWidth() - i, getHeight() - i);
         path.lineTo(getWidth(), getHeight() - mBorderRadius);
-        path.arcTo(new RectF(getWidth() - mBorderRadius * 2, getHeight() - mBorderRadius * 2, getWidth()-i, getHeight()-i), 0, 90);
+        path.arcTo(new RectF(getWidth() - mBorderRadius * 2, getHeight() - mBorderRadius * 2, getWidth() - i, getHeight() - i), 0, 90);
         path.close();
         canvas.drawPath(path, paint3);
 
@@ -224,13 +224,15 @@ public class RoundImageView6 extends ImageView {
         path.moveTo(getWidth(), mBorderRadius);
         path.lineTo(getWidth(), 0);
         path.lineTo(getWidth() - mBorderRadius, 0);
-        path.arcTo(new RectF(getWidth() - mBorderRadius * 2, 0+i, getWidth()-i, 0 + mBorderRadius * 2), -90, 90);
+        path.arcTo(new RectF(getWidth() - mBorderRadius * 2, 0 + i, getWidth() - i, 0 + mBorderRadius * 2), -90, 90);
         path.close();
         canvas.drawPath(path, paint3);
 
     }
 
-    /** 第二象限
+    /**
+     * 第二象限
+     *
      * @param canvas
      */
     private void drawLiftUp(Canvas canvas) {
@@ -246,7 +248,9 @@ public class RoundImageView6 extends ImageView {
 
     }
 
-    /** 第三象限
+    /**
+     * 第三象限
+     *
      * @param canvas
      */
     private void drawLiftDown(Canvas canvas) {
@@ -264,7 +268,9 @@ public class RoundImageView6 extends ImageView {
     }
 
 
-    /** 第四象限
+    /**
+     * 第四象限
+     *
      * @param canvas
      */
     private void drawRightDown(Canvas canvas) {
@@ -278,7 +284,9 @@ public class RoundImageView6 extends ImageView {
 
     }
 
-    /** 第一象限
+    /**
+     * 第一象限
+     *
      * @param canvas
      */
     private void drawRightUp(Canvas canvas) {

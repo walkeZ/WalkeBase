@@ -76,8 +76,6 @@
             android:layout_marginLeft="4dp"/>
     </LinearLayout>
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="130dp"
@@ -145,6 +143,31 @@
             app:borderColor="#f5f5f5"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp"
+        android:background="#6F55F439">
+        <View
+            android:id="@+id/img_normal1"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:background="@mipmap/meizi"
+            android:layout_marginLeft="4dp"/>
+        <ImageView
+            android:id="@+id/img_normal2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/meizi"
+            android:scaleType="fitCenter"
+            android:background="#a670baff"
+            app:border_Width="2dp"
+            app:imgType="circle"
+            app:borderColor="#18fd3a"
+            android:layout_marginHorizontal="16dp"/>
     </LinearLayout>
 
 

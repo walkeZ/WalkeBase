@@ -171,7 +171,6 @@ public class RoundImageView4 extends ImageView {
         canvas.drawPath(path, paint1);
 
 
-
 //        int radius = mWidth > mHeight ? mHeight / 2 : mWidth / 2;
 //        canvas.drawCircle(mWidth / 2, mHeight / 2, radius,paint1);
         ViewGroup.LayoutParams lp = getLayoutParams();
@@ -179,13 +178,13 @@ public class RoundImageView4 extends ImageView {
         int height = lp.height;
         int paddingStart = getPaddingStart();
         int paddingEnd = getPaddingEnd();
-        int i = mBorderWidth/2;
-        int paddingTop = getPaddingTop()+ i;
-        int paddingLeft = getPaddingLeft()+ i;
-        int paddingRight = getPaddingRight()+ i;
-        int paddingBottom = getPaddingBottom()+ i;
+        int i = mBorderWidth / 2;
+        int paddingTop = getPaddingTop() + i;
+        int paddingLeft = getPaddingLeft() + i;
+        int paddingRight = getPaddingRight() + i;
+        int paddingBottom = getPaddingBottom() + i;
         //之前用 paint1 出现奇怪现象：颜色设置不起效,原因估计：paint绘图的PorterDuff.Mode.XX原因，用一个新的paint即可
-        canvas.drawOval(new RectF(paddingLeft, paddingTop, mWidth- paddingRight, mHeight- paddingBottom),paint3);
+        canvas.drawOval(new RectF(paddingLeft, paddingTop, mWidth - paddingRight, mHeight - paddingBottom), paint3);
 
 
     }
