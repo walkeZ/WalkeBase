@@ -8,6 +8,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WalkeBase">
         <activity
+            android:name=".Mvvm2Activity"
+            android:exported="false" />
+        <activity
             android:name=".MvvmActivity"
             android:exported="true">
             <intent-filter>
