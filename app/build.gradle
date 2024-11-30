@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 30
     // The specified Android SDK Build Tools version (30.0.0) is ignored, as it is below the minimum supported version (30.0.2) for Android Gradle Plugin 4.2.2.
-    buildToolsVersion "30.0.2"
     defaultConfig {
         applicationId "com.hui.huiheight"
         minSdkVersion 21
@@ -23,6 +22,7 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+    namespace 'com.hui.huiheight'
 
 }
 

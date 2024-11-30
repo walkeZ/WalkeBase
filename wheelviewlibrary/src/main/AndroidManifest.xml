@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.hui.wheelviewlibrary">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--android:supportsRtl="true"-->
     <application
