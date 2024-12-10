@@ -61,5 +61,18 @@
         <attr name="borderColor" format="color|reference"/>
     </declare-styleable>
 
+    <attr name="pb_type" format="enum">
+        <!-- 常规 -->
+        <enum name="allText" value="0"/>
+        <!-- 数字变大 -->
+        <enum name="numberBig" value="1"/>
+    </attr>
+    <attr name="icon2" format="integer|reference"/>
+    <declare-styleable name="HorizontalProgressView">
+        <attr name="pb_type"/>
+        <attr name="icon2"/>
+        <attr name="android:text" />
+        <attr name="android:progress" />
+    </declare-styleable>
 
 </resources>
